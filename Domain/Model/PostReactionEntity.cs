@@ -5,7 +5,7 @@ namespace Domain.Model;
 
 public class PostReactionEntity<TKey>: UserManyToOneJoinWithUidIdentity<TKey> where TKey : IEquatable<TKey>
 {
-    public PostEntity<TKey> PostEntity { get; set; }
+    public PostEntity<TKey> Post { get; set; }
     
     public ReactionTypeEnum ReactionType { get; set; }
     

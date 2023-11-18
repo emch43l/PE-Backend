@@ -5,5 +5,7 @@ namespace Domain.Model.Join;
 
 public class UserManyToOneJoinWithUidIdentity<T> : UidIdentity<T> where T : IEquatable<T>
 {
-    public IUser<int> User { get; set; }
+    public IUser<T> User { get; set; }
+    
+    public T UserId { get; set; }
 }

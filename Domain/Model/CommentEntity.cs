@@ -8,9 +8,9 @@ public class CommentEntity<TKey>: UserManyToOneJoinWithUidIdentity<TKey> where T
     
     public string Content { get; set; }
     
-    public PostEntity<TKey> PostEntity { get; set; }
+    public PostEntity<TKey> Post { get; set; }
     
-    public FileEntity<TKey> FileEntity { get; set; }
+    public FileEntity<TKey> File { get; set; }
     
     public ICollection<CommentReactionEntity<TKey>> Reactions { get; set; }
 
