@@ -11,7 +11,7 @@ public class FileEntity<TKey>: FileEntityBase<TKey> where TKey: IEquatable<TKey>
     
     public CommentEntity<TKey>? Comment { get; set; }
     
-    public FileEntity()
+    public FileEntity() : base()
     {
         Albums = new List<AlbumEntity<TKey>>();
     }

@@ -7,4 +7,9 @@ public class AlbumRatingEntity<TKey> : UserManyToOneJoinWithUidIdentity<TKey> wh
     public AlbumEntity<TKey> Album{ get; set; }
     
     public int Raintg { get; set; }
+
+    public AlbumRatingEntity() : base()
+    {
+        
+    }
 }

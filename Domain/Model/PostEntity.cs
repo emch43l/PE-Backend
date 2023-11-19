@@ -19,7 +19,7 @@ public class PostEntity<TKey>: UserManyToOneJoinWithUidIdentity<TKey> where TKey
     
     public ICollection<FileEntity<TKey>> Files { get; set; }
 
-    public PostEntity()
+    public PostEntity() : base()
     {
         this.Files = new List<FileEntity<TKey>>();
         this.Reactions = new List<PostReactionEntity<TKey>>();

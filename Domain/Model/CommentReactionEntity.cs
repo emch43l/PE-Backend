@@ -10,4 +10,9 @@ public class CommentReactionEntity<TKey>: UserManyToOneJoinWithUidIdentity<TKey>
     public ReactionTypeEnum ReactionType { get; set; }
     
     public DateTime Date { get; set; }
+
+    public CommentReactionEntity() : base()
+    {
+        
+    }
 }

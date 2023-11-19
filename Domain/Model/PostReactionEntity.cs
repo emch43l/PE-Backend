@@ -10,4 +10,9 @@ public class PostReactionEntity<TKey>: UserManyToOneJoinWithUidIdentity<TKey> wh
     public ReactionTypeEnum ReactionType { get; set; }
     
     public DateTime Date { get; set; }
+
+    public PostReactionEntity() : base()
+    {
+        
+    }
 }

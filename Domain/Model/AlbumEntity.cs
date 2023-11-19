@@ -12,7 +12,7 @@ public class AlbumEntity<Key>: UserManyToOneJoinWithUidIdentity<Key> where Key :
     
     public ICollection<AlbumRatingEntity<Key>> Rating { get; set; }
 
-    public AlbumEntity()
+    public AlbumEntity() : base()
     {
         this.Rating = new List<AlbumRatingEntity<Key>>();
     }

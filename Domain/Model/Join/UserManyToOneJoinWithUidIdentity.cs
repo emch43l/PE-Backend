@@ -8,4 +8,9 @@ public class UserManyToOneJoinWithUidIdentity<TKey> : UidIdentity<TKey> where TK
     public IUser<TKey> User { get; set; }
     
     public TKey UserId { get; set; }
+
+    public UserManyToOneJoinWithUidIdentity() : base()
+    {
+        
+    }
 }

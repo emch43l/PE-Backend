@@ -1,5 +1,6 @@
 ﻿using Infrastructure.DB;
 using Infrastructure.Identity.Entity;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,8 +24,7 @@ public static class Configuration
         return serviceCollection;
     }
 
-    public static IServiceCollection ConfigureIdentity(this IServiceCollection serviceCollection,
-        IConfiguration configuration)
+    public static IServiceCollection ConfigureIdentity(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddIdentityCore<UserEntity>(options =>
         {
@@ -32,8 +32,17 @@ public static class Configuration
             options.Password.RequiredLength = 8;
             options.Password.RequireNonAlphanumeric = true;
             options.Lockout.MaxFailedAccessAttempts = 3;
-        }).AddRoles<UserRoleEntity>();
+        }).AddRoles<UserRoleEntity>().AddEntityFrameworkStores<ApplicationDbContext>();
         
+        return serviceCollection;
+    }
+
+    public static IServiceCollection ConfigureServices(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddMediatR(
+            options => options.RegisterServicesFromAssembly(typeof(Configuration).Assembly)
+            );
+
         return serviceCollection;
     }
 }

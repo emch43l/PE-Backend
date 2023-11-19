@@ -14,7 +14,7 @@ public class CommentEntity<TKey>: UserManyToOneJoinWithUidIdentity<TKey> where T
 
     public ICollection<CommentReactionEntity<TKey>> Reactions { get; set; }
 
-    public CommentEntity()
+    public CommentEntity() : base()
     {
         this.Reactions = new List<CommentReactionEntity<TKey>>();
     }

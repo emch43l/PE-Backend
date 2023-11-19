@@ -2,13 +2,13 @@
 
 namespace Domain.Model.Base;
 
-public abstract class UidIdentity<T> : IUidIdentity<T> where T : IEquatable<T>
+public abstract class UidIdentity<TKey> : IUidIdentity<TKey> where TKey : IEquatable<TKey>
 {
-    public T Id { get; set; }
+    public TKey Id { get; set; }
     public Guid Guid { get; set; }
 
     public UidIdentity()
     {
-        this.Guid = new Guid();
+        this.Guid = Guid.NewGuid();
     }
 }

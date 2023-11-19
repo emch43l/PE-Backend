@@ -25,7 +25,7 @@ public class UserEntity : IdentityUser<int>, IUser<int>
     
     public UserEntity()
     {
-        Guid = new Guid();
+        Guid = Guid.NewGuid();
         Comments = new List<CommentEntity<int>>();
         Albums = new List<AlbumEntity<int>>();
         AlbumRatings = new List<AlbumRatingEntity<int>>();
