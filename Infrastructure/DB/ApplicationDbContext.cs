@@ -20,12 +20,25 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity,UserRoleEntity,
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(
+                "Server=DESKTOP-7J9U791;Database=PE;TrustServerCertificate=true;Integrated Security=true");
+        }
+        
         base.OnConfiguring(optionsBuilder);
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfiguration(new PostEntityConfiguration());
         base.OnModelCreating(builder);
+        
+        builder.ApplyConfiguration(new AlbumEntityConfiguration());
+        builder.ApplyConfiguration(new AlbumRatingEntityConfiguration());
+        builder.ApplyConfiguration(new CommentEntityConfiguration());
+        builder.ApplyConfiguration(new CommentReactionEntityConfiguration());
+        builder.ApplyConfiguration(new FileEntityConfiguration());
+        builder.ApplyConfiguration(new PostReactionEntityConfiguration());
+        builder.ApplyConfiguration(new PostEntityConfiguration());
     }
 }

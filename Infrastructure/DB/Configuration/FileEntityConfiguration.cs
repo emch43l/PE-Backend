@@ -1,5 +1,6 @@
 ﻿using Domain.Model;
-using Infrastructure.Identity.Entity.Join;
+using Infrastructure.Identity.Entity;
+using Infrastructure.Join;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,20 +11,11 @@ public class FileEntityConfiguration : IEntityTypeConfiguration<FileEntity<int>>
     public void Configure(EntityTypeBuilder<FileEntity<int>> builder)
     {
         builder.HasKey(file => file.Id);
+        
         builder
-            .HasOne(file => file.Post)
-            .WithMany(post => post.Files)
-            .HasForeignKey("PostId");
-        builder
-            .HasOne(file => file.Comment)
-            .WithOne(comment => comment.File)
-            .HasForeignKey("CommentId");
-        builder
-            .HasMany(file => file.Albums)
-            .WithMany(album => album.Files)
-            .UsingEntity<AlbumFileJoin<int>>(
-                albumFile => albumFile.ToTable("AlbumsFiles")
-            );
+            .HasOne(file => (UserEntity)file.User)
+            .WithMany(user => user.Files)
+            .HasForeignKey(file => file.UserId);
         builder.ToTable("Files");
     }
 }

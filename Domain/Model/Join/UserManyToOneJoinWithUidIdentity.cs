@@ -3,9 +3,9 @@ using Domain.Model.Interface;
 
 namespace Domain.Model.Join;
 
-public class UserManyToOneJoinWithUidIdentity<T> : UidIdentity<T> where T : IEquatable<T>
+public class UserManyToOneJoinWithUidIdentity<TKey> : UidIdentity<TKey> where TKey : IEquatable<TKey>
 {
-    public IUser<T> User { get; set; }
+    public IUser<TKey> User { get; set; }
     
-    public T UserId { get; set; }
+    public TKey UserId { get; set; }
 }

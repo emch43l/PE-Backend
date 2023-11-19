@@ -17,7 +17,7 @@ public class UserEntity : IdentityUser<int>, IUser<int>
     public ICollection<CommentReactionEntity<int>> CommentReactions { get; set; }
     
     public ICollection<FileEntity<int>> Files { get; set; }
-    
+
     public ICollection<PostReactionEntity<int>> PostReactions { get; set; }
     
     public ICollection<PostEntity<int>> Posts { get; set; }
@@ -34,4 +34,5 @@ public class UserEntity : IdentityUser<int>, IUser<int>
         PostReactions = new List<PostReactionEntity<int>>();
         Posts = new List<PostEntity<int>>();
     }
+
 }

@@ -14,7 +14,6 @@ public class AlbumEntity<Key>: UserManyToOneJoinWithUidIdentity<Key> where Key :
 
     public AlbumEntity()
     {
-        this.Files = new List<FileEntity<Key>>();
         this.Rating = new List<AlbumRatingEntity<Key>>();
     }
 }

@@ -12,16 +12,20 @@ public class PostEntityConfiguration : IEntityTypeConfiguration<PostEntity<int>>
         builder.HasKey(post => post.Id);
         builder
             .HasMany(post => post.Files)
-            .WithOne(file => file.Post);
+            .WithOne(file => file.Post)
+            .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Reactions)
-            .WithOne(reaction => reaction.Post);
+            .WithOne(reaction => reaction.Post)
+            .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Comments)
-            .WithOne(comment => comment.Post);
+            .WithOne(comment => comment.Post)
+            .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasOne(post => (UserEntity)post.User)
             .WithMany(user => user.Posts)
             .HasForeignKey(post => post.UserId);
+        builder.ToTable("Posts");
     }
 }
