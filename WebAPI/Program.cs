@@ -1,16 +1,20 @@
 using Infrastructure;
 using WebAPI;
+using WebAPI.ExceptionHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(
+    options => options.Filters.Add<ExceptionFilter>()
+    );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureDb(builder.Configuration);
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
@@ -32,3 +36,11 @@ app.MapControllers();
 app.Seed();
 
 app.Run();
+
+namespace WebAPI
+{
+    public partial class Program()
+    {
+    
+    }
+}

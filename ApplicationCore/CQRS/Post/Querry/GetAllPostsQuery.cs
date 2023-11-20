@@ -1,9 +1,9 @@
-﻿using Domain.Model;
+﻿using ApplicationCore.Common.Implementation.EntityImplementation;
 using MediatR;
 
 namespace ApplicationCore.CQRS.Post.Querry;
 
-public class GetAllPostsQuery<TKey> : IRequest<List<PostEntity<TKey>>> where TKey: IEquatable<TKey>
+public class GetAllPostsQuery : IRequest<List<PostEntity>>
 {
     
 }

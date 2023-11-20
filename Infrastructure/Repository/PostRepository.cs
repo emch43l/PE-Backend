@@ -1,11 +1,13 @@
-﻿using Domain.Common.Repository.PostRepository;
+﻿using ApplicationCore.Common.Implementation.EntityImplementation;
+using ApplicationCore.Common.Implementation.RepositoryImplementation;
 using Domain.Common.Specification;
-using Domain.Model;
+using Domain.Model.Generic;
 using Infrastructure.DB;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
-public class PostRepository : IPostRepository<int>
+public class PostRepository : IPostRepository
 {
     private readonly ApplicationDbContext _context;
 
@@ -13,28 +15,28 @@ public class PostRepository : IPostRepository<int>
     {
         _context = context;
     }
-
-    public Task<PostEntity<int>?> FindByIdAsync(int id)
+    
+    public Task<PostEntity?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<List<PostEntity<int>>> FindAllAsync()
+    public async Task<List<PostEntity>> FindAllAsync()
+    {
+        return await _context.Posts.ToListAsync();
+    }
+
+    public PostEntity? FindById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public PostEntity<int>? FindById(int id)
+    public List<PostEntity> FindAll()
     {
         throw new NotImplementedException();
     }
 
-    public List<PostEntity<int>> FindAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public PostEntity<int> Add(PostEntity<int> o)
+    public PostEntity Add(PostEntity o)
     {
         throw new NotImplementedException();
     }
@@ -44,22 +46,22 @@ public class PostRepository : IPostRepository<int>
         throw new NotImplementedException();
     }
 
-    public void Update(int id, PostEntity<int> o)
+    public void Update(int id, PostEntity o)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<PostEntity<int>> FindBySpecification(ISpecification<PostEntity<int>>? specification = null)
+    public IEnumerable<PostEntity> FindBySpecification(ISpecification<PostEntity>? specification = null)
     {
         throw new NotImplementedException();
     }
 
-    public Task<PostEntity<int>?> FindByGuidAsync(Guid id)
+    public async Task<PostEntity?> FindByGuidAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Posts.Where(post => post.Guid == id).FirstOrDefaultAsync();
     }
 
-    public PostEntity<int>? FindByGuid(Guid id)
+    public PostEntity? FindByGuid(Guid id)
     {
         throw new NotImplementedException();
     }
@@ -69,7 +71,7 @@ public class PostRepository : IPostRepository<int>
         throw new NotImplementedException();
     }
 
-    public void Update(Guid id, PostEntity<int> o)
+    public void Update(Guid id, PostEntity o)
     {
         throw new NotImplementedException();
     }

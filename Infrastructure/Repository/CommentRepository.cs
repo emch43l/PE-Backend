@@ -1,32 +1,33 @@
-﻿using Domain.Common.Repository.CommentRepository;
+﻿using ApplicationCore.Common.Implementation.EntityImplementation;
+using ApplicationCore.Common.Implementation.RepositoryImplementation;
 using Domain.Common.Specification;
-using Domain.Model;
+using Domain.Model.Generic;
 
 namespace Infrastructure.Repository;
 
-public class CommentRepository : ICommentRepository<int>
+public class CommentRepository : ICommentRepository
 {
-    public Task<CommentEntity<int>?> FindByIdAsync(int id)
+    public Task<CommentEntity?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<List<CommentEntity<int>>> FindAllAsync()
+    public Task<List<CommentEntity>> FindAllAsync()
     {
         throw new NotImplementedException();
     }
 
-    public CommentEntity<int>? FindById(int id)
+    public CommentEntity? FindById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public List<CommentEntity<int>> FindAll()
+    public List<CommentEntity> FindAll()
     {
         throw new NotImplementedException();
     }
 
-    public CommentEntity<int> Add(CommentEntity<int> o)
+    public CommentEntity Add(CommentEntity o)
     {
         throw new NotImplementedException();
     }
@@ -36,22 +37,22 @@ public class CommentRepository : ICommentRepository<int>
         throw new NotImplementedException();
     }
 
-    public void Update(int id, CommentEntity<int> o)
+    public void Update(int id, CommentEntity o)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<CommentEntity<int>> FindBySpecification(ISpecification<CommentEntity<int>>? specification = null)
+    public IEnumerable<CommentEntity> FindBySpecification(ISpecification<CommentEntity>? specification = null)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CommentEntity<int>?> FindByGuidAsync(Guid id)
+    public Task<CommentEntity?> FindByGuidAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public CommentEntity<int>? FindByGuid(Guid id)
+    public CommentEntity? FindByGuid(Guid id)
     {
         throw new NotImplementedException();
     }
@@ -61,7 +62,7 @@ public class CommentRepository : ICommentRepository<int>
         throw new NotImplementedException();
     }
 
-    public void Update(Guid id, CommentEntity<int> o)
+    public void Update(Guid id, CommentEntity o)
     {
         throw new NotImplementedException();
     }

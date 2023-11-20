@@ -1,8 +1,10 @@
-﻿using Domain.Enum;
-using Domain.Model;
+﻿using ApplicationCore.Common.Implementation.EntityImplementation;
+using Domain.Enum;
 using Infrastructure.DB;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
+using UserEntity = Infrastructure.Identity.Entity.UserEntity;
+
 
 namespace WebAPI;
 
@@ -19,14 +21,14 @@ public static class SeedData
             UserEntity user = await CreateUser(provider,"SampleUser","zaq1@WSX");
             await AddUserToRole(provider, user, "admin");
 
-            PostEntity<int> postEntity = new PostEntity<int>();
-            postEntity.Date = DateTime.Now;
-            postEntity.Description = "Lorem ipsum description";
-            postEntity.Title = "Lorem Title";
-            postEntity.User = user;
-            postEntity.Status = StatusEnum.Visible;
+            PostEntity genericPostEntity = new PostEntity();
+            genericPostEntity.Date = DateTime.Now;
+            genericPostEntity.Description = "Lorem ipsum description";
+            genericPostEntity.Title = "Lorem Title";
+            genericPostEntity.GenericUser = user;
+            genericPostEntity.Status = StatusEnum.Visible;
 
-            context.Posts.Add(postEntity);
+            context.Posts.Add(genericPostEntity);
             await context.SaveChangesAsync();
         }
     }

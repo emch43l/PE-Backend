@@ -1,21 +1,22 @@
-﻿using Domain.Model;
+﻿using ApplicationCore.Common.Implementation.EntityImplementation;
+using Domain.Model.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Common.Interface;
 
-public interface IApplicationDbContext<TKey> where TKey: IEquatable<TKey>
+public interface IApplicationDbContext
 {
-    public DbSet<AlbumEntity<TKey>> Albums { get; set; }
+    public DbSet<AlbumEntity> Albums { get; set; }
     
-    public DbSet<AlbumRatingEntity<TKey>> AlbumRatings { get; set; }
+    public DbSet<AlbumRatingEntity> AlbumRatings { get; set; }
     
-    public DbSet<CommentEntity<TKey>> Comments { get; set; }
+    public DbSet<CommentEntity> Comments { get; set; }
     
-    public DbSet<CommentReactionEntity<TKey>> CommentReactions { get; set; }
+    public DbSet<CommentReactionEntity> CommentReactions { get; set; }
     
-    public DbSet<FileEntity<TKey>> Files { get; set; }
+    public DbSet<FileEntity> Files { get; set; }
     
-    public DbSet<PostEntity<TKey>> Posts { get; set; }
+    public DbSet<PostEntity> Posts { get; set; }
     
-    public DbSet<PostReactionEntity<TKey>> PostReactions { get; set; }
+    public DbSet<PostReactionEntity> PostReactions { get; set; }
 }

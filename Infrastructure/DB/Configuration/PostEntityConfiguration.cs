@@ -1,13 +1,14 @@
 ﻿using Domain.Model;
+using Domain.Model.Generic;
 using Infrastructure.Identity.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DB.Configuration;
 
-public class PostEntityConfiguration : IEntityTypeConfiguration<PostEntity<int>>
+public class PostEntityConfiguration : IEntityTypeConfiguration<GenericPostEntity<int>>
 {
-    public void Configure(EntityTypeBuilder<PostEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<GenericPostEntity<int>> builder)
     {
         builder.HasKey(post => post.Id);
         builder
@@ -16,14 +17,14 @@ public class PostEntityConfiguration : IEntityTypeConfiguration<PostEntity<int>>
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Reactions)
-            .WithOne(reaction => reaction.Post)
+            .WithOne(reaction => reaction.GenericPost)
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Comments)
-            .WithOne(comment => comment.Post)
+            .WithOne(comment => comment.GenericPost)
             .OnDelete(DeleteBehavior.NoAction);
         builder
-            .HasOne(post => (UserEntity)post.User)
+            .HasOne(post => (UserEntity)post.GenericUser)
             .WithMany(user => user.Posts)
             .HasForeignKey(post => post.UserId);
         builder.ToTable("Posts");

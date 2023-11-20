@@ -1,21 +1,22 @@
 ﻿using Domain.Model;
+using Domain.Model.Generic;
 using Infrastructure.Identity.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DB.Configuration;
 
-public class PostReactionEntityConfiguration : IEntityTypeConfiguration<PostReactionEntity<int>>
+public class PostReactionEntityConfiguration : IEntityTypeConfiguration<GenericPostReactionEntity<int>>
 {
-    public void Configure(EntityTypeBuilder<PostReactionEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<GenericPostReactionEntity<int>> builder)
     {
         builder.HasKey(postReaction => postReaction.Id);
         builder
-            .HasOne(postReaction => postReaction.Post)
+            .HasOne(postReaction => postReaction.GenericPost)
             .WithMany(post => post.Reactions)
             .HasForeignKey("PostId");
         builder
-            .HasOne(postReaction => (UserEntity)postReaction.User)
+            .HasOne(postReaction => (UserEntity)postReaction.GenericUser)
             .WithMany(user => user.PostReactions)
             .HasForeignKey(postReaction => postReaction.UserId);
         builder.ToTable("PostReactions");
