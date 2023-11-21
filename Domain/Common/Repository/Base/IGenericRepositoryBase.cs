@@ -22,4 +22,8 @@ public interface IGenericRepositoryBase<T, in TKey> where T: IUidIdentity<TKey> 
     void Update(TKey id, T o);
     
     IEnumerable<T> FindBySpecification(ISpecification<T>? specification = null);
+
+    IQueryable<T> GetQuery();
+
+    IQueryable<T> GetQueryBySpecification(ISpecification<T>? specification = null);
 }

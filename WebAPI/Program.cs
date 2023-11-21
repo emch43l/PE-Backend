@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureDb(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureServices();
+builder.Services.ConfigureValidation();
 
 var app = builder.Build();
 
@@ -39,7 +40,7 @@ app.Run();
 
 namespace WebAPI
 {
-    public partial class Program()
+    public partial class Program
     {
     
     }

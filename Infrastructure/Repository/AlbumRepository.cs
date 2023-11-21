@@ -47,4 +47,14 @@ public class AlbumRepository : IAlbumRepository
     {
         throw new NotImplementedException();
     }
+
+    public IQueryable<AlbumEntity> GetQuery()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IQueryable<AlbumEntity> GetQueryBySpecification(ISpecification<AlbumEntity>? specification = null)
+    {
+        throw new NotImplementedException();
+    }
 }

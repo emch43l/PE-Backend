@@ -36,7 +36,7 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity,UserRoleEntity,
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder.UseSqlServer(
-                "Server=DESKTOP-7J9U791;Database=PE;TrustServerCertificate=true;Integrated Security=true"); 
+                "Server=NB-MICHAL;Database=PE;TrustServerCertificate=true;Integrated Security=true"); 
         }
         
         base.OnConfiguring(optionsBuilder);

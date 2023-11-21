@@ -1,5 +1,9 @@
 ﻿using ApplicationCore;
 using ApplicationCore.Common.Implementation.RepositoryImplementation;
+using ApplicationCore.CQRS.Post.Query;
+using ApplicationCore.Pagination;
+using ApplicationCore.Validation;
+using FluentValidation;
 using Infrastructure.DB;
 using Infrastructure.Identity.Entity;
 using Infrastructure.Repository;
@@ -39,8 +43,16 @@ public static class DependencyInjection
         return serviceCollection;
     }
 
+    public static IServiceCollection ConfigureValidation(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<IValidator<GetAllPostsPaginatedQuery>, GetAllPostsPaginatedQueryValidator>();
+
+        return serviceCollection;
+    }
+
     public static IServiceCollection ConfigureServices(this IServiceCollection serviceCollection)
     {
+        serviceCollection.AddScoped(typeof(IGenericPaginator<>),typeof(GenericPaginator<>));
         serviceCollection.AddScoped<ICommentRepository, CommentRepository>();
         serviceCollection.AddScoped<IAlbumRepository, AlbumRepository>();
         serviceCollection.AddScoped<IPostRepository, PostRepository>();

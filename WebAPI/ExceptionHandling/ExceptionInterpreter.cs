@@ -1,7 +1,8 @@
 ﻿using System.Net;
+using Domain.Exception;
 using Domain.Exception.Base;
 
-namespace WebAPI.ExceptionHandling;
+namespace ApplicationCore.ExceptionHandling;
 
 public class ExceptionInterpreter
 {
@@ -14,8 +15,12 @@ public class ExceptionInterpreter
                 response.Message = exception.Message;
                 response.StatusCode = HttpStatusCode.NotFound; 
                 break;
+            case PaginatorException:
+                response.Message = exception.Message;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                break;
             default:
-                response.Message = "Not implemented exception";
+                response.Message = "An error occured !";
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 break;
         }

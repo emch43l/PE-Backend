@@ -3,7 +3,7 @@ using ApplicationCore.Common.Implementation.RepositoryImplementation;
 using Domain.Exception;
 using MediatR;
 
-namespace ApplicationCore.CQRS.Post.Querry;
+namespace ApplicationCore.CQRS.Post.Query;
 
 public class GetPostByGuidQueryHanlder : IRequestHandler<GetPostByGuidQuery,PostEntity>
 {

@@ -1,9 +1,8 @@
 ﻿using ApplicationCore.Common.Implementation.EntityImplementation;
 using ApplicationCore.Common.Implementation.RepositoryImplementation;
-using Domain.Model.Generic;
 using MediatR;
 
-namespace ApplicationCore.CQRS.Post.Querry;
+namespace ApplicationCore.CQRS.Post.Query;
 
 public class GetAllPostsQueryHandler : IRequestHandler<GetAllPostsQuery,List<PostEntity>>
 {

@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Common.Implementation.EntityImplementation;
-using ApplicationCore.CQRS.Post.Querry;
+using ApplicationCore.CQRS.Post.Query;
+using ApplicationCore.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,10 @@ public class PostController : ControllerBase
     
     [HttpGet]
     [Route("all")]
-    public async Task<IActionResult> GetPosts()
+    public async Task<IActionResult> GetPosts([FromQuery] int Page = 1, [FromQuery] int PageSize = 5)
     {
-        List<PostEntity> posts = await _mediator.Send(new GetAllPostsQuery());
-        return Ok(posts);
+        GenericPaginatorResult<PostEntity> result = await _mediator.Send(new GetAllPostsPaginatedQuery(Page,PageSize));
+        return Ok(result);
     }
 
     [HttpGet]

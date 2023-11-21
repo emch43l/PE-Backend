@@ -56,6 +56,16 @@ public class PostRepository : IPostRepository
         throw new NotImplementedException();
     }
 
+    public IQueryable<PostEntity> GetQuery()
+    {
+        return _context.Posts;
+    }
+
+    public IQueryable<PostEntity> GetQueryBySpecification(ISpecification<PostEntity>? specification = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<PostEntity?> FindByGuidAsync(Guid id)
     {
         return await _context.Posts.Where(post => post.Guid == id).FirstOrDefaultAsync();

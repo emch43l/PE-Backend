@@ -47,6 +47,16 @@ public class CommentRepository : ICommentRepository
         throw new NotImplementedException();
     }
 
+    public IQueryable<CommentEntity> GetQuery()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IQueryable<CommentEntity> GetQueryBySpecification(ISpecification<CommentEntity>? specification = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<CommentEntity?> FindByGuidAsync(Guid id)
     {
         throw new NotImplementedException();
