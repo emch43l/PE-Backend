@@ -1,7 +1,6 @@
-﻿using ApplicationCore.Common.Implementation.EntityImplementation;
-using ApplicationCore.Common.Implementation.RepositoryImplementation;
+﻿using ApplicationCore.Common.Implementation.Entity;
+using ApplicationCore.Common.Implementation.Repository;
 using Domain.Common.Specification;
-
 using Domain.Model.Generic;
 
 namespace Infrastructure.Repository;

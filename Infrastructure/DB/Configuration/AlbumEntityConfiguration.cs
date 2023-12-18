@@ -27,7 +27,7 @@ public class AlbumEntityConfiguration : IEntityTypeConfiguration<GenericAlbumEnt
              .HasMany(album => album.Rating)
              .WithOne(rating => rating.GenericAlbum);
         builder
-            .HasOne(album => (UserEntity)album.GenericUser)
+            .HasOne(album => (UserEntity)album.User)
             .WithMany(user => user.Albums)
             .HasForeignKey(post => post.UserId);
         builder.ToTable("Albums");

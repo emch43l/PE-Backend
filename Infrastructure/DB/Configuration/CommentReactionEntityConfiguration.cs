@@ -16,7 +16,7 @@ public class CommentReactionEntityConfiguration : IEntityTypeConfiguration<Gener
             .WithMany(comment => comment.Reactions)
             .HasForeignKey("CommentId");
         builder
-            .HasOne(commentReaction => (UserEntity)commentReaction.GenericUser)
+            .HasOne(commentReaction => (UserEntity)commentReaction.User)
             .WithMany(user => user.CommentReactions)
             .HasForeignKey(postReaction => postReaction.UserId);
         builder.ToTable("CommentReactions");

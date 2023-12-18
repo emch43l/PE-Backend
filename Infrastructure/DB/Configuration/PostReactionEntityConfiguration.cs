@@ -16,7 +16,7 @@ public class PostReactionEntityConfiguration : IEntityTypeConfiguration<GenericP
             .WithMany(post => post.Reactions)
             .HasForeignKey("PostId");
         builder
-            .HasOne(postReaction => (UserEntity)postReaction.GenericUser)
+            .HasOne(postReaction => (UserEntity)postReaction.User)
             .WithMany(user => user.PostReactions)
             .HasForeignKey(postReaction => postReaction.UserId);
         builder.ToTable("PostReactions");

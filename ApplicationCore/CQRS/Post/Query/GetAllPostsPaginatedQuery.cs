@@ -1,19 +1,19 @@
-﻿using ApplicationCore.Common.Implementation.EntityImplementation;
+﻿using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
 using MediatR;
 
 namespace ApplicationCore.CQRS.Post.Query;
 
-public record GetAllPostsPaginatedQuery : IRequest<GenericPaginatorResult<PostEntity>>
+public record GetAllPostsPaginatedQuery : IRequest<GenericPaginatorResult<PostDto>>
 {
     public int PageNumber { get; set; }
     
     public int ItemsPerPage { get; set; }
 
-    public GetAllPostsPaginatedQuery(int Page = 1, int PageSize = 10)
+    public GetAllPostsPaginatedQuery(int page = 1, int pageSize = 10)
     {
-        this.PageNumber = Page;
-        this.ItemsPerPage = PageSize;
+        this.PageNumber = page;
+        this.ItemsPerPage = pageSize;
     }
     
 }

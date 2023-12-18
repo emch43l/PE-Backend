@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Common.Implementation.EntityImplementation;
+﻿using ApplicationCore.Common.Implementation.Entity;
 using Domain.Enum;
 using Infrastructure.DB;
 using Infrastructure.Identity.Entity;
@@ -25,7 +25,7 @@ public static class SeedData
             genericPostEntity.Date = DateTime.Now;
             genericPostEntity.Description = "Lorem ipsum description";
             genericPostEntity.Title = "Lorem Title";
-            genericPostEntity.GenericUser = user;
+            genericPostEntity.User = user;
             genericPostEntity.Status = StatusEnum.Visible;
 
             context.Posts.Add(genericPostEntity);

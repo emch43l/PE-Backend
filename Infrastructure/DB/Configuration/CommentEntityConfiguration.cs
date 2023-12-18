@@ -12,7 +12,7 @@ public class CommentEntityConfiguration : IEntityTypeConfiguration<GenericCommen
     {
         builder.HasKey(comment => comment.Id);
         builder
-            .HasOne(comment => (UserEntity)comment.GenericUser)
+            .HasOne(comment => (UserEntity)comment.User)
             .WithMany(user => user.Comments)
             .HasForeignKey(comment => comment.UserId);
         builder

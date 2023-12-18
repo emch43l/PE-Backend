@@ -1,8 +1,10 @@
-﻿namespace ApplicationCore.Pagination;
+﻿using System.Linq.Expressions;
 
-public interface IGenericPaginator<TEntity> where TEntity: class
+namespace ApplicationCore.Pagination;
+
+public interface IGenericPaginator<TEntity,TResult> where TEntity: class where TResult: class
 {
-    public IGenericPaginator<TEntity> SetPageSize(int PageSize);
-    public Task<GenericPaginatorResult<TEntity>> Paginate(IQueryable<TEntity> query, int pageNumber);
+    public IGenericPaginator<TEntity,TResult> SetPageSize(int PageSize);
+    public Task<GenericPaginatorResult<TResult>> Paginate(IQueryable<TEntity> query, Expression<Func<TEntity,TResult>> selector, int pageNumber);
 
 }

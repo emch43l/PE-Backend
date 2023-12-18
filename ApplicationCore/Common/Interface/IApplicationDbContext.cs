@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Common.Implementation.EntityImplementation;
+﻿using ApplicationCore.Common.Implementation.Entity;
 using Domain.Model.Generic;
 using Microsoft.EntityFrameworkCore;
 

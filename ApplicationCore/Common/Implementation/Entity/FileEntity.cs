@@ -1,6 +1,6 @@
 ﻿using Domain.Model.Generic;
 
-namespace ApplicationCore.Common.Implementation.EntityImplementation;
+namespace ApplicationCore.Common.Implementation.Entity;
 
 public class FileEntity: GenericFileEntity<int>
 {

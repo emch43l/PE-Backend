@@ -14,7 +14,7 @@ public class FileEntityConfiguration : IEntityTypeConfiguration<GenericFileEntit
         builder.HasKey(file => file.Id);
         
         builder
-            .HasOne(file => (UserEntity)file.GenericUser)
+            .HasOne(file => (UserEntity)file.User)
             .WithMany(user => user.Files)
             .HasForeignKey(file => file.UserId);
         builder.ToTable("Files");

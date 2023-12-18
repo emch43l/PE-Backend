@@ -1,6 +1,8 @@
-﻿namespace ApplicationCore.Pagination;
+﻿using System.Linq.Expressions;
 
-public class GenericPaginator<TEntity> : IGenericPaginator<TEntity> where TEntity : class
+namespace ApplicationCore.Pagination;
+
+public class GenericPaginator<TEntity,TResult> : IGenericPaginator<TEntity,TResult> where TEntity : class where TResult: class
 {
     private int _itemNumberPerPage;
 
@@ -15,26 +17,27 @@ public class GenericPaginator<TEntity> : IGenericPaginator<TEntity> where TEntit
         _itemNumberPerPage = 5;
     }
 
-    public IGenericPaginator<TEntity> SetPageSize(int PageSize)
+    public IGenericPaginator<TEntity,TResult> SetPageSize(int PageSize)
     {
         this.ValidatePageSize(PageSize);
         _itemNumberPerPage = PageSize;
         return this;
     }
 
-    public async Task<GenericPaginatorResult<TEntity>> Paginate(IQueryable<TEntity> query, int pageNumber)
+    public async Task<GenericPaginatorResult<TResult>> Paginate(IQueryable<TEntity> query, Expression<Func<TEntity,TResult>> selector, int pageNumber)
     {
         return await Task.Run(() =>
         {
             int totalItemsCount = query.Count();
             int totalPages = (int)Math.Ceiling((double)totalItemsCount / _itemNumberPerPage);
 
-            List<TEntity> items = query
+            List<TResult> items = query
                 .Skip((pageNumber - 1) * _itemNumberPerPage)
                 .Take(_itemNumberPerPage)
+                .Select(selector)
                 .ToList();
 
-            return new GenericPaginatorResult<TEntity>(
+            return new GenericPaginatorResult<TResult>(
                 totalItemsCount,
                 items.Count(),
                 items,

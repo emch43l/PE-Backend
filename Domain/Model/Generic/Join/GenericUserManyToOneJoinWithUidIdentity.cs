@@ -5,7 +5,7 @@ namespace Domain.Model.Generic.Join;
 
 public class GenericUserManyToOneJoinWithUidIdentity<TKey> : UidIdentity<TKey> where TKey : IEquatable<TKey>
 {
-    public IGenericUser<TKey> GenericUser { get; set; }
+    public IGenericUser<TKey> User { get; set; }
     
     public TKey UserId { get; set; }
 

@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using ApplicationCore.Common.Implementation.EntityImplementation;
+using ApplicationCore.Common.Implementation.Entity;
 using ApplicationCore.Common.Interface;
 using Domain.Model;
 using Domain.Model.Generic;
@@ -36,7 +36,7 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity,UserRoleEntity,
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder.UseSqlServer(
-                "Server=NB-MICHAL;Database=PE;TrustServerCertificate=true;Integrated Security=true"); 
+                "Server=DESKTOP-7J9U791;Database=PE;TrustServerCertificate=true;Integrated Security=true"); 
         }
         
         base.OnConfiguring(optionsBuilder);

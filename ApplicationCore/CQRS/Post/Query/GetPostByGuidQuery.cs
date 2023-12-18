@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Common.Implementation.EntityImplementation;
+﻿using ApplicationCore.Common.Implementation.Entity;
 using MediatR;
 
 namespace ApplicationCore.CQRS.Post.Query;

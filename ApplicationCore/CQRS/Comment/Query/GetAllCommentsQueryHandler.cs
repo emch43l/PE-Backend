@@ -1,10 +1,10 @@
-﻿using ApplicationCore.Common.Implementation.RepositoryImplementation;
+﻿using ApplicationCore.Common.Implementation.Repository;
 using ApplicationCore.CQRS.Base;
-using ApplicationCore.DTO;
+using ApplicationCore.Dto;
 
 namespace ApplicationCore.CQRS.Comment.Query;
 
-public class GetAllCommentsQueryHandler : IQueryHandler<GetAllCommentsQuery,List<CommentDTO>>
+public class GetAllCommentsQueryHandler : IQueryHandler<GetAllCommentsQuery,List<CommentDto>>
 {
     private readonly ICommentRepository _repository;
 
@@ -13,7 +13,7 @@ public class GetAllCommentsQueryHandler : IQueryHandler<GetAllCommentsQuery,List
         _repository = repository;
     }
 
-    public Task<List<CommentDTO>> Handle(GetAllCommentsQuery query, CancellationToken cancellationToken)
+    public Task<List<CommentDto>> Handle(GetAllCommentsQuery query, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

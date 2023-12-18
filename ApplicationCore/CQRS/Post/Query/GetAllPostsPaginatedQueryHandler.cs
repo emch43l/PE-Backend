@@ -1,5 +1,7 @@
-﻿using ApplicationCore.Common.Implementation.EntityImplementation;
-using ApplicationCore.Common.Implementation.RepositoryImplementation;
+﻿using ApplicationCore.Common.Implementation.Entity;
+using ApplicationCore.Common.Implementation.Repository;
+using ApplicationCore.Common.Implementation.Specification.Post;
+using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
 using Domain.Exception;
 using FluentValidation;
@@ -8,14 +10,14 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.Post.Query;
 
-public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostEntity>>
+public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostDto>>
 {
-    private readonly IGenericPaginator<PostEntity> _paginator;
+    private readonly IGenericPaginator<PostEntity,PostDto> _paginator;
     private readonly IValidator<GetAllPostsPaginatedQuery> _validator;
     private readonly IPostRepository _postRepository;
 
     public GetAllPostsPaginatedQueryHandler(
-        IGenericPaginator<PostEntity> paginator, 
+        IGenericPaginator<PostEntity,PostDto> paginator, 
         IValidator<GetAllPostsPaginatedQuery> validator, 
         IPostRepository postRepository)
     {
@@ -24,7 +26,7 @@ public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPagina
         _postRepository = postRepository;
     }
 
-    public async Task<GenericPaginatorResult<PostEntity>> Handle(GetAllPostsPaginatedQuery request,
+    public async Task<GenericPaginatorResult<PostDto>> Handle(GetAllPostsPaginatedQuery request,
         CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await _validator.ValidateAsync(request);
@@ -33,8 +35,20 @@ public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPagina
             throw new PaginatorException();
         }
 
-        IQueryable<PostEntity> query = _postRepository.GetQuery();
-        GenericPaginatorResult<PostEntity> result = await _paginator.SetPageSize(request.ItemsPerPage).Paginate(query,request.PageNumber);
+        IQueryable<PostEntity> query = _postRepository.GetQueryBySpecification(new PostWithUserSpecification());
+        GenericPaginatorResult<PostDto> result = 
+            await _paginator
+                .SetPageSize(request.ItemsPerPage)
+                .Paginate(query, p => new PostDto
+                {
+                    User = new UserDto()
+                    {
+                        Id = p.User.Guid,
+                    },
+                    ReactionCount = p.ReactionCount,
+                    CommentCount = p.CommentCount,
+                    Title = p.Title
+                }, request.PageNumber);
         return result;
 
     }

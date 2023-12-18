@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Common.Implementation.RepositoryImplementation;
+﻿using ApplicationCore.Common.Implementation.Repository;
 using ApplicationCore.CQRS.Base;
 
 namespace ApplicationCore.CQRS.Comment.Command;

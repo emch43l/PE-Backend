@@ -1,7 +1,7 @@
 ﻿using Domain.Model.Generic;
 using Domain.Model.Generic.Interface;
 
-namespace ApplicationCore.Common.Implementation.EntityImplementation;
+namespace ApplicationCore.Common.Implementation.Entity;
 
 public class UserEntity : IGenericUser<int>
 {

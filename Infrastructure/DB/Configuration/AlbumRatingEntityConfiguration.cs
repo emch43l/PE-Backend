@@ -16,7 +16,7 @@ public class AlbumRatingEntityConfiguration : IEntityTypeConfiguration<GenericAl
             .WithMany(album => album.Rating)
             .HasForeignKey("AlbumId");
         builder
-            .HasOne(albumRating => (UserEntity)albumRating.GenericUser)
+            .HasOne(albumRating => (UserEntity)albumRating.User)
             .WithMany(user => user.AlbumRatings)
             .HasForeignKey(albumRating => albumRating.UserId)
             .OnDelete(DeleteBehavior.NoAction);

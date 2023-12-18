@@ -1,5 +1,6 @@
-﻿using ApplicationCore.Common.Implementation.EntityImplementation;
-using ApplicationCore.Common.Implementation.RepositoryImplementation;
+﻿using ApplicationCore.Common.Implementation.Entity;
+using ApplicationCore.Common.Implementation.Repository;
+using ApplicationCore.Common.Interface;
 using Domain.Common.Specification;
 using Domain.Model.Generic;
 using Infrastructure.DB;
@@ -9,11 +10,13 @@ namespace Infrastructure.Repository;
 
 public class PostRepository : IPostRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ISpecificationHandler<PostEntity> _specificationHandler;
+    private readonly IApplicationDbContext _context;
 
-    public PostRepository(ApplicationDbContext context)
+    public PostRepository(IApplicationDbContext context, ISpecificationHandler<PostEntity> specificationHandler)
     {
         _context = context;
+        _specificationHandler = specificationHandler;
     }
     
     public Task<PostEntity?> FindByIdAsync(int id)
@@ -56,14 +59,14 @@ public class PostRepository : IPostRepository
         throw new NotImplementedException();
     }
 
-    public IQueryable<PostEntity> GetQuery()
+    public IQueryable<PostEntity> GetQueryBySpecification()
     {
         return _context.Posts;
     }
 
     public IQueryable<PostEntity> GetQueryBySpecification(ISpecification<PostEntity>? specification = null)
     {
-        throw new NotImplementedException();
+        return _specificationHandler.Handle(_context.Posts,specification);
     }
 
     public async Task<PostEntity?> FindByGuidAsync(Guid id)

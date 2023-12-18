@@ -15,7 +15,11 @@ public class GenericPostEntity<TKey>: GenericUserManyToOneJoinWithUidIdentity<TK
     
     public ICollection<GenericCommentEntity<TKey>> Comments { get; set; }
     
+    public int CommentCount { get; set; }
+    
     public ICollection<GenericPostReactionEntity<TKey>> Reactions { get; set; }
+    
+    public int ReactionCount { get; set; }
     
     public ICollection<GenericFileEntity<TKey>> Files { get; set; }
 
