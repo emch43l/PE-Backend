@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using ApplicationCore.Mapper;
 
 namespace ApplicationCore.Pagination;
 
@@ -17,14 +18,14 @@ public class GenericPaginator<TEntity,TResult> : IGenericPaginator<TEntity,TResu
         _itemNumberPerPage = 5;
     }
 
-    public IGenericPaginator<TEntity,TResult> SetPageSize(int PageSize)
+    public IGenericPaginator<TEntity,TResult> SetPageSize(int pageSize)
     {
-        this.ValidatePageSize(PageSize);
-        _itemNumberPerPage = PageSize;
+        this.ValidatePageSize(pageSize);
+        _itemNumberPerPage = pageSize;
         return this;
     }
 
-    public async Task<GenericPaginatorResult<TResult>> Paginate(IQueryable<TEntity> query, Expression<Func<TEntity,TResult>> selector, int pageNumber)
+    public async Task<GenericPaginatorResult<TResult>> Paginate(IQueryable<TEntity> query, IMapper<TEntity,TResult> mapper, int pageNumber)
     {
         return await Task.Run(() =>
         {
@@ -34,7 +35,7 @@ public class GenericPaginator<TEntity,TResult> : IGenericPaginator<TEntity,TResu
             List<TResult> items = query
                 .Skip((pageNumber - 1) * _itemNumberPerPage)
                 .Take(_itemNumberPerPage)
-                .Select(selector)
+                .Select(mapper.GetMapperExpression())
                 .ToList();
 
             return new GenericPaginatorResult<TResult>(
@@ -47,9 +48,9 @@ public class GenericPaginator<TEntity,TResult> : IGenericPaginator<TEntity,TResu
         });
     }
 
-    private void ValidatePageSize(int PageSize)
+    private void ValidatePageSize(int pageSize)
     {
-        if (PageSize < 1)
-            throw new ArgumentException($"{nameof(PageSize)} cannot be less than 1");
+        if (pageSize < 1)
+            throw new ArgumentException($"{nameof(pageSize)} cannot be less than 1");
     }
 }

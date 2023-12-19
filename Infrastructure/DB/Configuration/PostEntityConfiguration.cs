@@ -21,7 +21,7 @@ public class PostEntityConfiguration : IEntityTypeConfiguration<GenericPostEntit
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Comments)
-            .WithOne(comment => comment.GenericPost)
+            .WithOne(comment => comment.Post)
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasOne(post => (UserEntity)post.User)

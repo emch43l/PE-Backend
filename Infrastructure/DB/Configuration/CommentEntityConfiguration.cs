@@ -16,12 +16,12 @@ public class CommentEntityConfiguration : IEntityTypeConfiguration<GenericCommen
             .WithMany(user => user.Comments)
             .HasForeignKey(comment => comment.UserId);
         builder
-            .HasOne(comment => comment.GenericPost)
+            .HasOne(comment => comment.Post)
             .WithMany(post => post.Comments)
             .HasForeignKey("PostId")
             .OnDelete(DeleteBehavior.NoAction);
         builder
-            .HasOne(comment => comment.GenericFile)
+            .HasOne(comment => comment.File)
             .WithOne(file => file.Comment)
             .HasForeignKey<GenericCommentEntity<int>>("FileId")
             .OnDelete(DeleteBehavior.NoAction);

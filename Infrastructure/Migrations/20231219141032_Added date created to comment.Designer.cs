@@ -4,6 +4,7 @@ using Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231219141032_Added date created to comment")]
+    partial class Addeddatecreatedtocomment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +121,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(34)
                         .HasColumnType("nvarchar(34)");
 
-                    b.Property<int?>("FileId")
+                    b.Property<int>("FileId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("Guid")
@@ -130,17 +133,13 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("PreviousId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReactionCount")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FileId")
-                        .IsUnique()
-                        .HasFilter("[FileId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("PostId");
 
@@ -642,12 +641,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Model.Generic.GenericCommentEntity<int>", b =>
                 {
-                    b.HasOne("Domain.Model.Generic.GenericFileEntity<int>", "File")
+                    b.HasOne("Domain.Model.Generic.GenericFileEntity<int>", "GenericFile")
                         .WithOne("Comment")
                         .HasForeignKey("Domain.Model.Generic.GenericCommentEntity<int>", "FileId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("Domain.Model.Generic.GenericPostEntity<int>", "Post")
+                    b.HasOne("Domain.Model.Generic.GenericPostEntity<int>", "GenericPost")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -663,9 +663,9 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("File");
+                    b.Navigation("GenericFile");
 
-                    b.Navigation("Post");
+                    b.Navigation("GenericPost");
 
                     b.Navigation("Previous");
 

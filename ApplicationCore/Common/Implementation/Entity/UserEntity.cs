@@ -6,6 +6,8 @@ namespace ApplicationCore.Common.Implementation.Entity;
 public class UserEntity : IGenericUser<int>
 {
     public int Id { get; set; }
+    public string UserName { get; set; }
+    public string Email { get; set; }
     public ICollection<GenericCommentEntity<int>> Comments { get; set; }
     public ICollection<GenericAlbumEntity<int>> Albums { get; set; }
     public ICollection<GenericAlbumRatingEntity<int>> AlbumRatings { get; set; }

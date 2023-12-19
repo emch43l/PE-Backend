@@ -6,6 +6,10 @@ public interface IGenericUser<TKey> : IUidIdentity<TKey> where TKey: IEquatable<
 {
     TKey Id { get; set; }
     
+    string UserName { get; set; }
+    
+    string Email { get; set; }
+    
     ICollection<GenericCommentEntity<TKey>> Comments { get; set; }
     
     ICollection<GenericAlbumEntity<TKey>> Albums { get; set; }

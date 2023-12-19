@@ -2,6 +2,7 @@
 using ApplicationCore.Common.Implementation.Repository;
 using ApplicationCore.Common.Implementation.Specification.Post;
 using ApplicationCore.Dto;
+using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Exception;
 using FluentValidation;
@@ -12,16 +13,13 @@ namespace ApplicationCore.CQRS.Post.Query;
 
 public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostDto>>
 {
-    private readonly IGenericPaginator<PostEntity,PostDto> _paginator;
     private readonly IValidator<GetAllPostsPaginatedQuery> _validator;
     private readonly IPostRepository _postRepository;
 
     public GetAllPostsPaginatedQueryHandler(
-        IGenericPaginator<PostEntity,PostDto> paginator, 
         IValidator<GetAllPostsPaginatedQuery> validator, 
         IPostRepository postRepository)
     {
-        _paginator = paginator;
         _validator = validator;
         _postRepository = postRepository;
     }
@@ -35,20 +33,13 @@ public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPagina
             throw new PaginatorException();
         }
 
-        IQueryable<PostEntity> query = _postRepository.GetQueryBySpecification(new PostWithUserSpecification());
+        IGenericPaginator<PostEntity, PostDto> paginator = new GenericPaginator<PostEntity, PostDto>();
+
+        IQueryable<PostEntity> query = _postRepository.GetPostsWithUserAndFirstCommentQuery();
         GenericPaginatorResult<PostDto> result = 
-            await _paginator
+            await paginator
                 .SetPageSize(request.ItemsPerPage)
-                .Paginate(query, p => new PostDto
-                {
-                    User = new UserDto()
-                    {
-                        Id = p.User.Guid,
-                    },
-                    ReactionCount = p.ReactionCount,
-                    CommentCount = p.CommentCount,
-                    Title = p.Title
-                }, request.PageNumber);
+                .Paginate(query, new PostWithUserAndSingleCommentMapper(), request.PageNumber);
         return result;
 
     }

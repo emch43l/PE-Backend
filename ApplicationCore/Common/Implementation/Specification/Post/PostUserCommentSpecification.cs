@@ -3,10 +3,11 @@ using Domain.Common.Specification.Base;
 
 namespace ApplicationCore.Common.Implementation.Specification.Post;
 
-public class PostWithUserSpecification : SpecificationBase<PostEntity>
+public class PostUserCommentSpecification : SpecificationBase<PostEntity>
 {
-    public PostWithUserSpecification()
+    public PostUserCommentSpecification()
     {
+        this.AddInclude(x => x.Comments);
         this.AddInclude(x => x.User);
     }
 }

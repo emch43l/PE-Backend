@@ -88,4 +88,12 @@ public class PostRepository : IPostRepository
     {
         throw new NotImplementedException();
     }
+
+    public IQueryable<PostEntity> GetPostsWithUserAndFirstCommentQuery()
+    {
+        return _context.Posts
+            .Include(p => p.User)
+            .Include(p => p.Comments.Take(1))
+            .ThenInclude(p => p.User);
+    }
 }
