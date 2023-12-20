@@ -3,7 +3,7 @@ using ApplicationCore.Mapper;
 
 namespace ApplicationCore.Pagination;
 
-public class GenericPaginator<TEntity,TResult> : IGenericPaginator<TEntity,TResult> where TEntity : class where TResult: class
+public class GenericPaginator<TEntity> : IGenericPaginator<TEntity> where TEntity : class
 {
     private int _itemNumberPerPage;
 
@@ -18,14 +18,14 @@ public class GenericPaginator<TEntity,TResult> : IGenericPaginator<TEntity,TResu
         _itemNumberPerPage = 5;
     }
 
-    public IGenericPaginator<TEntity,TResult> SetPageSize(int pageSize)
+    public IGenericPaginator<TEntity> SetPageSize(int pageSize)
     {
         this.ValidatePageSize(pageSize);
         _itemNumberPerPage = pageSize;
         return this;
     }
 
-    public async Task<GenericPaginatorResult<TResult>> Paginate(IQueryable<TEntity> query, IMapper<TEntity,TResult> mapper, int pageNumber)
+    public async Task<GenericPaginatorResult<TResult>> Paginate<TResult>(IQueryable<TEntity> query, IMapper<TEntity,TResult> mapper, int pageNumber) where TResult : class
     {
         return await Task.Run(() =>
         {

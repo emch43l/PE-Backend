@@ -13,15 +13,17 @@ namespace ApplicationCore.CQRS.Post.Query;
 
 public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostDto>>
 {
+    private readonly IGenericPaginator<PostEntity> _paginator;
     private readonly IValidator<GetAllPostsPaginatedQuery> _validator;
     private readonly IPostRepository _postRepository;
 
     public GetAllPostsPaginatedQueryHandler(
         IValidator<GetAllPostsPaginatedQuery> validator, 
-        IPostRepository postRepository)
+        IPostRepository postRepository, IGenericPaginator<PostEntity> paginator)
     {
         _validator = validator;
         _postRepository = postRepository;
+        _paginator = paginator;
     }
 
     public async Task<GenericPaginatorResult<PostDto>> Handle(GetAllPostsPaginatedQuery request,
@@ -33,11 +35,9 @@ public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPagina
             throw new PaginatorException();
         }
 
-        IGenericPaginator<PostEntity, PostDto> paginator = new GenericPaginator<PostEntity, PostDto>();
-
         IQueryable<PostEntity> query = _postRepository.GetPostsWithUserAndFirstCommentQuery();
         GenericPaginatorResult<PostDto> result = 
-            await paginator
+            await _paginator
                 .SetPageSize(request.ItemsPerPage)
                 .Paginate(query, new PostWithUserAndSingleCommentMapper(), request.PageNumber);
         return result;
