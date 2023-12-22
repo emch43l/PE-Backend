@@ -4,12 +4,13 @@ using Infrastructure.Identity.Entity;
 using Infrastructure.Join;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using File = Domain.Model.Generic.File;
 
 namespace Infrastructure.DB.Configuration;
 
-public class FileEntityConfiguration : IEntityTypeConfiguration<GenericFileEntity<int>>
+public class FileEntityConfiguration : IEntityTypeConfiguration<File>
 {
-    public void Configure(EntityTypeBuilder<GenericFileEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<File> builder)
     {
         builder.HasKey(file => file.Id);
         

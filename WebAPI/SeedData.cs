@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Common.Implementation.Entity;
-using ApplicationCore.Common.Interface;
+﻿using ApplicationCore.Common.Interface;
 using Domain.Enum;
+using Domain.Model.Generic;
 using Infrastructure.DB;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
@@ -21,15 +21,15 @@ public static class SeedData
 
             UserEntity user = await CreateUser(provider,"SampleUser","zaq1@WSX");
             await AddUserToRole(provider, user, "admin");
-            PostEntity post = await CreatePost(context,user);
+            Post post = await CreatePost(context,user);
             await CreateComments(context, user, post);
             await context.SaveChangesAsync();
         }
     }
 
-    private static async Task<PostEntity> CreatePost(IApplicationDbContext context, UserEntity user)
+    private static async Task<Post> CreatePost(IApplicationDbContext context, UserEntity user)
     {
-        PostEntity genericPostEntity = new PostEntity();
+        Post genericPostEntity = new Post();
         genericPostEntity.Date = DateTime.Now;
         genericPostEntity.Description = "Lorem ipsum description";
         genericPostEntity.Title = "Lorem Title";
@@ -39,12 +39,12 @@ public static class SeedData
         return genericPostEntity;
     }
 
-    private static async Task<List<CommentEntity>> CreateComments(IApplicationDbContext context, UserEntity user,
-        PostEntity post)
+    private static async Task<List<Comment>> CreateComments(IApplicationDbContext context, UserEntity user,
+        Post post)
     {
         return await Task.Run(() => Enumerable.Range(1, 5).Select( i =>
         {
-            CommentEntity comment = new CommentEntity();
+            Comment comment = new Comment();
             comment.User = user;
             comment.Content = "Lorem ipsum comment content";
             comment.Post = post;

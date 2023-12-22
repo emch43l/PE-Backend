@@ -1,12 +1,13 @@
 ﻿using ApplicationCore;
-using ApplicationCore.Common.Implementation.Repository;
 using ApplicationCore.Common.Implementation.Specification;
 using ApplicationCore.Common.Interface;
-using ApplicationCore.CQRS.Post.Query;
+using ApplicationCore.CQRS.PostOperations.Query;
 using ApplicationCore.Pagination;
 using ApplicationCore.Validation;
+using Domain.Common.Repository;
 using Domain.Common.Specification;
 using Domain.Common.Specification.Base;
+using Domain.Model.Generic;
 using FluentValidation;
 using Infrastructure.DB;
 using Infrastructure.Identity.Entity;

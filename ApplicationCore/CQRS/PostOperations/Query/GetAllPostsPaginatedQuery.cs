@@ -2,7 +2,7 @@
 using ApplicationCore.Pagination;
 using MediatR;
 
-namespace ApplicationCore.CQRS.Post.Query;
+namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public record GetAllPostsPaginatedQuery : IRequest<GenericPaginatorResult<PostDto>>
 {

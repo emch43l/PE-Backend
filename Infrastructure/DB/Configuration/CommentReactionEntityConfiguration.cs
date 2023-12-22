@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DB.Configuration;
 
-public class CommentReactionEntityConfiguration : IEntityTypeConfiguration<GenericCommentReactionEntity<int>>
+public class CommentReactionEntityConfiguration : IEntityTypeConfiguration<CommentReaction>
 {
-    public void Configure(EntityTypeBuilder<GenericCommentReactionEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<CommentReaction> builder)
     {
         builder.HasKey(commentReaction => commentReaction.Id);
         builder
-            .HasOne(commentReaction => commentReaction.GenericComment)
+            .HasOne(commentReaction => commentReaction.Comment)
             .WithMany(comment => comment.Reactions)
             .HasForeignKey("CommentId");
         builder

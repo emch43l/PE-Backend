@@ -1,28 +1,24 @@
 ﻿using System.Linq.Expressions;
-using ApplicationCore.Common.Implementation.Entity;
+using System.Linq;
 using ApplicationCore.Dto;
 using Domain.Model.Generic;
 
 namespace ApplicationCore.Mapper;
 
-public class PostWithCommentsMapper : IMapper<PostEntity,PostWithCommentsDto>
+public class PostWithCommentsMapper : AbstractMapper<Post,PostWithCommentsDto>
 {
-    public PostWithCommentsDto GetMappedResult()
+    public override Expression<Func<Post, PostWithCommentsDto>> GetMapperExpression()
     {
-        throw new NotImplementedException();
-    }
-
-    public Func<GenericCommentEntity<int>, CommentDto> GetMapperExpression()
-    {
-        return (PostEntity post) => new PostWithCommentsDto()
+        return (Post post) => new PostWithCommentsDto()
         {
+            Id = post.Guid,
             CommentCount = post.CommentCount,
             ReactionCount = post.ReactionCount,
             Date = post.Date,
             Description = post.Description,
             Status = post.Status,
             Title = post.Title,
-            Comments = post.Comments.Select(new CommentWithUserMapper().GetMapperExpression())
-        }
+            Comments = post.Comments.AsQueryable().Select(new CommentWithUserMapper().GetMapperExpression()).ToList()
+        };
     }
 }

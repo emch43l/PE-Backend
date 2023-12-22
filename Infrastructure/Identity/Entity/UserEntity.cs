@@ -1,38 +1,39 @@
-﻿using Domain.Model.Generic;
-using Domain.Model.Generic.Interface;
+﻿using Domain.Model;
+using Domain.Model.Generic;
 using Microsoft.AspNetCore.Identity;
+using File = Domain.Model.Generic.File;
 
 namespace Infrastructure.Identity.Entity;
 
-public class UserEntity : IdentityUser<int>, IGenericUser<int>
+public class UserEntity : IdentityUser<int>, IUser
 {
     public Guid Guid { get; set; }
     
-    public ICollection<GenericCommentEntity<int>> Comments { get; set; }
+    public ICollection<Comment> Comments { get; set; }
     
-    public ICollection<GenericAlbumEntity<int>> Albums { get; set; }
+    public ICollection<Album> Albums { get; set; }
     
-    public ICollection<GenericAlbumRatingEntity<int>> AlbumRatings { get; set; }
+    public ICollection<AlbumRating> AlbumRatings { get; set; }
     
-    public ICollection<GenericCommentReactionEntity<int>> CommentReactions { get; set; }
+    public ICollection<CommentReaction> CommentReactions { get; set; }
     
-    public ICollection<GenericFileEntity<int>> Files { get; set; }
+    public ICollection<File> Files { get; set; }
 
-    public ICollection<GenericPostReactionEntity<int>> PostReactions { get; set; }
+    public ICollection<PostReaction> PostReactions { get; set; }
     
-    public ICollection<GenericPostEntity<int>> Posts { get; set; }
+    public ICollection<Post> Posts { get; set; }
     
     
     public UserEntity()
     {
         Guid = Guid.NewGuid();
-        Comments = new List<GenericCommentEntity<int>>();
-        Albums = new List<GenericAlbumEntity<int>>();
-        AlbumRatings = new List<GenericAlbumRatingEntity<int>>();
-        CommentReactions = new List<GenericCommentReactionEntity<int>>();
-        Files = new List<GenericFileEntity<int>>();
-        PostReactions = new List<GenericPostReactionEntity<int>>();
-        Posts = new List<GenericPostEntity<int>>();
+        Comments = new List<Comment>();
+        Albums = new List<Album>();
+        AlbumRatings = new List<AlbumRating>();
+        CommentReactions = new List<CommentReaction>();
+        Files = new List<File>();
+        PostReactions = new List<PostReaction>();
+        Posts = new List<Post>();
     }
 
 }

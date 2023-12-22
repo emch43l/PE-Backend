@@ -1,4 +1,4 @@
-﻿using ApplicationCore.CQRS.Post.Query;
+﻿using ApplicationCore.CQRS.PostOperations.Query;
 using FluentValidation;
 
 namespace ApplicationCore.Validation;

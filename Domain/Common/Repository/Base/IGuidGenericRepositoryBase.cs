@@ -3,7 +3,7 @@
 namespace Domain.Common.Repository.Base;
 
 // https://www.youtube.com/watch?v=Wp5iYQqHspg - ('in TK') - covariance, contravariance
-public interface IGuidGenericRepositoryBase<T, in TK> : IGenericRepositoryBase<T,TK> where T: IUidIdentity<TK> where TK: IEquatable<TK>
+public interface IGuidGenericRepositoryBase<T> : IGenericRepositoryBase<T> where T: IUidIdentity<int>
 {
     Task<T?> FindByGuidAsync(Guid id);
     

@@ -1,25 +1,22 @@
-﻿using System.Reflection;
-using ApplicationCore.Common.Implementation.Entity;
-using ApplicationCore.Common.Interface;
-using Domain.Model;
+﻿using ApplicationCore.Common.Interface;
 using Domain.Model.Generic;
-using Infrastructure.DB.Configuration;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using File = Domain.Model.Generic.File;
 using UserEntity = Infrastructure.Identity.Entity.UserEntity;
 
 namespace Infrastructure.DB;
 
 public class ApplicationDbContext : IdentityDbContext<UserEntity,UserRoleEntity,int>, IApplicationDbContext
 {
-    public DbSet<AlbumEntity> Albums { get; set; }
-    public DbSet<AlbumRatingEntity> AlbumRatings { get; set; }
-    public DbSet<CommentEntity> Comments { get; set; }
-    public DbSet<CommentReactionEntity> CommentReactions { get; set; }
-    public DbSet<FileEntity> Files { get; set; }
-    public DbSet<PostEntity> Posts { get; set; }
-    public DbSet<PostReactionEntity> PostReactions { get; set; }
+    public DbSet<Album> Albums { get; set; }
+    public DbSet<AlbumRating> AlbumRatings { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<CommentReaction> CommentReactions { get; set; }
+    public DbSet<File> Files { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<PostReaction> PostReactions { get; set; }
 
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {

@@ -1,36 +1,33 @@
-﻿using ApplicationCore.Common.Implementation.Entity;
-using ApplicationCore.Common.Implementation.Repository;
-using ApplicationCore.Common.Interface;
+﻿using ApplicationCore.Common.Interface;
+using Domain.Common.Repository;
 using Domain.Common.Specification;
 using Domain.Model.Generic;
-using Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
 public class PostRepository : IPostRepository
 {
-    private readonly ISpecificationHandler<PostEntity> _specificationHandler;
+    private readonly ISpecificationHandler<Post> _specificationHandler;
     private readonly IApplicationDbContext _context;
 
-    public PostRepository(IApplicationDbContext context, ISpecificationHandler<PostEntity> specificationHandler)
+    public PostRepository(IApplicationDbContext context, ISpecificationHandler<Post> specificationHandler)
     {
         _context = context;
         _specificationHandler = specificationHandler;
     }
 
-    public Task<PostEntity?> GetPostWithComments(Guid guid, int commentCount)
+    public IQueryable<Post> GetPostWithCommentsQuery(Guid guid, int commentCount)
     {
         return _context.Posts
             .Include(p => p.User)
             .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(commentCount))
             .ThenInclude(c => c.User)
             .Where(p => p.Guid == guid)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
+            .AsNoTracking();
     }
 
-    public IQueryable<PostEntity> GetPostsWithUserAndFirstCommentQuery()
+    public IQueryable<Post> GetPostsWithUserAndFirstCommentQuery()
     {
         return _context.Posts
             .Include(p => p.User)
@@ -39,27 +36,27 @@ public class PostRepository : IPostRepository
             .AsNoTracking();
     }
     
-    public Task<PostEntity?> FindByIdAsync(int id)
+    public Task<Post?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<PostEntity>> FindAllAsync()
+    public async Task<List<Post>> FindAllAsync()
     {
         return await _context.Posts.ToListAsync();
     }
 
-    public PostEntity? FindById(int id)
+    public Post? FindById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public List<PostEntity> FindAll()
+    public List<Post> FindAll()
     {
         throw new NotImplementedException();
     }
 
-    public PostEntity Add(PostEntity o)
+    public Post Add(Post o)
     {
         throw new NotImplementedException();
     }
@@ -69,32 +66,32 @@ public class PostRepository : IPostRepository
         throw new NotImplementedException();
     }
 
-    public void Update(int id, PostEntity o)
+    public void Update(int id, Post o)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<PostEntity> FindBySpecification(ISpecification<PostEntity>? specification = null)
+    public IEnumerable<Post> FindBySpecification(ISpecification<Post>? specification = null)
     {
         throw new NotImplementedException();
     }
 
-    public IQueryable<PostEntity> GetQueryBySpecification()
+    public IQueryable<Post> GetQueryBySpecification()
     {
         return _context.Posts;
     }
 
-    public IQueryable<PostEntity> GetQueryBySpecification(ISpecification<PostEntity>? specification = null)
+    public IQueryable<Post> GetQueryBySpecification(ISpecification<Post>? specification = null)
     {
         return _specificationHandler.Handle(_context.Posts,specification);
     }
 
-    public async Task<PostEntity?> FindByGuidAsync(Guid id)
+    public async Task<Post?> FindByGuidAsync(Guid id)
     {
         return await _context.Posts.Where(post => post.Guid == id).FirstOrDefaultAsync();
     }
 
-    public PostEntity? FindByGuid(Guid id)
+    public Post? FindByGuid(Guid id)
     {
         throw new NotImplementedException();
     }
@@ -104,7 +101,7 @@ public class PostRepository : IPostRepository
         throw new NotImplementedException();
     }
 
-    public void Update(Guid id, PostEntity o)
+    public void Update(Guid id, Post o)
     {
         throw new NotImplementedException();
     }

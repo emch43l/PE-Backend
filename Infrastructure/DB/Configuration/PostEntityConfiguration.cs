@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DB.Configuration;
 
-public class PostEntityConfiguration : IEntityTypeConfiguration<GenericPostEntity<int>>
+public class PostEntityConfiguration : IEntityTypeConfiguration<Post>
 {
-    public void Configure(EntityTypeBuilder<GenericPostEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<Post> builder)
     {
         builder.HasKey(post => post.Id);
         builder
@@ -17,7 +17,7 @@ public class PostEntityConfiguration : IEntityTypeConfiguration<GenericPostEntit
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Reactions)
-            .WithOne(reaction => reaction.GenericPost)
+            .WithOne(reaction => reaction.Post)
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Comments)

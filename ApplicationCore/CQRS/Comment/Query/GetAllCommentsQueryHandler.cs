@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Common.Implementation.Repository;
-using ApplicationCore.CQRS.Base;
+﻿using ApplicationCore.CQRS.Base;
 using ApplicationCore.Dto;
+using Domain.Common.Repository;
 
 namespace ApplicationCore.CQRS.Comment.Query;
 

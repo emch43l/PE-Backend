@@ -1,14 +1,13 @@
-﻿using ApplicationCore.Common.Implementation.Entity;
-using ApplicationCore.Common.Implementation.Repository;
-using ApplicationCore.Dto;
+﻿using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
+using Domain.Common.Repository;
 using Domain.Exception;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
-namespace ApplicationCore.CQRS.Post.Query;
+namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostDto>>
 {
@@ -34,7 +33,7 @@ public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPagina
             throw new PaginatorException();
         }
 
-        IQueryable<PostEntity> query = _postRepository.GetPostsWithUserAndFirstCommentQuery();
+        IQueryable<Domain.Model.Generic.Post> query = _postRepository.GetPostsWithUserAndFirstCommentQuery();
         GenericPaginatorResult<PostDto> result = 
             await _paginator
                 .SetPageSize(request.ItemsPerPage)

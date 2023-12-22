@@ -1,7 +1,7 @@
-﻿using ApplicationCore.Common.Implementation.Entity;
-using ApplicationCore.CQRS.Post.Query;
+﻿using ApplicationCore.CQRS.PostOperations.Query;
 using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
+using Domain.Model.Generic;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +29,7 @@ public class PostController : ControllerBase
     [Route(":guid")]
     public async Task<IActionResult> GetPostByGuid([FromQuery] Guid id)
     {
-        PostEntity post = await _mediator.Send(new GetPostByGuidQuery(id));
+        PostWithCommentsDto post = await _mediator.Send(new GetPostWithCommentsQuery(id));
         return Ok(post);
     }
     

@@ -11,7 +11,7 @@
       <Folder Include="CQRS\Album\Querry\" />
       <Folder Include="CQRS\File\Command\" />
       <Folder Include="CQRS\File\Querry\" />
-      <Folder Include="CQRS\Post\Command\" />
+      <Folder Include="CQRS\PostOperations\Command\" />
     </ItemGroup>
 
     <ItemGroup>

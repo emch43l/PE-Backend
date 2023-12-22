@@ -1,6 +1,5 @@
-﻿using ApplicationCore.Common.Implementation.Entity;
-using ApplicationCore.Common.Implementation.Repository;
-using ApplicationCore.Common.Interface;
+﻿using ApplicationCore.Common.Interface;
+using Domain.Common.Repository;
 using Domain.Common.Specification;
 using Domain.Model.Generic;
 
@@ -8,36 +7,36 @@ namespace Infrastructure.Repository;
 
 public class CommentRepository : ICommentRepository
 {
-    private readonly ISpecificationHandler<CommentEntity> _specificationHandler;
+    private readonly ISpecificationHandler<Comment> _specificationHandler;
     private readonly IApplicationDbContext _context;
 
-    public CommentRepository(ISpecificationHandler<CommentEntity> specificationHandler, IApplicationDbContext context)
+    public CommentRepository(ISpecificationHandler<Comment> specificationHandler, IApplicationDbContext context)
     {
         _specificationHandler = specificationHandler;
         _context = context;
     }
 
-    public Task<CommentEntity?> FindByIdAsync(int id)
+    public Task<Comment?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<List<CommentEntity>> FindAllAsync()
+    public Task<List<Comment>> FindAllAsync()
     {
         throw new NotImplementedException();
     }
 
-    public CommentEntity? FindById(int id)
+    public Comment? FindById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public List<CommentEntity> FindAll()
+    public List<Comment> FindAll()
     {
         throw new NotImplementedException();
     }
 
-    public CommentEntity Add(CommentEntity o)
+    public Comment Add(Comment o)
     {
         throw new NotImplementedException();
     }
@@ -47,27 +46,27 @@ public class CommentRepository : ICommentRepository
         throw new NotImplementedException();
     }
 
-    public void Update(int id, CommentEntity o)
+    public void Update(int id, Comment o)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<CommentEntity> FindBySpecification(ISpecification<CommentEntity>? specification = null)
+    public IEnumerable<Comment> FindBySpecification(ISpecification<Comment>? specification = null)
     {
         throw new NotImplementedException();
     }
 
-    public IQueryable<CommentEntity> GetQueryBySpecification(ISpecification<CommentEntity>? specification = null)
+    public IQueryable<Comment> GetQueryBySpecification(ISpecification<Comment>? specification = null)
     {
         return _specificationHandler.Handle(_context.Comments, specification);
     }
 
-    public Task<CommentEntity?> FindByGuidAsync(Guid id)
+    public Task<Comment?> FindByGuidAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public CommentEntity? FindByGuid(Guid id)
+    public Comment? FindByGuid(Guid id)
     {
         throw new NotImplementedException();
     }
@@ -77,7 +76,7 @@ public class CommentRepository : ICommentRepository
         throw new NotImplementedException();
     }
 
-    public void Update(Guid id, CommentEntity o)
+    public void Update(Guid id, Comment o)
     {
         throw new NotImplementedException();
     }

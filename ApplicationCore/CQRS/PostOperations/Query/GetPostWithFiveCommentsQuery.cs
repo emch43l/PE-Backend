@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.Dto;
 using MediatR;
 
-namespace ApplicationCore.CQRS.Post.Query;
+namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public class GetPostWithCommentsQuery : IRequest<PostWithCommentsDto>
 {

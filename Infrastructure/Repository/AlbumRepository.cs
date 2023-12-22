@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Common.Implementation.Entity;
-using ApplicationCore.Common.Implementation.Repository;
+﻿using Domain.Common.Repository;
 using Domain.Common.Specification;
 using Domain.Model.Generic;
 
@@ -7,27 +6,27 @@ namespace Infrastructure.Repository;
 
 public class AlbumRepository : IAlbumRepository
 {
-    public Task<AlbumEntity?> FindByIdAsync(int id)
+    public Task<Album?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<List<AlbumEntity>> FindAllAsync()
+    public Task<List<Album>> FindAllAsync()
     {
         throw new NotImplementedException();
     }
 
-    public AlbumEntity? FindById(int id)
+    public Album? FindById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public List<AlbumEntity> FindAll()
+    public List<Album> FindAll()
     {
         throw new NotImplementedException();
     }
 
-    public AlbumEntity Add(AlbumEntity o)
+    public Album Add(Album o)
     {
         throw new NotImplementedException();
     }
@@ -37,22 +36,22 @@ public class AlbumRepository : IAlbumRepository
         throw new NotImplementedException();
     }
 
-    public void Update(int id, AlbumEntity o)
+    public void Update(int id, Album o)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<AlbumEntity> FindBySpecification(ISpecification<AlbumEntity>? specification = null)
+    public IEnumerable<Album> FindBySpecification(ISpecification<Album>? specification = null)
     {
         throw new NotImplementedException();
     }
 
-    public IQueryable<AlbumEntity> GetQuery()
+    public IQueryable<Album> GetQuery()
     {
         throw new NotImplementedException();
     }
 
-    public IQueryable<AlbumEntity> GetQueryBySpecification(ISpecification<AlbumEntity>? specification = null)
+    public IQueryable<Album> GetQueryBySpecification(ISpecification<Album>? specification = null)
     {
         throw new NotImplementedException();
     }

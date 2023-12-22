@@ -2,7 +2,7 @@
 
 namespace Domain.Model.Generic.Base;
 
-public class FileEntityBase<TKey>: GenericUserManyToOneJoinWithUidIdentity<TKey> where TKey : IEquatable<TKey>
+public class FileBase: UserManyToOneJoinWithUidIdentity, IEntity
 {
     public string Format { get; set; }
     

@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DB.Configuration;
 
-public class AlbumRatingEntityConfiguration : IEntityTypeConfiguration<GenericAlbumRatingEntity<int>>
+public class AlbumRatingEntityConfiguration : IEntityTypeConfiguration<AlbumRating>
 {
-    public void Configure(EntityTypeBuilder<GenericAlbumRatingEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<AlbumRating> builder)
     {
         builder.HasKey(albumRating => albumRating.Id);
         builder
-            .HasOne(albumRating => albumRating.GenericAlbum)
+            .HasOne(albumRating => albumRating.Album)
             .WithMany(album => album.Rating)
             .HasForeignKey("AlbumId");
         builder

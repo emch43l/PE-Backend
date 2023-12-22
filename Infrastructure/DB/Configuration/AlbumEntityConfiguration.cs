@@ -1,23 +1,24 @@
-﻿using Domain.Model;
+﻿
 using Domain.Model.Generic;
 using Infrastructure.Identity.Entity;
 using Infrastructure.Join;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using File = Domain.Model.Generic.File;
 
 namespace Infrastructure.DB.Configuration;
 
-public class AlbumEntityConfiguration : IEntityTypeConfiguration<GenericAlbumEntity<int>>
+public class AlbumEntityConfiguration : IEntityTypeConfiguration<Album>
 {
-    public void Configure(EntityTypeBuilder<GenericAlbumEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<Album> builder)
     {
         builder.HasKey(album => album.Id);
         builder
             .HasMany(album => album.Files)
             .WithMany(file => file.Albums)
             .UsingEntity<AlbumFileJoin>(
-                l => l.HasOne<GenericFileEntity<int>>().WithMany().HasForeignKey("FileId").OnDelete(DeleteBehavior.NoAction),
-                r => r.HasOne<GenericAlbumEntity<int>>().WithMany().HasForeignKey("AlbumId").OnDelete(DeleteBehavior.NoAction),
+                l => l.HasOne<File>().WithMany().HasForeignKey("FileId").OnDelete(DeleteBehavior.NoAction),
+                r => r.HasOne<Album>().WithMany().HasForeignKey("AlbumId").OnDelete(DeleteBehavior.NoAction),
                 j =>
                 {
                     j.HasKey(entity => new { entity.AlbumId, entity.FileId });
@@ -25,7 +26,7 @@ public class AlbumEntityConfiguration : IEntityTypeConfiguration<GenericAlbumEnt
                 });
         builder
              .HasMany(album => album.Rating)
-             .WithOne(rating => rating.GenericAlbum);
+             .WithOne(rating => rating.Album);
         builder
             .HasOne(album => (UserEntity)album.User)
             .WithMany(user => user.Albums)

@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DB.Configuration;
 
-public class PostReactionEntityConfiguration : IEntityTypeConfiguration<GenericPostReactionEntity<int>>
+public class PostReactionEntityConfiguration : IEntityTypeConfiguration<PostReaction>
 {
-    public void Configure(EntityTypeBuilder<GenericPostReactionEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<PostReaction> builder)
     {
         builder.HasKey(postReaction => postReaction.Id);
         builder
-            .HasOne(postReaction => postReaction.GenericPost)
+            .HasOne(postReaction => postReaction.Post)
             .WithMany(post => post.Reactions)
             .HasForeignKey("PostId");
         builder

@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DB.Configuration;
 
-public class CommentEntityConfiguration : IEntityTypeConfiguration<GenericCommentEntity<int>>
+public class CommentEntityConfiguration : IEntityTypeConfiguration<Comment>
 {
-    public void Configure(EntityTypeBuilder<GenericCommentEntity<int>> builder)
+    public void Configure(EntityTypeBuilder<Comment> builder)
     {
         builder.HasKey(comment => comment.Id);
         builder
@@ -23,16 +23,16 @@ public class CommentEntityConfiguration : IEntityTypeConfiguration<GenericCommen
         builder
             .HasOne(comment => comment.File)
             .WithOne(file => file.Comment)
-            .HasForeignKey<GenericCommentEntity<int>>("FileId")
+            .HasForeignKey<Comment>("FileId")
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(comment => comment.Reactions)
-            .WithOne(reaction => reaction.GenericComment)
+            .WithOne(reaction => reaction.Comment)
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasOne(comment => comment.Previous)
             .WithOne()
-            .HasForeignKey<GenericCommentEntity<int>>("PreviousId");
+            .HasForeignKey<Comment>("PreviousId");
         builder.ToTable("Comments");
     }
 }

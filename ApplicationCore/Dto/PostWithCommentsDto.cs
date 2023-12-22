@@ -4,6 +4,7 @@ namespace ApplicationCore.Dto;
 
 public class PostWithCommentsDto
 {
+    public Guid Id { get; set; }
     public string Title { get; set; }
     
     public string Description { get; set; }
@@ -12,7 +13,7 @@ public class PostWithCommentsDto
     
     public StatusEnum Status { get; set; }
     
-    public ICollection<CommentDto> Comments { get; set; }
+    public IEnumerable<CommentDto> Comments { get; set; }
     
     public int CommentCount { get; set; }
     
