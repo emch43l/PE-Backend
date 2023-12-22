@@ -1,11 +1,13 @@
-﻿using System.Linq.Expressions;
+﻿using Domain.Model;
 using ApplicationCore.Mapper;
 
 namespace ApplicationCore.Pagination;
 
-public interface IGenericPaginator<TEntity> where TEntity: class
+public interface IGenericPaginator
 {
-    public IGenericPaginator<TEntity> SetPageSize(int pageSize);
-    public Task<GenericPaginatorResult<TResult>> Paginate<TResult>(IQueryable<TEntity> query, IMapper<TEntity,TResult> mapper, int pageNumber) where TResult : class;
+    public IGenericPaginator SetPageSize(int pageSize);
+
+    public Task<GenericPaginatorResult<TResult>> Paginate<TEntity, TResult>(IQueryable<TEntity> query,
+        IMapper<TEntity, TResult> mapper, int pageNumber) where TResult : class where TEntity: IEntity;
 
 }

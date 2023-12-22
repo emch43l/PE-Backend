@@ -1,6 +1,5 @@
 ﻿using ApplicationCore.Common.Implementation.Entity;
 using ApplicationCore.Common.Implementation.Repository;
-using ApplicationCore.Common.Implementation.Specification.Post;
 using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
@@ -13,13 +12,13 @@ namespace ApplicationCore.CQRS.Post.Query;
 
 public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostDto>>
 {
-    private readonly IGenericPaginator<PostEntity> _paginator;
+    private readonly IGenericPaginator _paginator;
     private readonly IValidator<GetAllPostsPaginatedQuery> _validator;
     private readonly IPostRepository _postRepository;
 
     public GetAllPostsPaginatedQueryHandler(
         IValidator<GetAllPostsPaginatedQuery> validator, 
-        IPostRepository postRepository, IGenericPaginator<PostEntity> paginator)
+        IPostRepository postRepository, IGenericPaginator paginator)
     {
         _validator = validator;
         _postRepository = postRepository;

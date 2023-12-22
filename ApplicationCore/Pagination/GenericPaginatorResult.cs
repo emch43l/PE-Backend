@@ -1,6 +1,6 @@
 ﻿namespace ApplicationCore.Pagination;
 
-public record GenericPaginatorResult<T> where T: class
+public record GenericPaginatorResult<T>: IGenericPaginatorResult<T> where T: class
 {
     public int TotalItems { get; }
     public int ItemsOnPage { get; }

@@ -1,9 +1,10 @@
-﻿using Domain.Model.Generic;
+﻿using Domain.Model;
+using Domain.Model.Generic;
 using Domain.Model.Generic.Interface;
 
 namespace ApplicationCore.Common.Implementation.Entity;
 
-public class UserEntity : IGenericUser<int>
+public class UserEntity : IGenericUser<int>, IEntity
 {
     public int Id { get; set; }
     public string UserName { get; set; }

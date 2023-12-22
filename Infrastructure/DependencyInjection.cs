@@ -59,7 +59,7 @@ public static class DependencyInjection
         serviceCollection.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         serviceCollection.AddScoped(typeof(ISpecificationHandler<>),typeof(SpecificationHandler<>));
         serviceCollection.AddScoped(typeof(ISpecification<>),typeof(SpecificationBase<>));
-        serviceCollection.AddScoped(typeof(IGenericPaginator<>),typeof(GenericPaginator<>));
+        serviceCollection.AddScoped(typeof(IGenericPaginator),typeof(GenericPaginator));
         serviceCollection.AddScoped<ICommentRepository, CommentRepository>();
         serviceCollection.AddScoped<IAlbumRepository, AlbumRepository>();
         serviceCollection.AddScoped<IPostRepository, PostRepository>();

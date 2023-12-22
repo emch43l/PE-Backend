@@ -18,6 +18,26 @@ public class PostRepository : IPostRepository
         _context = context;
         _specificationHandler = specificationHandler;
     }
+
+    public Task<PostEntity?> GetPostWithComments(Guid guid, int commentCount)
+    {
+        return _context.Posts
+            .Include(p => p.User)
+            .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(commentCount))
+            .ThenInclude(c => c.User)
+            .Where(p => p.Guid == guid)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+    }
+
+    public IQueryable<PostEntity> GetPostsWithUserAndFirstCommentQuery()
+    {
+        return _context.Posts
+            .Include(p => p.User)
+            .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(1))
+            .ThenInclude(p => p.User)
+            .AsNoTracking();
+    }
     
     public Task<PostEntity?> FindByIdAsync(int id)
     {
@@ -88,12 +108,5 @@ public class PostRepository : IPostRepository
     {
         throw new NotImplementedException();
     }
-
-    public IQueryable<PostEntity> GetPostsWithUserAndFirstCommentQuery()
-    {
-        return _context.Posts
-            .Include(p => p.User)
-            .Include(p => p.Comments.Take(1))
-            .ThenInclude(p => p.User);
-    }
+    
 }

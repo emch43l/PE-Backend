@@ -1,8 +1,9 @@
-﻿using Domain.Model.Generic;
+﻿using Domain.Model;
+using Domain.Model.Generic;
 
 namespace ApplicationCore.Common.Implementation.Entity;
 
-public class AlbumRatingEntity : GenericAlbumRatingEntity<int>
+public class AlbumRatingEntity : GenericAlbumRatingEntity<int>, IEntity
 {
     
 }

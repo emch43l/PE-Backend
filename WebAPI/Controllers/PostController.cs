@@ -21,7 +21,7 @@ public class PostController : ControllerBase
     [Route("all")]
     public async Task<IActionResult> GetPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
     {
-        GenericPaginatorResult<PostDto> result = await _mediator.Send(new GetAllPostsPaginatedQuery(page,pageSize));
+        IGenericPaginatorResult<PostDto> result = await _mediator.Send(new GetAllPostsPaginatedQuery(page,pageSize));
         return Ok(result);
     }
 

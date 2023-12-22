@@ -1,8 +1,13 @@
 ﻿using System.Linq.Expressions;
+using ApplicationCore.Common.Implementation.Entity;
+using ApplicationCore.Dto;
+using Domain.Model;
+using Domain.Model.Generic;
 
 namespace ApplicationCore.Mapper;
 
-public interface IMapper<TEntity,TResult> where TEntity: class where TResult : class
+public interface IMapper<IEntity,TResult> where TResult : class
 {
-    Expression<Func<TEntity, TResult>> GetMapperExpression();
+    TResult GetMappedResult();
+    Expression<Func<IEntity, CommentDto>> GetMapperExpression();
 }
