@@ -32,12 +32,16 @@ public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPagina
         {
             throw new PaginatorException();
         }
-
-        IQueryable<Domain.Model.Generic.Post> query = _postRepository.GetPostsWithUserAndFirstCommentQuery();
+        
         GenericPaginatorResult<PostDto> result = 
             await _paginator
                 .SetPageSize(request.ItemsPerPage)
-                .Paginate(query, new PostWithUserAndSingleCommentMapper(), request.PageNumber);
+                .Paginate(
+                    _postRepository.GetPostsWithUserAndFirstCommentQuery().GetQuery(), 
+                    new PostWithUserAndSingleCommentMapper(), 
+                    request.PageNumber
+                    );
+        
         return result;
 
     }

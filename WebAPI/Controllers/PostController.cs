@@ -1,7 +1,6 @@
 ﻿using ApplicationCore.CQRS.PostOperations.Query;
 using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
-using Domain.Model.Generic;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

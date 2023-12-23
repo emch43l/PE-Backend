@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using ApplicationCore.Mapper;
+using Domain.Common.Query;
 using Domain.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Pagination;
 

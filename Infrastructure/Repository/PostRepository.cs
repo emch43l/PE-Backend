@@ -1,6 +1,9 @@
-﻿using ApplicationCore.Common.Interface;
+﻿using ApplicationCore.Common.Implementation.Query;
+using ApplicationCore.Common.Interface;
+using Domain.Common.Query;
 using Domain.Common.Repository;
 using Domain.Common.Specification;
+using Domain.Model;
 using Domain.Model.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,23 +20,27 @@ public class PostRepository : IPostRepository
         _specificationHandler = specificationHandler;
     }
 
-    public IQueryable<Post> GetPostWithCommentsQuery(Guid guid, int commentCount)
+    public ISelectableQuery<Post> GetPostWithCommentsQuery(Guid guid, int commentCount)
     {
-        return _context.Posts
+        IQueryable<Post> query = _context.Posts
             .Include(p => p.User)
             .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(commentCount))
             .ThenInclude(c => c.User)
             .Where(p => p.Guid == guid)
             .AsNoTracking();
+        
+        return SelectableQuery<Post>.FromQuery(query);
     }
 
-    public IQueryable<Post> GetPostsWithUserAndFirstCommentQuery()
+    public ISelectableQuery<Post> GetPostsWithUserAndFirstCommentQuery()
     {
-        return _context.Posts
+        IQueryable<Post> query = _context.Posts
             .Include(p => p.User)
             .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(1))
             .ThenInclude(p => p.User)
             .AsNoTracking();
+        
+        return SelectableQuery<Post>.FromQuery(query);
     }
     
     public Task<Post?> FindByIdAsync(int id)
@@ -106,4 +113,19 @@ public class PostRepository : IPostRepository
         throw new NotImplementedException();
     }
     
+}
+
+public class SampleClass<TEntity> where TEntity: IEntity
+{
+    private readonly IQueryable<TEntity> _query;
+
+    public SampleClass(IQueryable<TEntity> query)
+    {
+        _query = query;
+    }
+
+    public TEntity GetResult()
+    {
+        return _query.FirstOrDefault();
+    }
 }

@@ -1,15 +1,16 @@
 ﻿using System.Linq.Expressions;
 using ApplicationCore.Dto;
+using Domain.Common.Query;
 using Domain.Model;
 using Domain.Model.Generic;
 
 namespace ApplicationCore.Mapper;
 
-public interface IMapper<TEntity,TResult>
+public interface IMapper<TEntity,TResult> where TEntity: IEntity
 {
-    Task<List<TResult>> MapCollection(IQueryable<TEntity> query);
+    Task<List<TResult>> MapCollection(ISelectableQuery<TEntity> query);
 
-    Task<TResult?> MapSingle(IQueryable<TEntity> query);
+    Task<TResult?> MapSingle(ISelectableQuery<TEntity> query);
     
     Func<TEntity, TResult> GetCompiledDelegate();
     

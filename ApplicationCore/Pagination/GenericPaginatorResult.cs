@@ -16,16 +16,5 @@ public record GenericPaginatorResult<T>: IGenericPaginatorResult<T> where T: cla
         CurrentPage = currentPage;
         TotalPages = totalPages;
     }
-    
-    public GenericPaginatorResult<F> MapToOtherType<F>(Func<T,F> mapper) where F: class
-    {
-        return new GenericPaginatorResult<F>(
-            TotalItems,
-            ItemsOnPage,
-            Items.Select(c => mapper(c)).ToList(),
-            CurrentPage,
-            TotalPages
-        );
-    }
 
 }

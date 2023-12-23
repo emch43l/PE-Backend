@@ -1,5 +1,6 @@
 ﻿using Domain.Model;
 using ApplicationCore.Mapper;
+using Domain.Common.Query;
 
 namespace ApplicationCore.Pagination;
 
