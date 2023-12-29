@@ -1,7 +1,10 @@
-﻿using ApplicationCore.Common.Interface;
+﻿using ApplicationCore.Common.Implementation.Query;
+using ApplicationCore.Common.Interface;
+using Domain.Common.Query;
 using Domain.Common.Repository;
 using Domain.Common.Specification;
 using Domain.Model.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
@@ -14,6 +17,16 @@ public class CommentRepository : ICommentRepository
     {
         _specificationHandler = specificationHandler;
         _context = context;
+    }
+    
+    public ISelectableQuery<Comment> GetPostCommentsQuery(Post post)
+    {
+        IQueryable<Comment> query = _context.Comments
+            .Where(c => c.Post == post)
+            .Include(c => c.User)
+            .AsNoTracking();
+        
+        return SelectableQuery<Comment>.FromQuery(query);
     }
 
     public Task<Comment?> FindByIdAsync(int id)

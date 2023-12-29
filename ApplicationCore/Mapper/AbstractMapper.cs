@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Domain.Common.Query;
 using Domain.Model;
-using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Mapper;
 

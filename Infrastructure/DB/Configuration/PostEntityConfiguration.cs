@@ -1,4 +1,4 @@
-﻿using Domain.Model;
+﻿using Domain.Enum;
 using Domain.Model.Generic;
 using Infrastructure.Identity.Entity;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +27,9 @@ public class PostEntityConfiguration : IEntityTypeConfiguration<Post>
             .HasOne(post => (UserEntity)post.User)
             .WithMany(user => user.Posts)
             .HasForeignKey(post => post.UserId);
+
+        builder.HasQueryFilter(p => p.Status == StatusEnum.Visible);
+        
         builder.ToTable("Posts");
     }
 }

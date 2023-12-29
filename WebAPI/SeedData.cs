@@ -42,11 +42,11 @@ public static class SeedData
     private static async Task<List<Comment>> CreateComments(IApplicationDbContext context, UserEntity user,
         Post post)
     {
-        return await Task.Run(() => Enumerable.Range(1, 5).Select( i =>
+        return await Task.Run(() => Enumerable.Range(1, 20).Select( i =>
         {
             Comment comment = new Comment();
             comment.User = user;
-            comment.Content = "Lorem ipsum comment content";
+            comment.Content = new Random().Next(1,2) == 1 ? "Lorem" : "Ipsum";
             comment.Post = post;
             comment.DateCreated = DateTime.Now;
             comment.File = null;

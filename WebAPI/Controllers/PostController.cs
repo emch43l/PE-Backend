@@ -23,7 +23,7 @@ public class PostController : ControllerBase
         IGenericPaginatorResult<PostDto> result = await _mediator.Send(new GetAllPostsPaginatedQuery(page,pageSize));
         return Ok(result);
     }
-
+    
     [HttpGet]
     [Route(":guid")]
     public async Task<IActionResult> GetPostByGuid([FromQuery] Guid id)

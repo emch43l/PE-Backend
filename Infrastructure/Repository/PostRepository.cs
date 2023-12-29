@@ -43,6 +43,11 @@ public class PostRepository : IPostRepository
         return SelectableQuery<Post>.FromQuery(query);
     }
     
+    public async Task<Post?> FindByGuidAsync(Guid id)
+    {
+        return await _context.Posts.Where(post => post.Guid == id).FirstOrDefaultAsync();
+    }
+    
     public Task<Post?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
@@ -93,11 +98,6 @@ public class PostRepository : IPostRepository
         return _specificationHandler.Handle(_context.Posts,specification);
     }
 
-    public async Task<Post?> FindByGuidAsync(Guid id)
-    {
-        return await _context.Posts.Where(post => post.Guid == id).FirstOrDefaultAsync();
-    }
-
     public Post? FindByGuid(Guid id)
     {
         throw new NotImplementedException();
@@ -113,19 +113,4 @@ public class PostRepository : IPostRepository
         throw new NotImplementedException();
     }
     
-}
-
-public class SampleClass<TEntity> where TEntity: IEntity
-{
-    private readonly IQueryable<TEntity> _query;
-
-    public SampleClass(IQueryable<TEntity> query)
-    {
-        _query = query;
-    }
-
-    public TEntity GetResult()
-    {
-        return _query.FirstOrDefault();
-    }
 }
