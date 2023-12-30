@@ -6,13 +6,16 @@ using ApplicationCore.Common.Interface;
 using ApplicationCore.CQRS.Comment.Query;
 using ApplicationCore.CQRS.PostOperations.Query;
 using ApplicationCore.Pagination;
+using ApplicationCore.Service;
 using ApplicationCore.Validation;
 using Domain.Common.Repository;
 using Domain.Common.Specification;
 using Domain.Common.Specification.Base;
 using FluentValidation;
 using Infrastructure.DB;
+using Infrastructure.Identity;
 using Infrastructure.Identity.Entity;
+using Infrastructure.JWT;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -51,6 +54,7 @@ public static class DependencyInjection
             options.Password.RequireNonAlphanumeric = true;
             options.Lockout.MaxFailedAccessAttempts = 3;
         }).AddRoles<UserRoleEntity>().AddEntityFrameworkStores<ApplicationDbContext>();
+        serviceCollection.AddScoped<IIdentityService, IdentityService>();
         
         return serviceCollection;
     }
@@ -160,7 +164,10 @@ public static class DependencyInjection
                 OnForbidden = JwtEventsConfiguration.OnForbiddenEventBehaviour
             };
         });
-           
+
+        serviceCollection.AddScoped<IAuthService, AuthService>();
+        serviceCollection.AddScoped<ITokenService, TokenService>();
+        serviceCollection.AddSingleton<JwtSettings>();
 
         return serviceCollection;
     }

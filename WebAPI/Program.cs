@@ -1,4 +1,5 @@
 using Infrastructure;
+using Infrastructure.JWT;
 using WebAPI;
 using WebAPI.ExceptionHandling;
 

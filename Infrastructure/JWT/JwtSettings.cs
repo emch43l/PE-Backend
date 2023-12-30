@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure;
+namespace Infrastructure.JWT;
 
 public class JwtSettings
 {
@@ -15,7 +15,8 @@ public class JwtSettings
 
     public JwtSettings(IConfiguration configuration)
     {
-        this._configuration = configuration;
+        _configuration = configuration;
+        PopulateSettings();
     }
 
     public static JwtSettings FromConfiguration(IConfiguration configuration)
@@ -27,9 +28,9 @@ public class JwtSettings
     {
         IConfigurationSection section = this._configuration.GetSection(SettingsSectionName);
         
-        Secret = section.GetSection("Secret")?.Value ?? throw new ArgumentNullException(nameof(Secret));
-        Issuer = section.GetSection("Issuer")?.Value ?? throw new ArgumentNullException(nameof(Issuer));
-        Audience = section.GetSection("Audience")?.Value ?? throw new ArgumentNullException(nameof(Audience));
+        Secret = section.GetSection("Secret").Value ?? throw new ArgumentNullException(nameof(Secret));
+        Issuer = section.GetSection("Issuer").Value ?? throw new ArgumentNullException(nameof(Issuer));
+        Audience = section.GetSection("Audience").Value ?? throw new ArgumentNullException(nameof(Audience));
         
     }
     

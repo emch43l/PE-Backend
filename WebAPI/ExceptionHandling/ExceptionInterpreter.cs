@@ -19,6 +19,14 @@ public class ExceptionInterpreter
                 response.Message = exception.Message;
                 response.StatusCode = HttpStatusCode.BadRequest;
                 break;
+            case AlreadyExistException:
+                response.Message = exception.Message;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                break;
+            case IdentityException:
+                response.Message = exception.Message;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                break;
             default:
                 response.Message = "An error occured !";
                 response.StatusCode = HttpStatusCode.InternalServerError;

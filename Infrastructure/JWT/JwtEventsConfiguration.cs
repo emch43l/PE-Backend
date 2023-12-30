@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure;
+namespace Infrastructure.JWT;
 
 public static class JwtEventsConfiguration
 {
