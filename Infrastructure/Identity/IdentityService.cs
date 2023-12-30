@@ -30,7 +30,7 @@ public class IdentityService : IIdentityService
         IUser? user = await GetUserByEmailAsync(email);
         if (user != null)
         {
-            throw new UserAlreadyExistException($"{email} - User with this email already exist !");
+            throw new UserAlreadyExistException($"User with this email already exist !");
         }
 
         UserEntity newUser = new UserEntity() { Email = email, UserName = userName };
