@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace ApplicationCore.ExceptionHandling;
+namespace WebAPI.ExceptionHandling;
 
 public record ProblemResponse
 {

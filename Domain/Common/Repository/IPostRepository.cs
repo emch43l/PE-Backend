@@ -4,8 +4,9 @@ using Domain.Model.Generic;
 
 namespace Domain.Common.Repository;
 
-public interface IPostRepository : IGuidGenericRepositoryBase<Post> 
+public interface IPostRepository : IGuidGenericRepositoryBase<Post>
 {
+    ISelectableQuery<Post> GetUserPostsWithCommentsQuery(IUser user, int commentCount);
     ISelectableQuery<Post> GetPostWithCommentsQuery(Guid guid, int commentCount);
     ISelectableQuery<Post> GetPostsWithUserAndFirstCommentQuery();
 }

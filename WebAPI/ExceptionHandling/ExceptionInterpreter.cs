@@ -2,7 +2,7 @@
 using Domain.Exception;
 using Domain.Exception.Base;
 
-namespace ApplicationCore.ExceptionHandling;
+namespace WebAPI.ExceptionHandling;
 
 public class ExceptionInterpreter
 {

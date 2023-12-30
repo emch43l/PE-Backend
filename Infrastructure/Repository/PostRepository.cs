@@ -20,6 +20,18 @@ public class PostRepository : IPostRepository
         _specificationHandler = specificationHandler;
     }
 
+    public ISelectableQuery<Post> GetUserPostsWithCommentsQuery(IUser user, int commentCount)
+    {
+        IQueryable<Post> query = _context.Posts
+            .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(commentCount))
+            .ThenInclude(c => c.User)
+            .Where(p => p.User == user)
+            .IgnoreQueryFilters()
+            .AsNoTracking();
+
+        return SelectableQuery<Post>.FromQuery(query);
+    }
+
     public ISelectableQuery<Post> GetPostWithCommentsQuery(Guid guid, int commentCount)
     {
         IQueryable<Post> query = _context.Posts

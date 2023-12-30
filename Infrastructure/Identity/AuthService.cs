@@ -23,7 +23,7 @@ public class AuthService : IAuthService
 
         bool isPasswordOk = await _identityService.CheckPasswordAsync(user, password);
         if (!isPasswordOk)
-            throw new PasswordException("Wrong password !");
+            throw new PasswordException();
 
         string token = await _tokenService.CreateToken(user);
 
