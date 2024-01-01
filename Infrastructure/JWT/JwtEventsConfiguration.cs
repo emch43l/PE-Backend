@@ -24,7 +24,7 @@ public static class JwtEventsConfiguration
             context.Response.StatusCode = 401;
             context.Response.ContentType = "application/json";
             
-            return context.Response.WriteAsJsonAsync("401 Not authorized");
+            return context.Response.WriteAsJsonAsync(new { code = 403, message = "Not authorized" });
         });
 
 
@@ -35,6 +35,6 @@ public static class JwtEventsConfiguration
             context.Response.StatusCode = 403;
             context.Response.ContentType = "application/json";
             
-            return context.Response.WriteAsJsonAsync("403 Not authorized");
+            return context.Response.WriteAsJsonAsync(new { code = 403, message = "Not authorized" });
         });
 }

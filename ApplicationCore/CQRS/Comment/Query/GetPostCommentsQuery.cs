@@ -4,7 +4,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.Comment.Query;
 
-public class GetPostCommentsQuery : IRequest<IGenericPaginatorResult<CommentDto>>
+public class GetPostCommentsQuery : IQuery<IGenericPaginatorResult<CommentDto>>
 {
     public Guid PostId { get; set; }
     public int Page { get; set; }

@@ -5,11 +5,11 @@ namespace Domain.Common.Repository.Base;
 // https://www.youtube.com/watch?v=Wp5iYQqHspg - ('in TK') - covariance, contravariance
 public interface IGuidGenericRepositoryBase<T> : IGenericRepositoryBase<T> where T: IUidIdentity<int>
 {
-    Task<T?> FindByGuidAsync(Guid id);
+    Task<T?> FindByGuidAsync(Guid id, bool ignoreQueryFilters = false);
     
     T? FindByGuid(Guid id);
     
-    void RemoveByGuid(Guid id);
+    Task<bool> RemoveByGuidAsync(Guid id);
     
-    void Update(Guid id, T o);
+    Task<bool> UpdateAsync(Guid id, T o);
 }

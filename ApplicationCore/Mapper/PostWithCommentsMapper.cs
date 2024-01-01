@@ -15,7 +15,7 @@ public class PostWithCommentsMapper : AbstractMapper<Post,PostWithCommentsDto>
             ReactionCount = post.ReactionCount,
             Date = post.Date,
             Description = post.Description,
-            Status = post.Status,
+            Status = StatusField.FromStatusEnum(post.Status),
             Title = post.Title,
             Comments = post.Comments.AsQueryable().Select(new CommentWithUserMapper().GetMapperExpression()).ToList()
         };

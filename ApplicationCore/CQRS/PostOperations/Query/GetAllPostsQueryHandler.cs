@@ -4,7 +4,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetAllPostsQueryHandler : IRequestHandler<GetAllPostsQuery,List<Post>>
+public class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery,List<Post>>
 {
     private readonly IPostRepository _postRepository;
 

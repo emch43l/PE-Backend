@@ -11,7 +11,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetCurrentUserPostsQueryHandler : IRequestHandler<GetCurrentUserPostsQuery,IGenericPaginatorResult<PostWithCommentsDto>>
+public class GetCurrentUserPostsQueryHandler : IQueryHandler<GetCurrentUserPostsQuery,IGenericPaginatorResult<PostWithCommentsDto>>
 {
     private readonly IIdentityService _identityService;
     private readonly IGenericPaginator _paginator;

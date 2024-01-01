@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetAllPostsQuery : IRequest<List<Post>>
+public class GetAllPostsQuery : IQuery<List<Post>>
 {
     
 }

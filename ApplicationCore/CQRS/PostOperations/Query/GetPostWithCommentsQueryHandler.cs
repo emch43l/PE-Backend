@@ -7,7 +7,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetPostWithCommentsQueryHandler : IRequestHandler<GetPostWithCommentsQuery,PostWithCommentsDto>
+public class GetPostWithCommentsQueryHandler : IQueryHandler<GetPostWithCommentsQuery,PostWithCommentsDto>
 {
     private readonly IPostRepository _postRepository;
 

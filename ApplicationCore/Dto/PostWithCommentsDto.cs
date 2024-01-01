@@ -1,4 +1,5 @@
 ﻿using Domain.Enum;
+using Domain.Model.Generic;
 
 namespace ApplicationCore.Dto;
 
@@ -11,7 +12,7 @@ public class PostWithCommentsDto
     
     public DateTime Date { get; set; }
     
-    public StatusEnum Status { get; set; }
+    public StatusField Status { get; set; }
     
     public IEnumerable<CommentDto> Comments { get; set; }
     

@@ -42,7 +42,16 @@ public class IdentityService : IIdentityService
 
         return newUser;
     }
-    
+
+    public async Task<IUser> GetUserByClaim(ClaimsPrincipal claimsPrincipal)
+    {
+        IUser? user = await _manager.GetUserAsync(claimsPrincipal);
+        if (user == null)
+            throw new UserNotFoundException();
+
+        return user;
+    }
+
     public async Task<IList<string>> GetUserRolesByEmail(string email)
     {
         IUser? user = await GetUserByEmailAsync(email);

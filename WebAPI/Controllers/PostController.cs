@@ -1,9 +1,12 @@
-﻿using ApplicationCore.CQRS.PostOperations.Query;
+﻿using ApplicationCore.CQRS.PostOperations.Command;
+using ApplicationCore.CQRS.PostOperations.Query;
 using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Requests;
+using WebAPI.Response;
 
 namespace WebAPI.Controllers;
 
@@ -35,7 +38,48 @@ public class PostController : ControllerBase
         PostWithCommentsDto post = await _mediator.Send(new GetPostWithCommentsQuery(id));
         return Ok(post);
     }
-    
+
+    [Authorize]
+    [HttpPost]
+    [Route("create")]
+    public async Task<IActionResult> CreatePost([FromBody] CreatePostRequest request)
+    {
+        Guid id = await _mediator.Send(
+            new CreatePostCommand(request.Title, request.Description, HttpContext.User, request.Status)
+            );
+
+        return Ok(
+            new GuidResponse(id)
+            );
+    }
+
+    [Authorize]
+    [HttpPatch]
+    [Route("update")]
+    public async Task<IActionResult> UpdatePost([FromBody] UpdatePostRequest request)
+    {
+        UpdatePostCommand command = new UpdatePostCommand(
+            request.Id, 
+            request.Title, 
+            request.Description,
+            request.Status, 
+            HttpContext.User
+            );
+        Guid id = await _mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [Authorize]
+    [HttpDelete]
+    [Route("delete/:guid")]
+
+    public async Task<IActionResult> DeletePost([FromQuery] Guid id)
+    {
+        Guid result = await _mediator.Send(new DeletePostCommand(id, HttpContext.User));
+        return NoContent();
+    }
+
     [Authorize]
     [Route("all/my")]
     [HttpGet]

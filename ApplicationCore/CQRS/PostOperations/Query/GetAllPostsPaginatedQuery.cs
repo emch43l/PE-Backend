@@ -4,7 +4,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public record GetAllPostsPaginatedQuery : IRequest<GenericPaginatorResult<PostDto>>
+public record GetAllPostsPaginatedQuery : IQuery<GenericPaginatorResult<PostDto>>
 {
     public int PageNumber { get; set; }
     

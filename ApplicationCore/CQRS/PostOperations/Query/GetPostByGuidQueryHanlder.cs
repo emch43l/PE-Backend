@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetPostByGuidQueryHanlder : IRequestHandler<GetPostByGuidQuery,Post>
+public class GetPostByGuidQueryHanlder : IQueryHandler<GetPostByGuidQuery,Post>
 {
     private readonly IPostRepository _postRepository;
 

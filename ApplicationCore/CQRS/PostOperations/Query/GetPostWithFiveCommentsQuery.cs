@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetPostWithCommentsQuery : IRequest<PostWithCommentsDto>
+public class GetPostWithCommentsQuery : IQuery<PostWithCommentsDto>
 {
     public Guid PostId { get; set; }
     public int CommentCount { get; set; }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetCurrentUserPostsQuery : IRequest<IGenericPaginatorResult<PostWithCommentsDto>>
+public class GetCurrentUserPostsQuery : IQuery<IGenericPaginatorResult<PostWithCommentsDto>>
 {
     public int Page { get; set; }
     

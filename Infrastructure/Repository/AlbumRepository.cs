@@ -1,4 +1,5 @@
-﻿using Domain.Common.Repository;
+﻿using ApplicationCore.Common.Interface;
+using Domain.Common.Repository;
 using Domain.Common.Specification;
 using Domain.Model.Generic;
 
@@ -6,6 +7,18 @@ namespace Infrastructure.Repository;
 
 public class AlbumRepository : IAlbumRepository
 {
+    private readonly IApplicationDbContext _context;
+
+    public AlbumRepository(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     public Task<Album?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
@@ -26,17 +39,17 @@ public class AlbumRepository : IAlbumRepository
         throw new NotImplementedException();
     }
 
-    public Album Add(Album o)
+    public void Add(Album o)
     {
         throw new NotImplementedException();
     }
 
-    public void RemoveById(int id)
+    public bool RemoveById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public void Update(int id, Album o)
+    public bool Update(int id, Album o)
     {
         throw new NotImplementedException();
     }

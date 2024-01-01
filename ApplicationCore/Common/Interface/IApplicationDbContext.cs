@@ -19,4 +19,6 @@ public interface IApplicationDbContext
     public DbSet<Post> Posts { get; set; }
     
     public DbSet<PostReaction> PostReactions { get; set; }
+
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

@@ -42,7 +42,10 @@ public static class SeedData
     private static async Task<List<Comment>> CreateComments(IApplicationDbContext context, UserEntity user,
         Post post)
     {
-        return await Task.Run(() => Enumerable.Range(1, 20).Select( i =>
+        const int commentCount = 20;
+        post.CommentCount = 20;
+        
+        return await Task.Run(() => Enumerable.Range(1, commentCount).Select( i =>
         {
             Comment comment = new Comment();
             comment.User = user;

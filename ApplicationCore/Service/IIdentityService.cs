@@ -1,9 +1,12 @@
-﻿using Domain.Model.Generic;
+﻿using System.Security.Claims;
+using Domain.Model.Generic;
 
 namespace ApplicationCore.Service;
 
 public interface IIdentityService
 {
+    Task<IUser> GetUserByClaim(ClaimsPrincipal claimsPrincipal);
+    
     Task<IList<string>> GetUserRolesByEmail(string email);
     
     Task<IUser?> GetUserByEmailAsync(string email);

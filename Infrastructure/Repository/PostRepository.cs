@@ -3,7 +3,6 @@ using ApplicationCore.Common.Interface;
 using Domain.Common.Query;
 using Domain.Common.Repository;
 using Domain.Common.Specification;
-using Domain.Model;
 using Domain.Model.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,11 +54,18 @@ public class PostRepository : IPostRepository
         return SelectableQuery<Post>.FromQuery(query);
     }
     
-    public async Task<Post?> FindByGuidAsync(Guid id)
+    public async Task<Post?> FindByGuidAsync(Guid id, bool ignoreQueryFilters = false)
     {
-        return await _context.Posts.Where(post => post.Guid == id).FirstOrDefaultAsync();
+        return ignoreQueryFilters ? 
+            await _context.Posts.IgnoreQueryFilters().Where(post => post.Guid == id).FirstOrDefaultAsync() : 
+            await _context.Posts.Where(post => post.Guid == id).FirstOrDefaultAsync();
     }
-    
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     public Task<Post?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
@@ -80,17 +86,17 @@ public class PostRepository : IPostRepository
         throw new NotImplementedException();
     }
 
-    public Post Add(Post o)
+    public void Add(Post o)
+    {
+        _context.Posts.Add(o);
+    }
+
+    public bool RemoveById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public void RemoveById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Update(int id, Post o)
+    public bool Update(int id, Post o)
     {
         throw new NotImplementedException();
     }
@@ -115,14 +121,22 @@ public class PostRepository : IPostRepository
         throw new NotImplementedException();
     }
 
-    public void RemoveByGuid(Guid id)
+    public async Task<bool> RemoveByGuidAsync(Guid id)
     {
-        throw new NotImplementedException();
+        int rowsAffected = await _context.Posts.Where(p => p.Guid == id).ExecuteDeleteAsync();
+        return rowsAffected > 0;
     }
 
-    public void Update(Guid id, Post o)
+    public async Task<bool> UpdateAsync(Guid id, Post o)
     {
-        throw new NotImplementedException();
+        int rowsAffected = await _context.Posts
+            .Where(p => p.Guid == id).ExecuteUpdateAsync(update =>
+                update
+                    .SetProperty(p => p.Status, o => o.Status)
+                    .SetProperty(p => p.Title, o => o.Title)
+                    .SetProperty(p => p.Description, o => o.Description));
+
+        return rowsAffected > 0;
     }
     
 }

@@ -1,5 +1,4 @@
-﻿using ApplicationCore.CQRS.Base;
-using ApplicationCore.Dto;
+﻿using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Common.Repository;
@@ -7,11 +6,10 @@ using Domain.Exception;
 using Domain.Model.Generic;
 using FluentValidation;
 using FluentValidation.Results;
-using MediatR;
 
 namespace ApplicationCore.CQRS.Comment.Query;
 
-public class GetPostCommentsQueryHandler : IRequestHandler<GetPostCommentsQuery,IGenericPaginatorResult<CommentDto>>
+public class GetPostCommentsQueryHandler : IQueryHandler<GetPostCommentsQuery,IGenericPaginatorResult<CommentDto>>
 {
     private const int CommentNumberPerPage = 5;
     

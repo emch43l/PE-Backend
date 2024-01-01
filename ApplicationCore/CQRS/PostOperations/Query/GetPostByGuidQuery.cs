@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetPostByGuidQuery : IRequest<Post>
+public class GetPostByGuidQuery : IQuery<Post>
 {
     public Guid Guid { get; set; }
 

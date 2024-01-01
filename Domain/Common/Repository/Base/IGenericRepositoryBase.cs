@@ -7,6 +7,7 @@ namespace Domain.Common.Repository.Base;
 // https://www.youtube.com/watch?v=Wp5iYQqHspg - ('in TKey') - covariance, contravariance
 public interface IGenericRepositoryBase<T> where T: IUidIdentity<int>
 {
+    Task SaveChangesAsync(CancellationToken cancellationToken);
     Task<T?> FindByIdAsync(int id);
     
     Task<List<T>> FindAllAsync();
@@ -15,11 +16,11 @@ public interface IGenericRepositoryBase<T> where T: IUidIdentity<int>
     
     List<T> FindAll();
     
-    T Add(T o);
+    void Add(T o);
     
-    void RemoveById(int id);
+    bool RemoveById(int id);
     
-    void Update(int id, T o);
+    bool Update(int id, T o);
     
     IEnumerable<T> FindBySpecification(ISpecification<T>? specification = null);
 

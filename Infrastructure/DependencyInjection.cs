@@ -1,9 +1,9 @@
-﻿using System.Reflection;
-using System.Text;
+﻿using System.Text;
 using ApplicationCore;
 using ApplicationCore.Common.Implementation.Specification;
 using ApplicationCore.Common.Interface;
 using ApplicationCore.CQRS.Comment.Query;
+using ApplicationCore.CQRS.PostOperations.Command;
 using ApplicationCore.CQRS.PostOperations.Query;
 using ApplicationCore.Pagination;
 using ApplicationCore.Service;
@@ -19,7 +19,6 @@ using Infrastructure.JWT;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -176,6 +175,8 @@ public static class DependencyInjection
     {
         serviceCollection.AddScoped<IValidator<GetAllPostsPaginatedQuery>, GetAllPostsPaginatedQueryValidator>();
         serviceCollection.AddScoped<IValidator<GetPostCommentsQuery>, GetPostCommentsQueryValidator>();
+        serviceCollection.AddScoped<IValidator<CreatePostCommand>, CreatePostCommandValidator>();
+        serviceCollection.AddScoped<IValidator<UpdatePostCommand>, UpdatePostCommandValidator>();
 
         return serviceCollection;
     }

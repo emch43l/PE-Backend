@@ -9,7 +9,7 @@ using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
-public class GetAllPostsPaginatedQueryHandler: IRequestHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostDto>>
+public class GetAllPostsPaginatedQueryHandler: IQueryHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostDto>>
 {
     private readonly IGenericPaginator _paginator;
     private readonly IValidator<GetAllPostsPaginatedQuery> _validator;

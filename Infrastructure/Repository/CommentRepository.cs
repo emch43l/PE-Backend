@@ -29,6 +29,11 @@ public class CommentRepository : ICommentRepository
         return SelectableQuery<Comment>.FromQuery(query);
     }
 
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     public Task<Comment?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
@@ -49,17 +54,17 @@ public class CommentRepository : ICommentRepository
         throw new NotImplementedException();
     }
 
-    public Comment Add(Comment o)
+    public void Add(Comment o)
     {
         throw new NotImplementedException();
     }
 
-    public void RemoveById(int id)
+    public bool RemoveById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public void Update(int id, Comment o)
+    public bool Update(int id, Comment o)
     {
         throw new NotImplementedException();
     }
@@ -74,7 +79,7 @@ public class CommentRepository : ICommentRepository
         return _specificationHandler.Handle(_context.Comments, specification);
     }
 
-    public Task<Comment?> FindByGuidAsync(Guid id)
+    public Task<Comment?> FindByGuidAsync(Guid id, bool ignoreQueryFilters = false)
     {
         throw new NotImplementedException();
     }
@@ -84,12 +89,12 @@ public class CommentRepository : ICommentRepository
         throw new NotImplementedException();
     }
 
-    public void RemoveByGuid(Guid id)
+    public async Task<bool> RemoveByGuidAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public void Update(Guid id, Comment o)
+    public async Task<bool> UpdateAsync(Guid id, Comment o)
     {
         throw new NotImplementedException();
     }
