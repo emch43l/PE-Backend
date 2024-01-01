@@ -1,10 +1,12 @@
 ﻿using System.Security.Claims;
+using ApplicationCore.Common.Implementation.Specification.PostSpecification;
 using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using ApplicationCore.Service;
 using Domain.Common.Query;
 using Domain.Common.Repository;
+using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
 using Domain.Model.Generic;
 using MediatR;
@@ -15,9 +17,9 @@ public class GetCurrentUserPostsQueryHandler : IQueryHandler<GetCurrentUserPosts
 {
     private readonly IIdentityService _identityService;
     private readonly IGenericPaginator _paginator;
-    private readonly IPostRepository _postRepository;
+    private readonly IPostQueryRepository _postRepository;
 
-    public GetCurrentUserPostsQueryHandler(IIdentityService identityService, IGenericPaginator paginator, IPostRepository postRepository)
+    public GetCurrentUserPostsQueryHandler(IIdentityService identityService, IGenericPaginator paginator, IPostQueryRepository postRepository)
     {
         _identityService = identityService;
         _paginator = paginator;
@@ -34,10 +36,10 @@ public class GetCurrentUserPostsQueryHandler : IQueryHandler<GetCurrentUserPosts
         if (user == null)
             throw new UserNotFoundException();
 
-        ISelectableQuery<Post> query = _postRepository.GetUserPostsWithCommentsQuery(user, 3);
+        IQueryManager<Post> queryManager = _postRepository.GetUserPostsWithCommentsQuery(user, 3).ApplySpecification(new PrivatePostSpecification());
 
         return await _paginator.SetPageSize(request.PageSize)
-            .Paginate(query.GetQuery(), new PostWithCommentsMapper(), request.Page);
+            .Paginate(queryManager.GetQuery(), new PostWithCommentsMapper(), request.Page);
 
     }
 }

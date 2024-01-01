@@ -8,21 +8,17 @@ namespace Domain.Common.Repository.Base;
 public interface IGenericRepositoryBase<T> where T: IUidIdentity<int>
 {
     Task SaveChangesAsync(CancellationToken cancellationToken);
+    
     Task<T?> FindByIdAsync(int id);
     
     Task<List<T>> FindAllAsync();
-
-    T? FindById(int id);
     
-    List<T> FindAll();
+    Task AddAsync(T entity, bool save = true);
     
-    void Add(T o);
+    Task<bool> RemoveByIdAsync(int id);
     
-    bool RemoveById(int id);
+    Task UpdateAsync(T entity, bool save = true);
     
-    bool Update(int id, T o);
+    Task<IEnumerable<T>> FindBySpecificationAsync(ISpecification<T>? specification = null);
     
-    IEnumerable<T> FindBySpecification(ISpecification<T>? specification = null);
-
-    IQueryable<T> GetQueryBySpecification(ISpecification<T>? specification = null);
 }

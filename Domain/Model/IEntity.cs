@@ -1,6 +1,8 @@
-﻿namespace Domain.Model;
+﻿using Domain.Common.Identity;
 
-public interface IEntity
+namespace Domain.Model;
+
+public interface IEntity : IUidIdentity<int>
 {
     
 }

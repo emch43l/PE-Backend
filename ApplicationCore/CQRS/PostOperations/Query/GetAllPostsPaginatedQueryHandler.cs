@@ -1,7 +1,9 @@
-﻿using ApplicationCore.Dto;
+﻿using ApplicationCore.Common.Implementation.Specification.PostSpecification;
+using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Common.Repository;
+using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
 using FluentValidation;
 using FluentValidation.Results;
@@ -13,11 +15,11 @@ public class GetAllPostsPaginatedQueryHandler: IQueryHandler<GetAllPostsPaginate
 {
     private readonly IGenericPaginator _paginator;
     private readonly IValidator<GetAllPostsPaginatedQuery> _validator;
-    private readonly IPostRepository _postRepository;
+    private readonly IPostQueryRepository _postRepository;
 
     public GetAllPostsPaginatedQueryHandler(
         IValidator<GetAllPostsPaginatedQuery> validator, 
-        IPostRepository postRepository, IGenericPaginator paginator)
+        IPostQueryRepository postRepository, IGenericPaginator paginator)
     {
         _validator = validator;
         _postRepository = postRepository;
@@ -37,7 +39,7 @@ public class GetAllPostsPaginatedQueryHandler: IQueryHandler<GetAllPostsPaginate
             await _paginator
                 .SetPageSize(request.ItemsPerPage)
                 .Paginate(
-                    _postRepository.GetPostsWithUserAndFirstCommentQuery().GetQuery(), 
+                    _postRepository.GetPostsWithUserAndFirstCommentQuery().ApplySpecification(new PublicPostSpecification()).GetQuery(), 
                     new PostWithUserAndSingleCommentMapper(), 
                     request.PageNumber
                     );

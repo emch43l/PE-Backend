@@ -6,5 +6,5 @@ namespace Domain.Common.Repository;
 
 public interface ICommentRepository : IGuidGenericRepositoryBase<Comment>
 {
-    ISelectableQuery<Comment> GetPostCommentsQuery(Post post);
+ 
 }

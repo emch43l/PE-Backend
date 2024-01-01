@@ -3,7 +3,7 @@ using Domain.Model.Generic;
 
 namespace Domain.Common.Repository;
 
-public interface IAlbumRepository: IGenericRepositoryBase<Album>
+public interface IAlbumRepository: IGuidGenericRepositoryBase<Album>
 {
     
 }

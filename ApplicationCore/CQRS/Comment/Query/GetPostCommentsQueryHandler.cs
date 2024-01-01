@@ -2,6 +2,7 @@
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Common.Repository;
+using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
 using Domain.Model.Generic;
 using FluentValidation;
@@ -13,11 +14,11 @@ public class GetPostCommentsQueryHandler : IQueryHandler<GetPostCommentsQuery,IG
 {
     private const int CommentNumberPerPage = 5;
     
-    private readonly ICommentRepository _commentRepository;
+    private readonly ICommentQueryRepository _commentRepository;
     private readonly IPostRepository _postRepository;
     private readonly IGenericPaginator _genericPaginator;
     private readonly IValidator<GetPostCommentsQuery> _validator;
-    public GetPostCommentsQueryHandler(ICommentRepository repository,
+    public GetPostCommentsQueryHandler(ICommentQueryRepository repository,
         IPostRepository postRepository,
         IGenericPaginator genericPaginator,
         IValidator<GetPostCommentsQuery> validator)

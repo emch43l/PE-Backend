@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Domain.Common.Specification;
-using Microsoft.EntityFrameworkCore;
+using Domain.Model;
 
 namespace ApplicationCore.Common.Implementation.Specification;
 
-public class SpecificationHandler<T>: ISpecificationHandler<T> where T: class
+public class SpecificationHandler<T>: ISpecificationHandler<T> where T: IEntity
 {
     public IQueryable<T> Handle(IQueryable<T> query, ISpecification<T>? specification = null)
     {
@@ -16,9 +16,16 @@ public class SpecificationHandler<T>: ISpecificationHandler<T> where T: class
             query = query.Where(criteria);
         }
 
-        foreach (Expression<Func<T,object>> include in specification.Includes)
+        foreach (KeyValuePair<Expression<Func<T, object>>, bool> valuePair in specification.OrderBy)
         {
-            query = query.Include(include);
+            if (valuePair.Value)
+            {
+                query = query.OrderByDescending(valuePair.Key);
+            }
+            else
+            {
+                query = query.OrderBy(valuePair.Key);
+            }
         }
 
         return query;

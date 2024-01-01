@@ -8,9 +8,9 @@ namespace ApplicationCore.Mapper;
 
 public interface IMapper<TEntity,TResult> where TEntity: IEntity
 {
-    Task<List<TResult>> MapCollection(ISelectableQuery<TEntity> query);
+    Task<List<TResult>> MapCollection(IQueryManager<TEntity> queryManager);
 
-    Task<TResult?> MapSingle(ISelectableQuery<TEntity> query);
+    Task<TResult?> MapSingle(IQueryManager<TEntity> queryManager);
     
     Func<TEntity, TResult> GetCompiledDelegate();
     

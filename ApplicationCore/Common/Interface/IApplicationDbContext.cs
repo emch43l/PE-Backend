@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Model;
+using Microsoft.EntityFrameworkCore;
 using File = Domain.Model.Generic.File;
 using Domain.Model.Generic;
 
@@ -21,4 +22,6 @@ public interface IApplicationDbContext
     public DbSet<PostReaction> PostReactions { get; set; }
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
+    public DbSet<T> Set<T>() where T : class;
 }

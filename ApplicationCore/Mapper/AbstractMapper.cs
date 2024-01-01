@@ -6,14 +6,14 @@ namespace ApplicationCore.Mapper;
 
 public abstract class AbstractMapper<TEntity,TResult> : IMapper<TEntity,TResult> where TResult : class where TEntity: IEntity
 {
-    public async Task<List<TResult>> MapCollection(ISelectableQuery<TEntity> query)
+    public async Task<List<TResult>> MapCollection(IQueryManager<TEntity> queryManager)
     {
-        return await query.SelectList(GetMapperExpression());
+        return await queryManager.MapList(GetMapperExpression());
     }
 
-    public async Task<TResult?> MapSingle(ISelectableQuery<TEntity> query)
+    public async Task<TResult?> MapSingle(IQueryManager<TEntity> queryManager)
     {
-        return await query.SelectOne(GetMapperExpression());
+        return await queryManager.MapOne(GetMapperExpression());
     }
 
     public Func<TEntity, TResult> GetCompiledDelegate()

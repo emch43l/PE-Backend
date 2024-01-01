@@ -5,5 +5,5 @@ namespace Infrastructure.Identity.Entity;
 
 public class UserRoleEntity: IdentityRole<int>, IEntity
 {
-    
+    public Guid Guid { get; set; }
 }

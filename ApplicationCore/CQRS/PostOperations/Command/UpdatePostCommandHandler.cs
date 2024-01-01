@@ -31,7 +31,7 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
             );
         }
         
-        Post? post = await _postRepository.FindByGuidAsync(request.PostId,true);
+        Post? post = await _postRepository.FindByGuidAsync(request.PostId);
         if (post == null)
             throw new PostNotFoundException();
 

@@ -42,7 +42,7 @@ public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand>
             UserId = user.Id
         };
 
-        _postRepository.Add(post);
+        await _postRepository.AddAsync(post);
         await _postRepository.SaveChangesAsync(cancellationToken);
 
         return post.Guid;

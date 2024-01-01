@@ -19,7 +19,7 @@ public class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
 
     public async Task<Guid> Handle(DeletePostCommand request, CancellationToken cancellationToken)
     {
-        Post? post = await _postRepository.FindByGuidAsync(request.Id,true);
+        Post? post = await _postRepository.FindByGuidAsync(request.Id);
         if (post == null)
             throw new PostNotFoundException();
 

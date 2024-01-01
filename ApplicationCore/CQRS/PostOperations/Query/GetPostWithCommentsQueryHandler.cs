@@ -1,17 +1,17 @@
-﻿using ApplicationCore.Dto;
+﻿using ApplicationCore.Common.Implementation.Specification.PostSpecification;
+using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
-using Domain.Common.Repository;
+using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
 using Domain.Model.Generic;
-using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public class GetPostWithCommentsQueryHandler : IQueryHandler<GetPostWithCommentsQuery,PostWithCommentsDto>
 {
-    private readonly IPostRepository _postRepository;
+    private readonly IPostQueryRepository _postRepository;
 
-    public GetPostWithCommentsQueryHandler(IPostRepository postRepository)
+    public GetPostWithCommentsQueryHandler(IPostQueryRepository postRepository)
     {
         _postRepository = postRepository;
     }
@@ -19,7 +19,9 @@ public class GetPostWithCommentsQueryHandler : IQueryHandler<GetPostWithComments
     public async Task<PostWithCommentsDto> Handle(GetPostWithCommentsQuery request, CancellationToken cancellationToken)
     {
         IMapper<Post, PostWithCommentsDto> mapper = new PostWithCommentsMapper();
-        PostWithCommentsDto? result = await mapper.MapSingle(_postRepository.GetPostWithCommentsQuery(request.PostId,request.CommentCount));
+        PostWithCommentsDto? result = await mapper.MapSingle(_postRepository
+            .GetPostWithCommentsQuery(request.PostId, request.CommentCount)
+            .ApplySpecification(new PublicPostSpecification()));
         
         if (result == null)
             throw new PostNotFoundException();
