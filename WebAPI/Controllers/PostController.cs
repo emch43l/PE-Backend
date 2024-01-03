@@ -32,7 +32,7 @@ public class PostController : ControllerBase
     }
     
     [HttpGet]
-    [Route(":guid")]
+    [Route(":id")]
     public async Task<IActionResult> GetPostByGuid([FromQuery] Guid id)
     {
         PostWithCommentsDto post = await _mediator.Send(new GetPostWithCommentsQuery(id));
@@ -55,24 +55,24 @@ public class PostController : ControllerBase
 
     [Authorize]
     [HttpPatch]
-    [Route("update")]
-    public async Task<IActionResult> UpdatePost([FromBody] UpdatePostRequest request)
+    [Route("update/:id")]
+    public async Task<IActionResult> UpdatePost([FromQuery] Guid id, [FromBody] UpdatePostRequest request)
     {
         UpdatePostCommand command = new UpdatePostCommand(
-            request.Id, 
+            id,
             request.Title, 
             request.Description,
             request.Status, 
             HttpContext.User
             );
-        Guid id = await _mediator.Send(command);
+        Guid result = await _mediator.Send(command);
 
         return NoContent();
     }
 
     [Authorize]
     [HttpDelete]
-    [Route("delete/:guid")]
+    [Route("delete/:id")]
 
     public async Task<IActionResult> DeletePost([FromQuery] Guid id)
     {

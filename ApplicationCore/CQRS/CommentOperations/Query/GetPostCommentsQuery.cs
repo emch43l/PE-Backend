@@ -1,8 +1,7 @@
 ﻿using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
-using MediatR;
 
-namespace ApplicationCore.CQRS.Comment.Query;
+namespace ApplicationCore.CQRS.CommentOperations.Query;
 
 public class GetPostCommentsQuery : IQuery<IGenericPaginatorResult<CommentDto>>
 {

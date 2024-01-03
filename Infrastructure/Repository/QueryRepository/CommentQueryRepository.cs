@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Common.Implementation.Query;
+﻿using ApplicationCore.Common.Extension;
+using ApplicationCore.Common.Implementation.Query;
 using ApplicationCore.Common.Interface;
 using Domain.Common.Query;
 using Domain.Common.Repository.QueryRepository;
@@ -10,7 +11,7 @@ namespace Infrastructure.Repository.QueryRepository;
 
 public class CommentQueryRepository : CommentRepository, ICommentQueryRepository
 {
-    public CommentQueryRepository(ISpecificationHandler<Comment> specificationHandler, IApplicationDbContext context) : base(specificationHandler, context)
+    public CommentQueryRepository(IApplicationDbContext context) : base(context)
     {
     }
     
@@ -24,8 +25,17 @@ public class CommentQueryRepository : CommentRepository, ICommentQueryRepository
         return QueryManager<Comment>.FromQuery(query);
     }
 
+    public IQueryManager<Comment> GetCommentCommentsQuery(Comment comment)
+    {
+        IQueryable<Comment> query = Context.Comments
+            .Include(c => c.User)
+            .Where(c => c.Parent == comment);
+        
+        return QueryManager<Comment>.FromQuery(query);
+    }
+
     public IQueryManager<Comment> GetQueryBySpecification(ISpecification<Comment>? specification = null)
     {
-        return QueryManager<Comment>.FromQuery(SpecificationHandler.Handle(Context.Comments,specification));
+        return QueryManager<Comment>.FromQuery(Context.Comments.ApplySpecification(specification));
     }
 }

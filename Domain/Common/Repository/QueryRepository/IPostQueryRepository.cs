@@ -9,5 +9,5 @@ public interface IPostQueryRepository : IQueryRepositoryBase<Post>, IPostReposit
     
     IQueryManager<Post> GetPostWithCommentsQuery(Guid guid, int commentCount);
     
-    IQueryManager<Post> GetPostsWithUserAndFirstCommentQuery();
+    IQueryManager<Post> GetPublicPostsWithUserAndFirstCommentQuery();
 }

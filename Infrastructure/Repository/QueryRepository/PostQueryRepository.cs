@@ -1,8 +1,10 @@
-﻿using ApplicationCore.Common.Implementation.Query;
+﻿using ApplicationCore.Common.Extension;
+using ApplicationCore.Common.Implementation.Query;
 using ApplicationCore.Common.Interface;
 using Domain.Common.Query;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Common.Specification;
+using Domain.Enum;
 using Domain.Model.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +12,7 @@ namespace Infrastructure.Repository.QueryRepository;
 
 public class PostQueryRepository : PostRepository, IPostQueryRepository
 {
-    public PostQueryRepository(IApplicationDbContext context, ISpecificationHandler<Post> specificationHandler) : base(context, specificationHandler)
+    public PostQueryRepository(IApplicationDbContext context) : base(context)
     {
     }
     
@@ -29,6 +31,7 @@ public class PostQueryRepository : PostRepository, IPostQueryRepository
     public IQueryManager<Post> GetPostWithCommentsQuery(Guid guid, int commentCount)
     {
         IQueryable<Post> query = Context.Posts
+            .AsSplitQuery()
             .Include(p => p.User)
             .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(commentCount))
             .ThenInclude(c => c.User)
@@ -38,9 +41,10 @@ public class PostQueryRepository : PostRepository, IPostQueryRepository
         return QueryManager<Post>.FromQuery(query);
     }
 
-    public IQueryManager<Post> GetPostsWithUserAndFirstCommentQuery()
+    public IQueryManager<Post> GetPublicPostsWithUserAndFirstCommentQuery()
     {
         IQueryable<Post> query = Context.Posts
+            .Where(p => p.Status == StatusEnum.Visible)
             .Include(p => p.User)
             .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(1))
             .ThenInclude(p => p.User)
@@ -51,7 +55,7 @@ public class PostQueryRepository : PostRepository, IPostQueryRepository
     
     public IQueryManager<Post> GetQueryBySpecification(ISpecification<Post>? specification = null)
     {
-        return QueryManager<Post>.FromQuery(SpecificationHandler.Handle(Context.Posts,specification));
+        return QueryManager<Post>.FromQuery(Context.Posts.ApplySpecification(specification));
     }
     
 }

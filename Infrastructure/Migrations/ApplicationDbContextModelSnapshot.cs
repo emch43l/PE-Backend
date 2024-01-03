@@ -101,10 +101,10 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("PostId")
+                    b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PreviousId")
+                    b.Property<int>("PostId")
                         .HasColumnType("int");
 
                     b.Property<int>("ReactionCount")
@@ -119,11 +119,9 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[FileId] IS NOT NULL");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("ParentId");
 
-                    b.HasIndex("PreviousId")
-                        .IsUnique()
-                        .HasFilter("[PreviousId] IS NOT NULL");
+                    b.HasIndex("PostId");
 
                     b.HasIndex("UserId");
 
@@ -538,15 +536,15 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Domain.Model.Generic.Comment", "FileId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("Domain.Model.Generic.Comment", "Parent")
+                        .WithMany("Replies")
+                        .HasForeignKey("ParentId");
+
                     b.HasOne("Domain.Model.Generic.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("Domain.Model.Generic.Comment", "Previous")
-                        .WithOne()
-                        .HasForeignKey("Domain.Model.Generic.Comment", "PreviousId");
 
                     b.HasOne("Infrastructure.Identity.Entity.UserEntity", "User")
                         .WithMany("Comments")
@@ -556,9 +554,9 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("File");
 
-                    b.Navigation("Post");
+                    b.Navigation("Parent");
 
-                    b.Navigation("Previous");
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
@@ -704,6 +702,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Model.Generic.Comment", b =>
                 {
                     b.Navigation("Reactions");
+
+                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("Domain.Model.Generic.File", b =>

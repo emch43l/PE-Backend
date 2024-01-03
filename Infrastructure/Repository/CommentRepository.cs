@@ -11,7 +11,7 @@ namespace Infrastructure.Repository;
 
 public class CommentRepository : EntityRepositoryBase<Comment>, ICommentRepository
 {
-    public CommentRepository(ISpecificationHandler<Comment> specificationHandler, IApplicationDbContext context) : base(specificationHandler,context)
+    public CommentRepository(IApplicationDbContext context) : base(context)
     {
         
     }

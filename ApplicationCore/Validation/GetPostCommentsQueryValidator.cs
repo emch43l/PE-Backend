@@ -1,4 +1,4 @@
-﻿using ApplicationCore.CQRS.Comment.Query;
+﻿using ApplicationCore.CQRS.CommentOperations.Query;
 using FluentValidation;
 
 namespace ApplicationCore.Validation;

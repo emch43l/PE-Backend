@@ -2,7 +2,7 @@
 using ApplicationCore;
 using ApplicationCore.Common.Implementation.Specification;
 using ApplicationCore.Common.Interface;
-using ApplicationCore.CQRS.Comment.Query;
+using ApplicationCore.CQRS.CommentOperations.Query;
 using ApplicationCore.CQRS.PostOperations.Command;
 using ApplicationCore.CQRS.PostOperations.Query;
 using ApplicationCore.Pagination;
@@ -186,7 +186,6 @@ public static class DependencyInjection
     public static IServiceCollection ConfigureServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IApplicationDbContext, ApplicationDbContext>();
-        serviceCollection.AddScoped(typeof(ISpecificationHandler<>),typeof(SpecificationHandler<>));
         serviceCollection.AddScoped(typeof(ISpecification<>),typeof(SpecificationBase<>));
         serviceCollection.AddScoped(typeof(IGenericPaginator),typeof(GenericPaginator));
         serviceCollection.AddScoped<ICommentRepository, CommentRepository>();

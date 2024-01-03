@@ -8,7 +8,7 @@ using Domain.Model.Generic;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace ApplicationCore.CQRS.Comment.Query;
+namespace ApplicationCore.CQRS.CommentOperations.Query;
 
 public class GetPostCommentsQueryHandler : IQueryHandler<GetPostCommentsQuery,IGenericPaginatorResult<CommentDto>>
 {

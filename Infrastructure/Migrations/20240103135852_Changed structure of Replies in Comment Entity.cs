@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class ChangedstructureofRepliesinCommentEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,6 +17,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -82,7 +83,6 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -192,7 +192,8 @@ namespace Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
+                    CommentCount = table.Column<int>(type: "int", nullable: false),
+                    ReactionCount = table.Column<int>(type: "int", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -215,7 +216,6 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AlbumId = table.Column<int>(type: "int", nullable: false),
                     Raintg = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -242,7 +242,6 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PostId = table.Column<int>(type: "int", nullable: true),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Format = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -276,7 +275,6 @@ namespace Infrastructure.Migrations
                     PostId = table.Column<int>(type: "int", nullable: false),
                     ReactionType = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -324,11 +322,12 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PreviousId = table.Column<int>(type: "int", nullable: true),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PostId = table.Column<int>(type: "int", nullable: false),
-                    FileId = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
+                    FileId = table.Column<int>(type: "int", nullable: true),
+                    ReactionCount = table.Column<int>(type: "int", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -342,8 +341,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comments_Comments_PreviousId",
-                        column: x => x.PreviousId,
+                        name: "FK_Comments_Comments_ParentId",
+                        column: x => x.ParentId,
                         principalTable: "Comments",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -367,7 +366,6 @@ namespace Infrastructure.Migrations
                     CommentId = table.Column<int>(type: "int", nullable: false),
                     ReactionType = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -460,19 +458,18 @@ namespace Infrastructure.Migrations
                 name: "IX_Comments_FileId",
                 table: "Comments",
                 column: "FileId",
-                unique: true);
+                unique: true,
+                filter: "[FileId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ParentId",
+                table: "Comments",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",
                 table: "Comments",
                 column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_PreviousId",
-                table: "Comments",
-                column: "PreviousId",
-                unique: true,
-                filter: "[PreviousId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_UserId",

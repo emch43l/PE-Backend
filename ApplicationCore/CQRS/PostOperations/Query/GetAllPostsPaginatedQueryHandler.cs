@@ -39,7 +39,7 @@ public class GetAllPostsPaginatedQueryHandler: IQueryHandler<GetAllPostsPaginate
             await _paginator
                 .SetPageSize(request.ItemsPerPage)
                 .Paginate(
-                    _postRepository.GetPostsWithUserAndFirstCommentQuery().ApplySpecification(new PublicPostSpecification()).GetQuery(), 
+                    _postRepository.GetPublicPostsWithUserAndFirstCommentQuery().ApplySpecification(new PublicPostSpecification()).GetQuery(), 
                     new PostWithUserAndSingleCommentMapper(), 
                     request.PageNumber
                     );

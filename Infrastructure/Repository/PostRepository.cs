@@ -11,7 +11,7 @@ namespace Infrastructure.Repository;
 
 public class PostRepository : EntityRepositoryBase<Post>, IPostRepository
 {
-    public PostRepository(IApplicationDbContext context, ISpecificationHandler<Post> specificationHandler) : base(specificationHandler,context)
+    public PostRepository(IApplicationDbContext context) : base(context)
     {
        
     }

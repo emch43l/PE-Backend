@@ -4,7 +4,11 @@ namespace Domain.Model.Generic;
 
 public class Comment: UserManyToOneJoinWithUidIdentity, IEntity
 {
-    public Comment? Previous { get; set; }
+    public int? ParentId { get; set; }
+    
+    public Comment? Parent { get; set; }
+    
+    public ICollection<Comment> Replies { get; set; }
     
     public string Content { get; set; }
     

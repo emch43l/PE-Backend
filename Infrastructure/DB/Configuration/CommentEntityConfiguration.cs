@@ -30,9 +30,9 @@ public class CommentEntityConfiguration : IEntityTypeConfiguration<Comment>
             .WithOne(reaction => reaction.Comment)
             .OnDelete(DeleteBehavior.NoAction);
         builder
-            .HasOne(comment => comment.Previous)
-            .WithOne()
-            .HasForeignKey<Comment>("PreviousId");
+            .HasMany(c => c.Replies)
+            .WithOne(c => c.Parent)
+            .HasForeignKey("ParentId");
         builder.ToTable("Comments");
     }
 }

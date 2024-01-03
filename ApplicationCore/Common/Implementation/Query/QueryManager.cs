@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using ApplicationCore.Common.Extension;
 using Domain.Common.Query;
 using Domain.Common.Specification;
 using Domain.Model;
@@ -6,10 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Common.Implementation.Query;
 
-public class QueryManager<TEntity> : IQueryManager< TEntity> where TEntity: IEntity
+public class QueryManager<TEntity> : IQueryManager< TEntity> where TEntity: class, IEntity
 {
     private IQueryable<TEntity> _query;
-    private readonly ISpecificationHandler<TEntity> _specificationHandler;
 
     public QueryManager(IQueryable<TEntity> query)
     {
@@ -18,7 +18,7 @@ public class QueryManager<TEntity> : IQueryManager< TEntity> where TEntity: IEnt
 
     public IQueryManager<TEntity> ApplySpecification(ISpecification<TEntity> specification)
     {
-        _query = _specificationHandler.Handle(_query, specification);
+        _query = _query.ApplySpecification(specification);
         return this;
     }
 

@@ -3,17 +3,16 @@ using Domain.Common.Repository.Base;
 using Domain.Common.Specification;
 using Domain.Model;
 using Microsoft.EntityFrameworkCore;
+using ApplicationCore.Common.Extension;
 
 namespace Infrastructure.Repository.Base;
 
 public abstract class EntityRepositoryBase<T> : IGuidGenericRepositoryBase<T> where T: class, IEntity
 {
-    protected readonly ISpecificationHandler<T> SpecificationHandler;
     protected readonly IApplicationDbContext Context;
 
-    protected EntityRepositoryBase(ISpecificationHandler<T> specificationHandler, IApplicationDbContext context)
+    protected EntityRepositoryBase(IApplicationDbContext context)
     {
-        SpecificationHandler = specificationHandler;
         Context = context;
     }
     
@@ -55,7 +54,7 @@ public abstract class EntityRepositoryBase<T> : IGuidGenericRepositoryBase<T> wh
 
     public async Task<IEnumerable<T>> FindBySpecificationAsync(ISpecification<T>? specification = null)
     {
-        return await SpecificationHandler.Handle(Context.Set<T>(), specification).ToListAsync();
+        return await Context.Set<T>().ApplySpecification(specification).ToListAsync();
     }
 
     public async Task<T?> FindByGuidAsync(Guid id)
