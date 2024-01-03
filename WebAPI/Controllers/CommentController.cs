@@ -16,8 +16,8 @@ public class CommentController : ControllerBase
         _mediator = mediator;
     }
 
-    [Route("post/:id/:page")]
     [HttpGet]
+    [Route("post/:id/:page")]
     public async Task<IActionResult> GetPostComments(Guid id, int page)
     {
         IGenericPaginatorResult<CommentDto> result = await _mediator.Send(new GetPostCommentsQuery(id, page));

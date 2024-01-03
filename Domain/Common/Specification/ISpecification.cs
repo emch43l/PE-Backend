@@ -4,7 +4,7 @@ namespace Domain.Common.Specification;
 
 public interface ISpecification<T>
 {
-    HashSet<Expression<Func<T, bool>>> Criteria { get; }
+    List<Expression<Func<T, bool>>> Criteria { get; }
     
     Expression<Func<T, object>>? OrderBy { get; }
     

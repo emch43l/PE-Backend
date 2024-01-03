@@ -10,6 +10,8 @@ public class Comment: UserManyToOneJoinWithUidIdentity, IEntity
     
     public ICollection<Comment> Replies { get; set; }
     
+    public int RepliesCount { get; set; }
+    
     public string Content { get; set; }
     
     public DateTime DateCreated { get; set; }

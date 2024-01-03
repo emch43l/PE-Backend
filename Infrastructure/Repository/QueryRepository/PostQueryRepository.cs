@@ -14,6 +14,7 @@ public class PostQueryRepository : PostRepository, IPostQueryRepository
 {
     public PostQueryRepository(IApplicationDbContext context) : base(context)
     {
+        
     }
     
     public IQueryManager<Post> GetUserPostsWithCommentsQuery(IUser user, int commentCount)

@@ -19,6 +19,7 @@ public class CommentQueryRepository : CommentRepository, ICommentQueryRepository
     {
         IQueryable<Comment> query = Context.Comments
             .Where(c => c.Post == post)
+            .Where(c => c.Parent == null)
             .Include(c => c.User)
             .AsNoTracking();
         
@@ -36,6 +37,6 @@ public class CommentQueryRepository : CommentRepository, ICommentQueryRepository
 
     public IQueryManager<Comment> GetQueryBySpecification(ISpecification<Comment>? specification = null)
     {
-        return QueryManager<Comment>.FromQuery(Context.Comments.ApplySpecification(specification));
+        return QueryManager<Comment>.FromQuery(Context.Comments).ApplySpecification(specification);
     }
 }

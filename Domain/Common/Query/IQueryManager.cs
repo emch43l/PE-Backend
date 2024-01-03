@@ -6,7 +6,7 @@ namespace Domain.Common.Query;
 
 public interface IQueryManager<TEntity> where TEntity: IEntity
 {
-    IQueryManager<TEntity> ApplySpecification(ISpecification<TEntity> specification);
+    IQueryManager<TEntity> ApplySpecification(ISpecification<TEntity>? specification);
     
     Task<TResult?> MapOne<TResult>(Expression<Func<TEntity,TResult>> selectExpression);
 

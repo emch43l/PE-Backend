@@ -5,7 +5,7 @@ namespace Domain.Common.Specification.Base;
 
 public class SpecificationBase<TEntity> : ISpecification<TEntity> where TEntity: IEntity
 {
-    public HashSet<Expression<Func<TEntity, bool>>> Criteria { get; } = new();
+    public List<Expression<Func<TEntity, bool>>> Criteria { get; } = new();
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; } = null;
 
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; } = null;

@@ -23,7 +23,8 @@ public class GetCommentRepliesQueryHandler : IQueryHandler<GetCommentRepliesQuer
 
     public async Task<IGenericPaginatorResult<CommentDto>> Handle(GetCommentRepliesQuery request, CancellationToken cancellationToken)
     {
-        ISpecification<Comment> specification = new CommentWithPostSpecification(request.Id);
+        ISpecification<Comment> specification = new CommentWithPublicPostSpecification(request.Id);
+        // gets first comment
         Comment? comment = (await _commentQueryRepository.FindBySpecificationAsync(specification)).FirstOrDefault();
         if (comment == null)
             throw new NotFoundException("Comment not found !");

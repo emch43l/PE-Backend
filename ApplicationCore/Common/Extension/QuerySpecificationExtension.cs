@@ -25,12 +25,12 @@ public static class QuerySpecificationExtension
             query = query.AsNoTracking();
         }
         
-        specification.Criteria
+        query = specification.Criteria
             .Aggregate(query, 
                 (current, criteria) => current.Where(criteria)
             );
 
-        specification.Includes
+        query = specification.Includes
             .Aggregate(query, 
                 (current, include) => current.Include(include)
             );

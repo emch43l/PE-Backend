@@ -10,8 +10,10 @@ public class CommentWithUserMapper : AbstractMapper<Comment,CommentDto>
     {
         return (Comment comment) => new CommentDto()
         {
+            Id = comment.Guid,
             Content = comment.Content,
             DateCreated = comment.DateCreated,
+            RepliesCount = comment.RepliesCount,
             ReactionCount = comment.ReactionCount,
             UserName = comment.User.UserName
         };

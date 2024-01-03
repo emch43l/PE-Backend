@@ -16,7 +16,7 @@ public class QueryManager<TEntity> : IQueryManager< TEntity> where TEntity: clas
         _query = query;
     }
 
-    public IQueryManager<TEntity> ApplySpecification(ISpecification<TEntity> specification)
+    public IQueryManager<TEntity> ApplySpecification(ISpecification<TEntity>? specification)
     {
         _query = _query.ApplySpecification(specification);
         return this;
