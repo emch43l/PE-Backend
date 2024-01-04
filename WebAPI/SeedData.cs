@@ -1,14 +1,11 @@
-﻿using ApplicationCore.Common.Interface;
-using Domain.Enum;
-using Domain.Model.Generic;
+﻿using Domain.Model.Generic;
 using Infrastructure.DB;
 using Infrastructure.Dev.Seed;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using File = Domain.Model.Generic.File;
 using UserEntity = Infrastructure.Identity.Entity.UserEntity;
-
-
 
 namespace WebAPI;
 
@@ -37,20 +34,26 @@ public static class SeedData
             
             users.Add(adminUser);
             users.Add(normalUser);
-            
-            CommentSeeder commentSeeder = new CommentSeeder(users).AddReactionSeeder(new ReactionSeeder(50,users));
-            PostSeeder postSeeder = new PostSeeder(users, 50);
 
-            List<Post> posts = postSeeder.CreatePosts();
+            FileSeeder fileSeeder = new FileSeeder(users,"Resources/Images");
             
-            List<Comment> comments = postSeeder.PopulatePostsCommentsWithReactions(new List<int>([10, 5, 2]), commentSeeder,
-                new ReactionSeeder(50, users));
+            CommentSeeder commentSeeder = new CommentSeeder(users);
+            commentSeeder.SetCommentRandomization(CommentRandomization.Full);
+            commentSeeder.AddReactionSeeder(new ReactionSeeder(50,users));
+            
+            PostSeeder postSeeder = new PostSeeder(users, 50);
+            postSeeder.AddReactionSeeder(new ReactionSeeder(50, users));
+
+            List<File> files = fileSeeder.CreateFiles(100);
+            List<Post> posts = postSeeder.CreatePosts();
+            List<Comment> comments = postSeeder.PopulatePostsCommentsWithReactions(new List<int>([10, 7, 3]), commentSeeder);
             
             context.Database.OpenConnection();
             context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Comments] ON;");
             
             context.AddRange(posts);
             context.AddRange(comments);
+            context.AddRange(files);
             await context.SaveChangesAsync();
             
             context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Comments] OFF;");

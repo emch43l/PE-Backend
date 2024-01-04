@@ -1,4 +1,5 @@
-﻿using Domain.Model.Generic;
+﻿using Bogus;
+using Domain.Model.Generic;
 using Infrastructure.Identity.Entity;
 
 namespace Infrastructure.Dev.Seed;
@@ -13,33 +14,25 @@ public class CommentSeeder
 
     public static int CommentId = 0;
 
-    private bool _seedReactions;
-
     private ReactionSeeder? _reactionSeeder;
 
-    public CommentSeeder(List<IUser> users, bool seedReactions = true)
+    private CommentRandomization _commentRandomization;
+
+    private Random _random = new Random();
+
+    private readonly Faker _faker = new Faker();
+
+    public CommentSeeder(List<IUser> users)
     {
-        _seedReactions = seedReactions;
+        _commentRandomization = CommentRandomization.None;
         _users = users;
         _rootCommentList = new List<Comment>();
         _previousCommentList = new List<Comment>();
     }
     
-    public List<Comment> GetComments(bool clearSeeder = true)
-    {
-        List<Comment> result = new List<Comment>(_rootCommentList);
-        if (clearSeeder == true)
-        {
-            ClearSeeder();
-        }
-        
-        return result;
-    }
-
-    public CommentSeeder AddReactionSeeder(ReactionSeeder seeder)
+    public void AddReactionSeeder(ReactionSeeder seeder)
     {
         _reactionSeeder = seeder;
-        return this;
     }
 
     public void ClearSeeder()
@@ -48,52 +41,83 @@ public class CommentSeeder
         _previousCommentList.Clear();
     }
 
-    public CommentSeeder CreateComments(int commentCount, IUser user, ref Post post)
+    public void SetCommentRandomization(CommentRandomization randomization)
     {
-        Post currentPost = post;
+        _commentRandomization = randomization;
+    }
+    
+    public List<Comment> CreateComments(List<int> commentCountList, Post post)
+    {
+        commentCountList.ForEach(count => 
+            CreateComments(_commentRandomization == CommentRandomization.None ? count : _random.Next(1,count+1) ,post)
+            );
+
+        post.CommentCount = _rootCommentList.Count;
+        List<Comment> result = new List<Comment>(_rootCommentList);
+        ClearSeeder();
         
+        return result;
+    }
+
+    private CommentSeeder CreateComments(int commentCount, Post post)
+    {
         if (_rootCommentList.Count == 0)
         {
-            _rootCommentList = GenerateComments(commentCount, user, currentPost, null);
+            _rootCommentList = GenerateComments(commentCount, post, null);
             _previousCommentList = _rootCommentList;
             return this;
         }
         
 
         List<Comment> currentCommentList = _previousCommentList.Select(comment => 
-            GenerateComments(commentCount, user, currentPost, comment))
-            .SelectMany(c => c).ToList();
+            GenerateComments(commentCount, post, comment)).SelectMany(c => c).ToList();
         
         _rootCommentList.AddRange(currentCommentList);
         _previousCommentList = currentCommentList;
-
-        post.CommentCount = _rootCommentList.Count;
         
         return this;
     }
 
-    private List<Comment> GenerateComments(int commentCount, IUser user, Post post, Comment? comment)
+    private List<Comment> GenerateComments(int commentCount, Post post, Comment? comment)
     {
-        return Enumerable.Range(1, commentCount).Select(i => GenerateComment(post, user ,i ,comment)).ToList();
+        return Enumerable
+            .Range(1,_commentRandomization == CommentRandomization.Full ? _random.Next(1,commentCount+1) : commentCount )
+            .Select(i => GenerateComment(post,i ,comment)).ToList();
     }
     
-    private Comment GenerateComment(Post post, IUser user, int count, Comment? parent)
+    private Comment GenerateComment(Post post, int count, Comment? parent)
     {
         Comment comment = new Comment();
+        
         if (parent != null)
         {
             parent.RepliesCount = count;
         }
+        
         comment.Id = ++CommentId;
-        comment.User = user;
+        comment.User = RandomizeUser();
         comment.Parent = parent;
         comment.Post = post;
-        comment.Content = "Lorem ipsum description";
+        comment.Content = _faker.Lorem.Paragraph(2);
         comment.DateCreated = DateTime.Now;
-        if (_seedReactions && _reactionSeeder != null)
+        
+        if (_reactionSeeder != null)
         {
             comment = _reactionSeeder.SeedReactionsForComment(comment);
         }
+        
         return comment;
     }
+
+    private IUser RandomizeUser()
+    {
+        return _users[_random.Next(_users.Count)];
+    }
+}
+
+public enum CommentRandomization
+{
+    None,
+    Partial,
+    Full
 }

@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Dto;
+﻿using ApplicationCore.Common.Implementation.Specification.PostSpecification;
+using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Common.Repository;
@@ -37,7 +38,10 @@ public class GetPostCommentsQueryHandler : IQueryHandler<GetPostCommentsQuery,IG
             throw new PaginatorException();
         }
         
-        Post? post = await _postRepository.FindByGuidAsync(query.PostId);
+        Post? post = (await _postRepository.FindBySpecificationAsync(
+            new GetPublicPostSpecification(query.PostId)
+            )).FirstOrDefault();
+        
         if (post == null)
         {
             throw new PostNotFoundException();

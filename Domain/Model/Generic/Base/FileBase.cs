@@ -1,13 +1,20 @@
-﻿using Domain.Model.Generic.Join;
+﻿using Domain.Enum;
+using Domain.Model.Generic.Join;
 
 namespace Domain.Model.Generic.Base;
 
 public class FileBase: UserManyToOneJoinWithUidIdentity, IEntity
 {
-    public string Format { get; set; }
+    public const char SlugSeparator = '-'; 
     
-    public string Slug { get; set; }
+    public FileFormatEnum Format { get; set; }
     
+    public string Slug
+    {
+        get => $"{Name}{SlugSeparator}{Guid}";
+        private set => Slug = value;
+    }
+
     public string Name { get; set; }
     
     public long Size { get; set; }

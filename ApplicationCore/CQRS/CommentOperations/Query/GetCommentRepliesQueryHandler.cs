@@ -1,7 +1,7 @@
-﻿using ApplicationCore.Dto;
+﻿using ApplicationCore.Common.Implementation.Specification.CommentSpecification;
+using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
-using ApplicationCore.Specification;
 using Domain.Common.Repository;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Common.Specification;
