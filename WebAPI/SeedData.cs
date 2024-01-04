@@ -44,9 +44,16 @@ public static class SeedData
             PostSeeder postSeeder = new PostSeeder(users, 50);
             postSeeder.AddReactionSeeder(new ReactionSeeder(50, users));
 
+            AlbumSeeder albumSeeder = new AlbumSeeder(users);
+            
             List<File> files = fileSeeder.CreateFiles(100);
             List<Post> posts = postSeeder.CreatePosts();
             List<Comment> comments = postSeeder.PopulatePostsCommentsWithReactions(new List<int>([10, 7, 3]), commentSeeder);
+            
+            albumSeeder.AddFiles(files);
+            albumSeeder.AddRatingSeeder(new AlbumRatingSeeder(users));
+
+            List<Album> albums = albumSeeder.CreateAlbums(50);
             
             context.Database.OpenConnection();
             context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Comments] ON;");
@@ -54,6 +61,7 @@ public static class SeedData
             context.AddRange(posts);
             context.AddRange(comments);
             context.AddRange(files);
+            context.AddRange(albums);
             await context.SaveChangesAsync();
             
             context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Comments] OFF;");
