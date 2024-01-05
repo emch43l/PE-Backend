@@ -23,7 +23,7 @@ public class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
         if (post == null)
             throw new PostNotFoundException();
 
-        IUser user = await _identityService.GetUserByClaim(request.User);
+        IUser user = await _identityService.GetUserByClaimAsync(request.User);
 
         if (post.UserId != user.Id)
             throw new PostNotFoundException();

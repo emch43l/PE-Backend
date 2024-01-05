@@ -38,11 +38,11 @@ public abstract class EntityRepositoryBase<T> : IGuidGenericRepositoryBase<T> wh
             await Context.SaveChangesAsync();
     }
 
-    public async Task<bool> RemoveByIdAsync(int id)
+    public async Task Remove(T entity, bool save = true)
     {
-        int affectedRows = await Context.Set<T>().Where(p => p.Id == id).ExecuteDeleteAsync();
-
-        return affectedRows > 0;
+        Context.Set<T>().Remove(entity);
+        if (save)
+            await Context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(T entity, bool save = true)
@@ -52,20 +52,19 @@ public abstract class EntityRepositoryBase<T> : IGuidGenericRepositoryBase<T> wh
             await Context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<T>> FindBySpecificationAsync(ISpecification<T>? specification = null)
+    public async Task<IEnumerable<T>> FindAllBySpecificationAsync(ISpecification<T>? specification = null)
     {
         return await Context.Set<T>().ApplySpecification(specification).ToListAsync();
+    }
+    
+    public async Task<T?> FindBySpecificationAsync(ISpecification<T>? specification = null)
+    {
+        return await Context.Set<T>().ApplySpecification(specification).FirstOrDefaultAsync();
     }
 
     public async Task<T?> FindByGuidAsync(Guid id)
     {
         return await Context.Set<T>().FirstOrDefaultAsync(p => p.Guid == id);
     }
-
-    public async Task<bool> RemoveByGuidAsync(Guid id)
-    {
-        int affectedRows = await Context.Set<T>().Where(p => p.Guid == id).ExecuteDeleteAsync();
-
-        return affectedRows > 0;
-    }
+    
 }

@@ -179,6 +179,7 @@ public static class DependencyInjection
         serviceCollection.AddScoped<IValidator<GetPostCommentsQuery>, GetPostCommentsQueryValidator>();
         serviceCollection.AddScoped<IValidator<CreatePostCommand>, CreatePostCommandValidator>();
         serviceCollection.AddScoped<IValidator<UpdatePostCommand>, UpdatePostCommandValidator>();
+        serviceCollection.AddScoped<IValidator<AddReactionToPostCommand>, AddReactionToPostCommandValidator>();
 
         return serviceCollection;
     }
@@ -194,6 +195,7 @@ public static class DependencyInjection
         serviceCollection.AddScoped<ICommentQueryRepository, CommentQueryRepository>();
         serviceCollection.AddScoped<IAlbumQueryRepository, AlbumQueryRepository>();
         serviceCollection.AddScoped<IPostQueryRepository, PostQueryRepository>();
+        serviceCollection.AddScoped<IPostReactionRepository, PostReactionRepository>();
         serviceCollection.AddMediatR(options =>
             options.RegisterServicesFromAssembly(typeof(EntryPoint).Assembly)
             );

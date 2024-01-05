@@ -40,7 +40,7 @@ public class PostSeeder
         return entity;
     }
     
-    public List<Comment> PopulatePostsCommentsWithReactions(List<int> commentNumberList, CommentSeeder commentSeeder, bool randomizeCommentNumber = true)
+    public List<Comment> PopulatePostsCommentsWithReactions(List<int> commentNumberList, CommentSeeder commentSeeder, bool randomizeCommentNumber = true, bool interceptorInUse = true)
     {
         List<Comment> result = new List<Comment>();
 

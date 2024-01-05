@@ -12,6 +12,8 @@ public class ReactionSeeder
     private readonly Random _random;
 
     private readonly List<IUser> _users;
+
+    private bool _interceptorInUse = true;
     
     public ReactionSeeder(int numberOfReactions, List<IUser> users, bool randomizeReactionCount = true)
     {
@@ -21,10 +23,19 @@ public class ReactionSeeder
         _users = users;
     }
 
+    public void WithoutInterceptor()
+    {
+        _interceptorInUse = false;
+    }
+
     public Comment SeedReactionsForComment(Comment comment)
     {
         int count = GetReactionCount();
         List<CommentReaction> result = GenerateCommentReactions(count, comment);
+        if (!_interceptorInUse)
+        {
+            comment.ReactionCount = count;
+        }
         comment.ReactionCount = count;
         comment.Reactions = result;
         return comment;
@@ -34,7 +45,10 @@ public class ReactionSeeder
     {
         int count = GetReactionCount();
         List<PostReaction> result = GeneratePostReactions(count, post);
-        post.ReactionCount = count;
+        if (!_interceptorInUse)
+        {
+            post.ReactionCount = count;
+        }
         post.Reactions = result;
         return post;
     }

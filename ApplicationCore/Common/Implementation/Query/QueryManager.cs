@@ -27,12 +27,12 @@ public class QueryManager<TEntity> : IQueryManager< TEntity> where TEntity: clas
         return new QueryManager<TEntity>(query);
     }
 
-    public Task<TResult?> MapOne<TResult>(Expression<Func<TEntity, TResult>> selectExpression)
+    public Task<TResult?> GetOne<TResult>(Expression<Func<TEntity, TResult>> selectExpression)
     {
         return _query.Select(selectExpression).FirstOrDefaultAsync();
     }
 
-    public Task<List<TResult>> MapList<TResult>(Expression<Func<TEntity, TResult>> selectExpression)
+    public Task<List<TResult>> GetList<TResult>(Expression<Func<TEntity, TResult>> selectExpression)
     {
         return _query.Select(selectExpression).ToListAsync();
     }

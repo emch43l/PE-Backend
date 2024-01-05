@@ -7,5 +7,4 @@ public interface IGuidGenericRepositoryBase<T> : IGenericRepositoryBase<T> where
 {
     Task<T?> FindByGuidAsync(Guid id);
     
-    Task<bool> RemoveByGuidAsync(Guid id);
 }

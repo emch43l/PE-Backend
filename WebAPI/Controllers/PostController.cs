@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Requests;
-using WebAPI.Response;
 
 namespace WebAPI.Controllers;
 
@@ -49,7 +48,7 @@ public class PostController : ControllerBase
             );
 
         return Ok(
-            new GuidResponse(id)
+            new { Id = id }
             );
     }
 
@@ -65,7 +64,7 @@ public class PostController : ControllerBase
             request.Status, 
             HttpContext.User
             );
-        Guid result = await _mediator.Send(command);
+        await _mediator.Send(command);
 
         return NoContent();
     }
@@ -76,7 +75,7 @@ public class PostController : ControllerBase
 
     public async Task<IActionResult> DeletePost([FromQuery] Guid id)
     {
-        Guid result = await _mediator.Send(new DeletePostCommand(id, HttpContext.User));
+        await _mediator.Send(new DeletePostCommand(id, HttpContext.User));
         return NoContent();
     }
 

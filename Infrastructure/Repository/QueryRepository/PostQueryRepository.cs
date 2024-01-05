@@ -29,13 +29,11 @@ public class PostQueryRepository : PostRepository, IPostQueryRepository
         return QueryManager<Post>.FromQuery(query);
     }
 
-    public IQueryManager<Post> GetPostWithCommentsQuery(Guid guid, int commentCount)
+    public IQueryManager<Post> GetPostWithUserQuery(Guid guid)
     {
         IQueryable<Post> query = Context.Posts
             .AsSplitQuery()
             .Include(p => p.User)
-            .Include(p => p.Comments.OrderBy(c => c.ReactionCount).Take(commentCount))
-            .ThenInclude(c => c.User)
             .Where(p => p.Guid == guid)
             .AsNoTracking();
         

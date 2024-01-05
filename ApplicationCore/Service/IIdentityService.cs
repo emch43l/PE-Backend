@@ -5,9 +5,9 @@ namespace ApplicationCore.Service;
 
 public interface IIdentityService
 {
-    Task<IUser> GetUserByClaim(ClaimsPrincipal claimsPrincipal);
+    Task<IUser> GetUserByClaimAsync(ClaimsPrincipal claimsPrincipal);
     
-    Task<IList<string>> GetUserRolesByEmail(string email);
+    Task<IList<string>> GetUserRolesByEmailAsync(string email);
     
     Task<IUser?> GetUserByEmailAsync(string email);
     

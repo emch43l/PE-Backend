@@ -30,7 +30,7 @@ public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand>
                 );
         }
 
-        IUser user = await _identityService.GetUserByClaim(request.User);
+        IUser user = await _identityService.GetUserByClaimAsync(request.User);
         
         Post post = new Post()
         {

@@ -37,10 +37,8 @@ public class GetPostCommentsQueryHandler : IQueryHandler<GetPostCommentsQuery,IG
         {
             throw new PaginatorException();
         }
-        
-        Post? post = (await _postRepository.FindBySpecificationAsync(
-            new GetPublicPostSpecification(query.PostId)
-            )).FirstOrDefault();
+
+        Post? post = await _postRepository.FindBySpecificationAsync(new GetPublicPostSpecification(query.PostId));
         
         if (post == null)
         {

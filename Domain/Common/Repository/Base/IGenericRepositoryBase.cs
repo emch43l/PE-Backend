@@ -14,11 +14,13 @@ public interface IGenericRepositoryBase<T> where T: IUidIdentity<int>
     Task<List<T>> FindAllAsync();
     
     Task AddAsync(T entity, bool save = true);
-    
-    Task<bool> RemoveByIdAsync(int id);
+
+    Task Remove(T entity, bool save = true);
     
     Task UpdateAsync(T entity, bool save = true);
     
-    Task<IEnumerable<T>> FindBySpecificationAsync(ISpecification<T>? specification = null);
+    Task<T?> FindBySpecificationAsync(ISpecification<T>? specification = null);
+    
+    Task<IEnumerable<T>> FindAllBySpecificationAsync(ISpecification<T>? specification = null);
     
 }

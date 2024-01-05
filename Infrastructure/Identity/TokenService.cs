@@ -33,7 +33,7 @@ public class TokenService : ITokenService
             .AddClaim(JwtRegisteredClaimNames.Email, user.Email)
             .AddClaim(JwtRegisteredClaimNames.Exp, DateTimeOffset.UtcNow.AddDays(365).ToUnixTimeSeconds())
             .AddClaim(JwtRegisteredClaimNames.Jti, Guid.NewGuid())
-            .AddClaim(ClaimTypes.Role, await _identityService.GetUserRolesByEmail(user.Email))
+            .AddClaim(ClaimTypes.Role, await _identityService.GetUserRolesByEmailAsync(user.Email))
             .Audience(_settings.Audience)
             .Issuer(_settings.Issuer)
             .Encode();

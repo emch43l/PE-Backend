@@ -24,6 +24,11 @@ public static class QuerySpecificationExtension
         {
             query = query.AsNoTracking();
         }
+
+        if (specification.Take != null)
+        {
+            query = query.Take((int)specification.Take);
+        }
         
         query = specification.Criteria
             .Aggregate(query, 

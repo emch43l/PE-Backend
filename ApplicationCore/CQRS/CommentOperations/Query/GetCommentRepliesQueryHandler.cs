@@ -25,7 +25,7 @@ public class GetCommentRepliesQueryHandler : IQueryHandler<GetCommentRepliesQuer
     {
         ISpecification<Comment> specification = new CommentWithPublicPostSpecification(request.Id);
         // gets first comment
-        Comment? comment = (await _commentQueryRepository.FindBySpecificationAsync(specification)).FirstOrDefault();
+        Comment? comment = await _commentQueryRepository.FindBySpecificationAsync(specification);
         if (comment == null)
             throw new NotFoundException("Comment not found !");
 

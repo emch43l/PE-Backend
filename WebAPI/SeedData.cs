@@ -4,6 +4,9 @@ using Infrastructure.Dev.Seed;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
 using File = Domain.Model.Generic.File;
 using UserEntity = Infrastructure.Identity.Entity.UserEntity;
 
@@ -18,16 +21,19 @@ public static class SeedData
 
             IServiceProvider provider = scope.ServiceProvider;
             ApplicationDbContext context = provider.GetRequiredService<ApplicationDbContext>();
-
+            
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
+            
 
             UserEntity adminUser = await CreateUser(provider,"admin","admin@admin.com","zaq1@WSX");
             UserEntity normalUser = await CreateUser(provider,"user", "user@user.com","zaq1@WSX");
+            UserEntity testUser = await CreateUser(provider, "test", "test@test.com", "zaq1@WSX");
             
             await AddUserToRole(provider, adminUser, "admin");
             await AddUserToRole(provider, adminUser, "user");
             await AddUserToRole(provider, normalUser, "user");
+            await AddUserToRole(provider, testUser, "user");
             
             Random random = new Random();
             List<IUser> users = new List<IUser>();

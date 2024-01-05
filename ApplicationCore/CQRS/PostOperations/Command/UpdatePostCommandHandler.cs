@@ -37,7 +37,7 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
 
         if (!request.IgnoreResourceOwner)
         {
-            IUser user = await _identityService.GetUserByClaim(request.User);
+            IUser user = await _identityService.GetUserByClaimAsync(request.User);
             if (post.UserId != user.Id)
                 throw new PostNotFoundException();
         }

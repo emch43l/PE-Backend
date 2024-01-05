@@ -1,8 +1,11 @@
 ﻿using ApplicationCore.Common.Interface;
 using Domain.Model.Generic;
+using Infrastructure.DB.Interceptors;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using File = Domain.Model.Generic.File;
 using UserEntity = Infrastructure.Identity.Entity.UserEntity;
 
@@ -35,6 +38,9 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity,UserRoleEntity,
             optionsBuilder.UseSqlServer(
                 "Server=DESKTOP-7J9U791;Database=PE;TrustServerCertificate=true;Integrated Security=true"); 
         }
+
+        optionsBuilder.AddInterceptors(new PostReactionInterceptor());
+        optionsBuilder.AddInterceptors(new CommentReactionInterceptor());
         
         base.OnConfiguring(optionsBuilder);
     }

@@ -8,9 +8,9 @@ public interface IQueryManager<TEntity> where TEntity: IEntity
 {
     IQueryManager<TEntity> ApplySpecification(ISpecification<TEntity>? specification);
     
-    Task<TResult?> MapOne<TResult>(Expression<Func<TEntity,TResult>> selectExpression);
+    Task<TResult?> GetOne<TResult>(Expression<Func<TEntity,TResult>> selectExpression);
 
-    Task<List<TResult>> MapList<TResult>(Expression<Func<TEntity,TResult>> selectExpression);
+    Task<List<TResult>> GetList<TResult>(Expression<Func<TEntity,TResult>> selectExpression);
     
     IQueryable<TEntity> GetQuery();
 }

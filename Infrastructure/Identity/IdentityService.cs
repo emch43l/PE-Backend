@@ -43,7 +43,7 @@ public class IdentityService : IIdentityService
         return newUser;
     }
 
-    public async Task<IUser> GetUserByClaim(ClaimsPrincipal claimsPrincipal)
+    public async Task<IUser> GetUserByClaimAsync(ClaimsPrincipal claimsPrincipal)
     {
         IUser? user = await _manager.GetUserAsync(claimsPrincipal);
         if (user == null)
@@ -52,7 +52,7 @@ public class IdentityService : IIdentityService
         return user;
     }
 
-    public async Task<IList<string>> GetUserRolesByEmail(string email)
+    public async Task<IList<string>> GetUserRolesByEmailAsync(string email)
     {
         IUser? user = await GetUserByEmailAsync(email);
         if (user == null)

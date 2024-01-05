@@ -8,12 +8,12 @@ public abstract class AbstractMapper<TEntity,TResult> : IMapper<TEntity,TResult>
 {
     public async Task<List<TResult>> MapCollection(IQueryManager<TEntity> queryManager)
     {
-        return await queryManager.MapList(GetMapperExpression());
+        return await queryManager.GetList(GetMapperExpression());
     }
 
     public async Task<TResult?> MapSingle(IQueryManager<TEntity> queryManager)
     {
-        return await queryManager.MapOne(GetMapperExpression());
+        return await queryManager.GetOne(GetMapperExpression());
     }
 
     public Func<TEntity, TResult> GetCompiledDelegate()
