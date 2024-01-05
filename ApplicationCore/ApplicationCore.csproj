@@ -9,7 +9,6 @@
     <ItemGroup>
       <Folder Include="CQRS\Album\Command\" />
       <Folder Include="CQRS\Album\Querry\" />
-      <Folder Include="CQRS\CommentOperations\Command\" />
       <Folder Include="CQRS\File\Command\" />
       <Folder Include="CQRS\File\Querry\" />
     </ItemGroup>

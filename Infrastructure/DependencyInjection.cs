@@ -187,8 +187,10 @@ public static class DependencyInjection
     public static IServiceCollection ConfigureServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+        
         serviceCollection.AddScoped(typeof(ISpecification<>),typeof(SpecificationBase<>));
         serviceCollection.AddScoped(typeof(IGenericPaginator),typeof(GenericPaginator));
+        
         serviceCollection.AddScoped<ICommentRepository, CommentRepository>();
         serviceCollection.AddScoped<IAlbumRepository, AlbumRepository>();
         serviceCollection.AddScoped<IPostRepository, PostRepository>();
@@ -196,6 +198,9 @@ public static class DependencyInjection
         serviceCollection.AddScoped<IAlbumQueryRepository, AlbumQueryRepository>();
         serviceCollection.AddScoped<IPostQueryRepository, PostQueryRepository>();
         serviceCollection.AddScoped<IPostReactionRepository, PostReactionRepository>();
+        serviceCollection.AddScoped<ICommentReactionRepository, CommentReactionRepository>();
+        serviceCollection.AddScoped<ICommentReactionQueryRepository, CommentReactionQueryRepository>();
+        
         serviceCollection.AddMediatR(options =>
             options.RegisterServicesFromAssembly(typeof(EntryPoint).Assembly)
             );

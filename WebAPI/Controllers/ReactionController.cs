@@ -1,4 +1,5 @@
-﻿using ApplicationCore.CQRS.PostOperations.Command;
+﻿using ApplicationCore.CQRS.CommentOperations.Command;
+using ApplicationCore.CQRS.PostOperations.Command;
 using Domain.Enum;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,12 +28,16 @@ public class ReactionController : ControllerBase
         return Ok();
     }
 
-    /*[Route("comment")]
-    public async Task<IActionResult> AddReactionToComment([FromQuery] Guid commentId)
+    [Route("comment")]
+    [HttpPost]
+    public async Task<IActionResult> AddReactionToComment([FromQuery] Guid commentId, [FromBody] ReactionTypeEnum reaction)
     {
-        
+        await _mediator.Send(new AddReactionToCommentCommand(commentId, reaction, HttpContext.User));
+
+        return Ok();
     }
 
+    /*
     [Route("album")]
     public async Task<IActionResult> AddRatingToAlbum([FromQuery] Guid albumId)
     {
