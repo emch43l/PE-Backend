@@ -25,11 +25,12 @@ public class AlbumEntityConfiguration : IEntityTypeConfiguration<Album>
                 });
         builder
              .HasMany(album => album.Rating)
-             .WithOne(rating => rating.Album);
+             .WithOne(rating => rating.Parent);
         builder
             .HasOne(album => (UserEntity)album.User)
             .WithMany(user => user.Albums)
             .HasForeignKey(post => post.UserId);
+        
         builder.ToTable("Albums");
     }
 }

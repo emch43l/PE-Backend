@@ -1,5 +1,4 @@
-﻿using Domain.Model;
-using Domain.Model.Interface;
+﻿using Domain.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -17,30 +16,28 @@ public abstract class AbstractReactionInterceptor<TParent,TReaction> : ISaveChan
         if (reactions.Count() == 0)
             return new ValueTask<InterceptionResult<int>>(result);
         
-        foreach (EntityEntry<TReaction> entityEntry in reactions)
-        {
-            ChangePostReactionCountBasedOnReactionEntityState(entityEntry);
-        }
+        reactions.ForEach(entry => AdjustReactionCount(entry));
+        
 
         return new ValueTask<InterceptionResult<int>>(result);
     }
 
-    private void ChangePostReactionCountBasedOnReactionEntityState(EntityEntry<TReaction> entry)
+    private void AdjustReactionCount(EntityEntry<TReaction> entry)
     {
-        TParent post = entry.Entity.Parent;
+        TParent parent = entry.Entity.Parent;
         if (entry.State == EntityState.Added)
         {
-            post.ReactionCount = post.ReactionCount + 1;
+            parent.ReactionCount = parent.ReactionCount + 1;
         }
 
         if (entry.State == EntityState.Deleted)
         {
-            if (post.ReactionCount == 0)
+            if (parent.ReactionCount == 0)
             {
                 return;
             }
             
-            post.ReactionCount = post.ReactionCount - 1;
+            parent.ReactionCount = parent.ReactionCount - 1;
         }
     }
 }

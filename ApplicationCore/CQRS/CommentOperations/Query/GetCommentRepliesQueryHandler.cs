@@ -31,7 +31,7 @@ public class GetCommentRepliesQueryHandler : IQueryHandler<GetCommentRepliesQuer
 
         IGenericPaginatorResult<CommentDto> result = await _genericPaginator.Paginate(
             _commentQueryRepository.GetCommentCommentsQuery(comment).GetQuery(), new CommentWithUserMapper(),
-            request.Page);
+            request.Page.Value);
 
         return result;
 

@@ -7,10 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="CQRS\Album\Command\" />
-      <Folder Include="CQRS\Album\Querry\" />
+      <Folder Include="CQRS\AlbumOperations\Command\" />
       <Folder Include="CQRS\File\Command\" />
-      <Folder Include="CQRS\File\Querry\" />
+      <Folder Include="CQRS\File\Query\" />
     </ItemGroup>
 
     <ItemGroup>

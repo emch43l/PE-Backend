@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.CQRS.CommentOperations.Query;
 using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
+using Domain.ValueObject;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ public class CommentController : ControllerBase
     [Route("post/:id/:page")]
     public async Task<IActionResult> GetPostComments(Guid id, int page)
     {
-        IGenericPaginatorResult<CommentDto> result = await _mediator.Send(new GetPostCommentsQuery(id, page));
+        IGenericPaginatorResult<CommentDto> result = await _mediator.Send(new GetPostCommentsQuery(id, Page.FromValue(page)));
 
         return Ok(result);
     }
@@ -29,7 +30,7 @@ public class CommentController : ControllerBase
     [Route("replies/:id/:page")]
     public async Task<IActionResult> GetCommentReplies(Guid id, int page)
     {
-        IGenericPaginatorResult<CommentDto> result = await _mediator.Send(new GetCommentRepliesQuery(id, page));
+        IGenericPaginatorResult<CommentDto> result = await _mediator.Send(new GetCommentRepliesQuery(id, Page.FromValue(page)));
 
         return Ok(result);
     }

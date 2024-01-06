@@ -11,7 +11,7 @@ public class AlbumRatingEntityConfiguration : IEntityTypeConfiguration<AlbumRati
     {
         builder.HasKey(albumRating => albumRating.Id);
         builder
-            .HasOne(albumRating => albumRating.Album)
+            .HasOne(albumRating => albumRating.Parent)
             .WithMany(album => album.Rating)
             .HasForeignKey("AlbumId");
         builder

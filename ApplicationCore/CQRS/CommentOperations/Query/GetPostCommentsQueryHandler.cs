@@ -48,7 +48,7 @@ public class GetPostCommentsQueryHandler : IQueryHandler<GetPostCommentsQuery,IG
         IGenericPaginatorResult<CommentDto> result = await _genericPaginator.SetPageSize(CommentNumberPerPage).Paginate(
             _commentRepository.GetPostCommentsQuery(post).GetQuery(),
             new CommentWithUserMapper(), 
-            query.Page
+            query.Page.Value
             );
 
         return result;

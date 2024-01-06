@@ -1,8 +1,9 @@
-﻿using Domain.Model.Join;
+﻿using Domain.Model.Interface;
+using Domain.Model.Join;
 
 namespace Domain.Model;
 
-public class Album: UserManyToOneJoinWithUidIdentity, IEntity
+public class Album: UserManyToOneJoinWithUidIdentity, IEntity, IRatingParent<Album,AlbumRating>
 {
     public string Title { get; set; }
     
@@ -11,6 +12,10 @@ public class Album: UserManyToOneJoinWithUidIdentity, IEntity
     public ICollection<File> Files { get; set; }
     
     public ICollection<AlbumRating> Rating { get; set; }
+    
+    public int NumberOfRatingVotes { get; set; }
+    
+    public double AverageRating { get; set; }
 
     public Album() : base()
     {

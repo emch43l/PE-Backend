@@ -37,11 +37,11 @@ public class GetAllPostsPaginatedQueryHandler: IQueryHandler<GetAllPostsPaginate
         
         GenericPaginatorResult<PostDto> result = 
             await _paginator
-                .SetPageSize(request.ItemsPerPage)
+                .SetPageSize(request.ItemNumber)
                 .Paginate(
                     _postRepository.GetPublicPostsWithUserAndFirstCommentQuery().ApplySpecification(new PublicPostSpecification()).GetQuery(), 
                     new PostWithUserAndSingleCommentMapper(), 
-                    request.PageNumber
+                    request.Page.Value
                     );
         
         return result;

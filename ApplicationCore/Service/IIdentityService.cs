@@ -14,5 +14,8 @@ public interface IIdentityService
     Task<bool> CheckPasswordAsync(IUser user, string password);
 
     Task<IUser> CreateUserAsync(string userName, string email,  string password);
-    
+
+    Task<IUser?> GetUserByGuidAsync(Guid id);
+
+
 }

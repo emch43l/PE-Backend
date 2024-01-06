@@ -32,7 +32,7 @@ public class AlbumRatingSeeder
     {
         AlbumRating rating = new AlbumRating()
         {
-            Album = album,
+            Parent = album,
             Raintg = (AlbumRatingEnum)_random.Next(5),
             User = RandomizeUser()
         };

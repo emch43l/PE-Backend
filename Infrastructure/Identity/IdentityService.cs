@@ -1,8 +1,10 @@
 ﻿using System.Security.Claims;
+using ApplicationCore.Common.Interface;
 using ApplicationCore.Service;
 using Domain.Exception;
 using Domain.Model;
 using Infrastructure.Identity.Entity;
+using Infrastructure.Identity.Extension;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Identity;
@@ -41,6 +43,11 @@ public class IdentityService : IIdentityService
         }
 
         return newUser;
+    }
+
+    public async Task<IUser?> GetUserByGuidAsync(Guid id)
+    {
+        return await _manager.GetUserByGuidAsync(id);
     }
 
     public async Task<IUser> GetUserByClaimAsync(ClaimsPrincipal claimsPrincipal)

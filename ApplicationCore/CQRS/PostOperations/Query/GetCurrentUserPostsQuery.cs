@@ -1,19 +1,20 @@
 ﻿using System.Security.Claims;
 using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
+using Domain.ValueObject;
 using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public class GetCurrentUserPostsQuery : IQuery<IGenericPaginatorResult<PostWithCommentsDto>>
 {
-    public int Page { get; set; }
+    public Page Page { get; set; }
     
-    public int PageSize { get; set; }
+    public ItemNumber PageSize { get; set; }
     
     public ClaimsPrincipal CurrentUser { get; set; }
     
-    public GetCurrentUserPostsQuery(ClaimsPrincipal currentUser, int page, int pageSize)
+    public GetCurrentUserPostsQuery(ClaimsPrincipal currentUser, Page page, ItemNumber pageSize)
     {
         CurrentUser = currentUser;
         Page = page;

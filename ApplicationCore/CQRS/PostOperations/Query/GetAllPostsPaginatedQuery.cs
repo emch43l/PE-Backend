@@ -1,19 +1,20 @@
 ﻿using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
+using Domain.ValueObject;
 using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public record GetAllPostsPaginatedQuery : IQuery<GenericPaginatorResult<PostDto>>
 {
-    public int PageNumber { get; set; }
+    public Page Page { get; set; }
     
-    public int ItemsPerPage { get; set; }
+    public int ItemNumber { get; set; }
 
-    public GetAllPostsPaginatedQuery(int page = 1, int pageSize = 10)
+    public GetAllPostsPaginatedQuery(Page page, int pageSize = 10)
     {
-        this.PageNumber = page;
-        this.ItemsPerPage = pageSize;
+        Page = page;
+        ItemNumber = pageSize;
     }
     
 }

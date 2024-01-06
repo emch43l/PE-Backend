@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Common.Interface;
 using Domain.Model;
 using Infrastructure.DB.Interceptors;
+using Infrastructure.DB.Interceptors.Rating;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,7 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity,UserRoleEntity,
 
         optionsBuilder.AddInterceptors(new PostReactionInterceptor());
         optionsBuilder.AddInterceptors(new CommentReactionInterceptor());
+        optionsBuilder.AddInterceptors(new AlbumRatingInterceptor());
         
         base.OnConfiguring(optionsBuilder);
     }

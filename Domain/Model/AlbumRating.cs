@@ -1,11 +1,12 @@
 ﻿using Domain.Enum;
+using Domain.Model.Interface;
 using Domain.Model.Join;
 
 namespace Domain.Model;
 
-public class AlbumRating : UserManyToOneJoinWithUidIdentity, IEntity
+public class AlbumRating : UserManyToOneJoinWithUidIdentity, IEntity, IRating<Album,AlbumRating>
 {
-    public Album Album{ get; set; }
+    public Album Parent { get; set; }
     
     public AlbumRatingEnum Raintg { get; set; }
 

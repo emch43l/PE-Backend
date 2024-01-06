@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Requests;
+using Domain.ValueObject;
 
 namespace WebAPI.Controllers;
 
@@ -25,7 +26,7 @@ public class PostController : ControllerBase
     public async Task<IActionResult> GetPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
     {
         IGenericPaginatorResult<PostDto> result = 
-            await _mediator.Send(new GetAllPostsPaginatedQuery(page,pageSize));
+            await _mediator.Send(new GetAllPostsPaginatedQuery(Page.FromValue(page),pageSize));
         
         return Ok(result);
     }
@@ -85,7 +86,7 @@ public class PostController : ControllerBase
     public async Task<IActionResult> UserPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
     {
         IGenericPaginatorResult<PostWithCommentsDto> result =
-            await _mediator.Send(new GetCurrentUserPostsQuery(HttpContext.User,page,pageSize));
+            await _mediator.Send(new GetCurrentUserPostsQuery(HttpContext.User,Page.FromValue(page),ItemNumber.FromValue(pageSize)));
 
         return Ok(result);
     }

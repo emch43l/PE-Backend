@@ -30,12 +30,18 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("AverageRating")
+                        .HasColumnType("float");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("NumberOfRatingVotes")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -514,7 +520,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Model.AlbumRating", b =>
                 {
-                    b.HasOne("Domain.Model.Album", "Album")
+                    b.HasOne("Domain.Model.Album", "Parent")
                         .WithMany("Rating")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -526,7 +532,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Album");
+                    b.Navigation("Parent");
 
                     b.Navigation("User");
                 });

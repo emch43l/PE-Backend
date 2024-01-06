@@ -176,8 +176,6 @@ public static class DependencyInjection
 
     public static IServiceCollection ConfigureValidation(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IValidator<GetAllPostsPaginatedQuery>, GetAllPostsPaginatedQueryValidator>();
-        serviceCollection.AddScoped<IValidator<GetPostCommentsQuery>, GetPostCommentsQueryValidator>();
         serviceCollection.AddScoped<IValidator<CreatePostCommand>, CreatePostCommandValidator>();
         serviceCollection.AddScoped<IValidator<UpdatePostCommand>, UpdatePostCommandValidator>();
         serviceCollection.AddScoped<IValidator<AddReactionToPostCommand>, AddReactionToPostCommandValidator>();
