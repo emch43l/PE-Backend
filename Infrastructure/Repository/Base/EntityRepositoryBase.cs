@@ -4,6 +4,7 @@ using Domain.Common.Specification;
 using Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using ApplicationCore.Common.Extension;
+using Domain.Model.Interface;
 
 namespace Infrastructure.Repository.Base;
 

@@ -1,4 +1,5 @@
 ﻿using Domain.Model;
+using Domain.Model.Interface;
 using Infrastructure.DB;
 using Infrastructure.Dev.Seed;
 using Infrastructure.Identity.Entity;

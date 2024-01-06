@@ -1,6 +1,7 @@
 ﻿using Domain.Common.Specification.Base;
 using Domain.Enum;
 using Domain.Model;
+using Domain.Model.Interface;
 
 namespace ApplicationCore.Common.Implementation.Specification.ReactionSpecification;
 

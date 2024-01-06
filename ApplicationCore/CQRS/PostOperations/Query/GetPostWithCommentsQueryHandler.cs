@@ -2,6 +2,7 @@
 using ApplicationCore.Common.Implementation.Specification.PostSpecification;
 using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
+using ApplicationCore.Mapper.Base;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
 using Domain.Model;

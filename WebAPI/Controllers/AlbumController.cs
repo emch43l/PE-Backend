@@ -1,4 +1,4 @@
-﻿using ApplicationCore.CQRS.AlbumOperations.Querry;
+﻿using ApplicationCore.CQRS.AlbumOperations.Query;
 using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
 using Domain.ValueObject;

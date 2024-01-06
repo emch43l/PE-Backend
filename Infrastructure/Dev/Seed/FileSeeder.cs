@@ -1,5 +1,6 @@
 ﻿using Domain.Enum;
 using Domain.Model;
+using Domain.Model.Interface;
 using File = System.IO.File;
 using FileEntity= Domain.Model.File;
 

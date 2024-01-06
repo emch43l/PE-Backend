@@ -3,6 +3,7 @@ using ApplicationCore.Service;
 using Domain.Common.Repository;
 using Domain.Exception;
 using Domain.Model;
+using Domain.Model.Interface;
 using FluentValidation;
 using FluentValidation.Results;
 using ValidationException = FluentValidation.ValidationException;

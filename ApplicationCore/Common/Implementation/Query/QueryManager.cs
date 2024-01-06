@@ -3,6 +3,7 @@ using ApplicationCore.Common.Extension;
 using Domain.Common.Query;
 using Domain.Common.Specification;
 using Domain.Model;
+using Domain.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Common.Implementation.Query;

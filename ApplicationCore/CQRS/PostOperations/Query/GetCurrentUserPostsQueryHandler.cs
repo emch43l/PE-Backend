@@ -9,6 +9,7 @@ using Domain.Common.Repository;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
 using Domain.Model;
+using Domain.Model.Interface;
 using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;

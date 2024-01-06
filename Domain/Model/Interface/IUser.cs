@@ -1,6 +1,6 @@
 ﻿using Domain.Common.Identity;
 
-namespace Domain.Model;
+namespace Domain.Model.Interface;
 
 public interface IUser : IUidIdentity<int>, IEntity
 {

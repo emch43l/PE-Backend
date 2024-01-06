@@ -1,7 +1,9 @@
 ﻿using System.Linq.Expressions;
 using ApplicationCore.Mapper;
+using ApplicationCore.Mapper.Base;
 using Domain.Common.Query;
 using Domain.Model;
+using Domain.Model.Interface;
 
 namespace ApplicationCore.Pagination;
 

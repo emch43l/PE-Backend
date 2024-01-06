@@ -6,6 +6,7 @@ using Domain.Common.Repository.QueryRepository;
 using Domain.Common.Specification;
 using Domain.Enum;
 using Domain.Model;
+using Domain.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.QueryRepository;

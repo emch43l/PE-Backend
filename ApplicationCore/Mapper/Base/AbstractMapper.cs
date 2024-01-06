@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Domain.Common.Query;
-using Domain.Model;
+using Domain.Model.Interface;
 
-namespace ApplicationCore.Mapper;
+namespace ApplicationCore.Mapper.Base;
 
 public abstract class AbstractMapper<TEntity,TResult> : IMapper<TEntity,TResult> where TResult : class where TEntity: IEntity
 {

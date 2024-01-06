@@ -2,6 +2,7 @@
 using System.Text;
 using ApplicationCore.Service;
 using Domain.Model;
+using Domain.Model.Interface;
 using Infrastructure.Identity.Entity;
 using Infrastructure.JWT;
 using JWT.Algorithms;

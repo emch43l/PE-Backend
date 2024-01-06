@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using ApplicationCore.Dto;
+using ApplicationCore.Mapper.Base;
 using Domain.Model;
 
 namespace ApplicationCore.Mapper;

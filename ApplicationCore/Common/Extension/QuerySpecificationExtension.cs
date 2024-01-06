@@ -1,5 +1,6 @@
 ﻿using Domain.Common.Specification;
 using Domain.Model;
+using Domain.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Common.Extension;

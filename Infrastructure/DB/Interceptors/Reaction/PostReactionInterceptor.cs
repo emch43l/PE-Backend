@@ -1,10 +1,6 @@
-﻿using System.Data.Common;
-using Domain.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Domain.Model;
 
-namespace Infrastructure.DB.Interceptors;
+namespace Infrastructure.DB.Interceptors.Reaction;
 
 public class PostReactionInterceptor : AbstractReactionInterceptor<Post,PostReaction>
 {

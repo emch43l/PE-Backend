@@ -3,6 +3,7 @@ using Domain.Common.Repository;
 using Domain.Enum;
 using Domain.Exception;
 using Domain.Model;
+using Domain.Model.Interface;
 
 namespace ApplicationCore.CQRS.PostOperations.Command;
 

@@ -2,7 +2,7 @@
 using ApplicationCore.Pagination;
 using Domain.ValueObject;
 
-namespace ApplicationCore.CQRS.AlbumOperations.Querry;
+namespace ApplicationCore.CQRS.AlbumOperations.Query;
 
 public class GetUserAlbumsQuery : IQuery<IGenericPaginatorResult<AlbumDto>>
 {

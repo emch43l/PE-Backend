@@ -3,6 +3,7 @@ using ApplicationCore.Common.Interface;
 using ApplicationCore.Service;
 using Domain.Exception;
 using Domain.Model;
+using Domain.Model.Interface;
 using Infrastructure.Identity.Entity;
 using Infrastructure.Identity.Extension;
 using Microsoft.AspNetCore.Identity;

@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Domain.Model;
+using Domain.Model.Interface;
 using FileEntity = Domain.Model.File;
 
 namespace Infrastructure.Dev.Seed;

@@ -1,5 +1,6 @@
 ﻿using Domain.Common.Query;
 using Domain.Model;
+using Domain.Model.Interface;
 
 namespace Domain.Common.Repository.QueryRepository;
 

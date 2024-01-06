@@ -2,6 +2,7 @@
 using Domain.Model;
 using Infrastructure.DB.Interceptors;
 using Infrastructure.DB.Interceptors.Rating;
+using Infrastructure.DB.Interceptors.Reaction;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Domain.Model;
+using Domain.Model.Interface;
 
 namespace ApplicationCore.Service;
 

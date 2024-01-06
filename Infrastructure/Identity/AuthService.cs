@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Service;
 using Domain.Exception;
 using Domain.Model;
+using Domain.Model.Interface;
 
 namespace Infrastructure.Identity;
 

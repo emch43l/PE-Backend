@@ -5,9 +5,9 @@ using ApplicationCore.Pagination;
 using ApplicationCore.Service;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
-using Domain.Model;
+using Domain.Model.Interface;
 
-namespace ApplicationCore.CQRS.AlbumOperations.Querry;
+namespace ApplicationCore.CQRS.AlbumOperations.Query;
 
 public class GetUserAlbumsQueryHandler : IQueryHandler<GetUserAlbumsQuery,IGenericPaginatorResult<AlbumDto>>
 {

@@ -1,4 +1,5 @@
 ﻿using Domain.Model.Base;
+using Domain.Model.Interface;
 
 namespace Domain.Model.Join;
 

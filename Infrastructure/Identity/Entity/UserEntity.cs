@@ -1,4 +1,5 @@
 ﻿using Domain.Model;
+using Domain.Model.Interface;
 using Microsoft.AspNetCore.Identity;
 using File = Domain.Model.File;
 

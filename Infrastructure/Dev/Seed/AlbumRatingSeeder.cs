@@ -1,5 +1,6 @@
 ﻿using Domain.Enum;
 using Domain.Model;
+using Domain.Model.Interface;
 
 namespace Infrastructure.Dev.Seed;
 
