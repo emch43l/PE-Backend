@@ -1,7 +1,7 @@
 ﻿using Domain.Enum;
-using Domain.Model.Generic;
+using Domain.Model;
 using File = System.IO.File;
-using FileEntity= Domain.Model.Generic.File;
+using FileEntity= Domain.Model.File;
 
 namespace Infrastructure.Dev.Seed;
 

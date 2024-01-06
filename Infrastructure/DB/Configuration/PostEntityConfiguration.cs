@@ -1,4 +1,4 @@
-﻿using Domain.Model.Generic;
+﻿using Domain.Model;
 using Infrastructure.Identity.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -16,7 +16,7 @@ public class PostEntityConfiguration : IEntityTypeConfiguration<Post>
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Reactions)
-            .WithOne(reaction => reaction.Post)
+            .WithOne(reaction => reaction.Parent)
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(post => post.Comments)

@@ -2,7 +2,7 @@
 using Domain.Common.Repository;
 using Domain.Enum;
 using Domain.Exception;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace ApplicationCore.CQRS.PostOperations.Command;
 

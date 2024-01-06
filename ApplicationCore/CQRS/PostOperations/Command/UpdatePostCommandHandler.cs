@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.Service;
 using Domain.Common.Repository;
 using Domain.Exception;
-using Domain.Model.Generic;
+using Domain.Model;
 using FluentValidation;
 using FluentValidation.Results;
 using ValidationException = Domain.Exception.ValidationException;

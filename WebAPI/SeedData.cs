@@ -1,4 +1,4 @@
-﻿using Domain.Model.Generic;
+﻿using Domain.Model;
 using Infrastructure.DB;
 using Infrastructure.Dev.Seed;
 using Infrastructure.Identity.Entity;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
-using File = Domain.Model.Generic.File;
+using File = Domain.Model.File;
 using UserEntity = Infrastructure.Identity.Entity.UserEntity;
 
 namespace WebAPI;

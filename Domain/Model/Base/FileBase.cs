@@ -1,7 +1,7 @@
 ﻿using Domain.Enum;
-using Domain.Model.Generic.Join;
+using Domain.Model.Join;
 
-namespace Domain.Model.Generic.Base;
+namespace Domain.Model.Base;
 
 public class FileBase: UserManyToOneJoinWithUidIdentity, IEntity
 {

@@ -1,5 +1,4 @@
 ﻿using Domain.Model;
-using Domain.Model.Generic;
 using Infrastructure.Identity.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,7 +11,7 @@ public class PostReactionEntityConfiguration : IEntityTypeConfiguration<PostReac
     {
         builder.HasKey(postReaction => postReaction.Id);
         builder
-            .HasOne(postReaction => postReaction.Post)
+            .HasOne(postReaction => postReaction.Parent)
             .WithMany(post => post.Reactions)
             .HasForeignKey("PostId");
         builder

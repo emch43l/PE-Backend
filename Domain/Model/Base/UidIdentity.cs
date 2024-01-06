@@ -1,6 +1,6 @@
 ﻿using Domain.Common.Identity;
 
-namespace Domain.Model.Generic.Base;
+namespace Domain.Model.Base;
 
 public abstract class UidIdentity<TKey> : IUidIdentity<TKey> where TKey : IEquatable<TKey>
 {

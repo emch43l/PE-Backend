@@ -1,6 +1,6 @@
 ﻿using Domain.Common.Specification.Base;
 using Domain.Enum;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace ApplicationCore.Common.Implementation.Specification.CommentSpecification;
 

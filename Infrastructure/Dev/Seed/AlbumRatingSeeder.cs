@@ -1,5 +1,5 @@
 ﻿using Domain.Enum;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace Infrastructure.Dev.Seed;
 

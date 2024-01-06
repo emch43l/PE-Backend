@@ -1,4 +1,4 @@
-﻿using Domain.Model.Generic;
+﻿using Domain.Model;
 using Infrastructure.Identity.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,7 +11,7 @@ public class CommentReactionEntityConfiguration : IEntityTypeConfiguration<Comme
     {
         builder.HasKey(commentReaction => commentReaction.Id);
         builder
-            .HasOne(commentReaction => commentReaction.Comment)
+            .HasOne(commentReaction => commentReaction.Parent)
             .WithMany(comment => comment.Reactions)
             .HasForeignKey("CommentId");
         builder

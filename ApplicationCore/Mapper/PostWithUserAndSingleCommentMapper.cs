@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Linq;
 using ApplicationCore.Dto;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace ApplicationCore.Mapper;
 

@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using Domain.Model.Generic;
-using FileEntity = Domain.Model.Generic.File;
+using Domain.Model;
+using FileEntity = Domain.Model.File;
 
 namespace Infrastructure.Dev.Seed;
 

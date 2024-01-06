@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using ApplicationCore.Service;
 using Domain.Exception;
-using Domain.Model.Generic;
+using Domain.Model;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
 

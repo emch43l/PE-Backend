@@ -1,7 +1,6 @@
 ﻿using Domain.Model;
-using Domain.Model.Generic;
 using Microsoft.AspNetCore.Identity;
-using File = Domain.Model.Generic.File;
+using File = Domain.Model.File;
 
 namespace Infrastructure.Identity.Entity;
 

@@ -2,6 +2,7 @@
 using ApplicationCore;
 using ApplicationCore.Common.Implementation.Specification;
 using ApplicationCore.Common.Interface;
+using ApplicationCore.CQRS.CommentOperations.Command;
 using ApplicationCore.CQRS.CommentOperations.Query;
 using ApplicationCore.CQRS.PostOperations.Command;
 using ApplicationCore.CQRS.PostOperations.Query;
@@ -180,6 +181,7 @@ public static class DependencyInjection
         serviceCollection.AddScoped<IValidator<CreatePostCommand>, CreatePostCommandValidator>();
         serviceCollection.AddScoped<IValidator<UpdatePostCommand>, UpdatePostCommandValidator>();
         serviceCollection.AddScoped<IValidator<AddReactionToPostCommand>, AddReactionToPostCommandValidator>();
+        serviceCollection.AddScoped<IValidator<AddReactionToCommentCommand>, AddReactionToCommentCommandValidator>();
 
         return serviceCollection;
     }

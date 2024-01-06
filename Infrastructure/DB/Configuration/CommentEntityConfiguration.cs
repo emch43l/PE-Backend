@@ -1,5 +1,4 @@
 ﻿using Domain.Model;
-using Domain.Model.Generic;
 using Infrastructure.Identity.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -27,7 +26,7 @@ public class CommentEntityConfiguration : IEntityTypeConfiguration<Comment>
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(comment => comment.Reactions)
-            .WithOne(reaction => reaction.Comment)
+            .WithOne(reaction => reaction.Parent)
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(c => c.Replies)

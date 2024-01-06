@@ -5,7 +5,7 @@ using ApplicationCore.Pagination;
 using Domain.Common.Repository;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
-using Domain.Model.Generic;
+using Domain.Model;
 using FluentValidation;
 using FluentValidation.Results;
 

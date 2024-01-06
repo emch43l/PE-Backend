@@ -1,6 +1,4 @@
-﻿using Domain.Model.Generic;
-
-namespace ApplicationCore.Service;
+﻿namespace ApplicationCore.Service;
 
 public interface IAuthService
 {

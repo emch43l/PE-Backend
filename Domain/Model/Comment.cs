@@ -1,8 +1,9 @@
-﻿using Domain.Model.Generic.Join;
+﻿using Domain.Model.Interface;
+using Domain.Model.Join;
 
-namespace Domain.Model.Generic;
+namespace Domain.Model;
 
-public class Comment: UserManyToOneJoinWithUidIdentity, IEntity
+public class Comment: UserManyToOneJoinWithUidIdentity, IEntity, IReactionParent<Comment,CommentReaction>
 {
     public int? ParentId { get; set; }
     

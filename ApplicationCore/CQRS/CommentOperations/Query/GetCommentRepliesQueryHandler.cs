@@ -6,7 +6,7 @@ using Domain.Common.Repository;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Common.Specification;
 using Domain.Exception.Base;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace ApplicationCore.CQRS.CommentOperations.Query;
 

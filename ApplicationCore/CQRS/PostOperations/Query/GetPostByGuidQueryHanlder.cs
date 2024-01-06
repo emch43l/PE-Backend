@@ -1,6 +1,6 @@
 ﻿using Domain.Common.Repository;
 using Domain.Exception;
-using Domain.Model.Generic;
+using Domain.Model;
 using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;

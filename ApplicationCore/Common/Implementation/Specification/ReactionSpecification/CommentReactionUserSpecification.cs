@@ -1,5 +1,5 @@
 ﻿using Domain.Common.Specification.Base;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace ApplicationCore.Common.Implementation.Specification.ReactionSpecification;
 
@@ -7,7 +7,7 @@ public class CommentReactionUserSpecification : SpecificationBase<CommentReactio
 {
     public CommentReactionUserSpecification(Comment comment, IUser user)
     {
-        AddCriteria(c => c.Comment == comment);
+        AddCriteria(c => c.Parent == comment);
         AddCriteria(c => c.User == user);
     }
 }

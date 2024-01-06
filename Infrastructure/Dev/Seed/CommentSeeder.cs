@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using Domain.Model.Generic;
+using Domain.Model;
 using Infrastructure.Identity.Entity;
 
 namespace Infrastructure.Dev.Seed;

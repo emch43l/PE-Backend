@@ -4,7 +4,7 @@ using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
-using Domain.Model.Generic;
+using Domain.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;

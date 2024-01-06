@@ -1,6 +1,6 @@
-﻿using Domain.Model.Generic.Base;
+﻿using Domain.Model.Base;
 
-namespace Domain.Model.Generic;
+namespace Domain.Model;
 
 public class File: FileBase
 {

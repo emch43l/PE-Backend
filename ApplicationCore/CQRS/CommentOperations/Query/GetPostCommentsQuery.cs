@@ -1,6 +1,5 @@
 ﻿using ApplicationCore.Dto;
 using ApplicationCore.Pagination;
-using Domain.Model.Generic;
 
 namespace ApplicationCore.CQRS.CommentOperations.Query;
 

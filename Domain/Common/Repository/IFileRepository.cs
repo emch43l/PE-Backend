@@ -1,6 +1,5 @@
 ﻿using Domain.Common.Repository.Base;
-using Domain.Model.Generic;
-using File = Domain.Model.Generic.File;
+using File = Domain.Model.File;
 
 namespace Domain.Common.Repository;
 

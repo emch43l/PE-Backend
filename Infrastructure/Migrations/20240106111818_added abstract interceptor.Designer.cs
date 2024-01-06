@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240104125237_changed file entity")]
-    partial class changedfileentity
+    [Migration("20240106111818_added abstract interceptor")]
+    partial class addedabstractinterceptor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Model.Generic.Album", b =>
+            modelBuilder.Entity("Domain.Model.Album", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Albums", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.AlbumRating", b =>
+            modelBuilder.Entity("Domain.Model.AlbumRating", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("AlbumRatings", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.Comment", b =>
+            modelBuilder.Entity("Domain.Model.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,7 +134,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Comments", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.CommentReaction", b =>
+            modelBuilder.Entity("Domain.Model.CommentReaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,7 +166,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("CommentReactions", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.File", b =>
+            modelBuilder.Entity("Domain.Model.File", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -209,7 +209,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Files", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.Post", b =>
+            modelBuilder.Entity("Domain.Model.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -250,7 +250,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Posts", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.PostReaction", b =>
+            modelBuilder.Entity("Domain.Model.PostReaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -504,7 +504,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.Album", b =>
+            modelBuilder.Entity("Domain.Model.Album", b =>
                 {
                     b.HasOne("Infrastructure.Identity.Entity.UserEntity", "User")
                         .WithMany("Albums")
@@ -515,9 +515,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.AlbumRating", b =>
+            modelBuilder.Entity("Domain.Model.AlbumRating", b =>
                 {
-                    b.HasOne("Domain.Model.Generic.Album", "Album")
+                    b.HasOne("Domain.Model.Album", "Album")
                         .WithMany("Rating")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -534,18 +534,18 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.Comment", b =>
+            modelBuilder.Entity("Domain.Model.Comment", b =>
                 {
-                    b.HasOne("Domain.Model.Generic.File", "File")
+                    b.HasOne("Domain.Model.File", "File")
                         .WithOne("Comment")
-                        .HasForeignKey("Domain.Model.Generic.Comment", "FileId")
+                        .HasForeignKey("Domain.Model.Comment", "FileId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Domain.Model.Generic.Comment", "Parent")
+                    b.HasOne("Domain.Model.Comment", "Parent")
                         .WithMany("Replies")
                         .HasForeignKey("ParentId");
 
-                    b.HasOne("Domain.Model.Generic.Post", "Post")
+                    b.HasOne("Domain.Model.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -566,9 +566,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.CommentReaction", b =>
+            modelBuilder.Entity("Domain.Model.CommentReaction", b =>
                 {
-                    b.HasOne("Domain.Model.Generic.Comment", "Comment")
+                    b.HasOne("Domain.Model.Comment", "Parent")
                         .WithMany("Reactions")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -580,14 +580,14 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Comment");
+                    b.Navigation("Parent");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.File", b =>
+            modelBuilder.Entity("Domain.Model.File", b =>
                 {
-                    b.HasOne("Domain.Model.Generic.Post", "Post")
+                    b.HasOne("Domain.Model.Post", "Post")
                         .WithMany("Files")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -603,7 +603,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.Post", b =>
+            modelBuilder.Entity("Domain.Model.Post", b =>
                 {
                     b.HasOne("Infrastructure.Identity.Entity.UserEntity", "User")
                         .WithMany("Posts")
@@ -614,9 +614,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.PostReaction", b =>
+            modelBuilder.Entity("Domain.Model.PostReaction", b =>
                 {
-                    b.HasOne("Domain.Model.Generic.Post", "Post")
+                    b.HasOne("Domain.Model.Post", "Parent")
                         .WithMany("Reactions")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -628,20 +628,20 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Post");
+                    b.Navigation("Parent");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Infrastructure.Join.AlbumFileJoin", b =>
                 {
-                    b.HasOne("Domain.Model.Generic.Album", null)
+                    b.HasOne("Domain.Model.Album", null)
                         .WithMany()
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Domain.Model.Generic.File", null)
+                    b.HasOne("Domain.Model.File", null)
                         .WithMany()
                         .HasForeignKey("FileId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -699,24 +699,24 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.Album", b =>
+            modelBuilder.Entity("Domain.Model.Album", b =>
                 {
                     b.Navigation("Rating");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.Comment", b =>
+            modelBuilder.Entity("Domain.Model.Comment", b =>
                 {
                     b.Navigation("Reactions");
 
                     b.Navigation("Replies");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.File", b =>
+            modelBuilder.Entity("Domain.Model.File", b =>
                 {
                     b.Navigation("Comment");
                 });
 
-            modelBuilder.Entity("Domain.Model.Generic.Post", b =>
+            modelBuilder.Entity("Domain.Model.Post", b =>
                 {
                     b.Navigation("Comments");
 

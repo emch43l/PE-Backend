@@ -1,12 +1,12 @@
 ﻿using ApplicationCore.Common.Interface;
-using Domain.Model.Generic;
+using Domain.Model;
 using Infrastructure.DB.Interceptors;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using File = Domain.Model.Generic.File;
+using File = Domain.Model.File;
 using UserEntity = Infrastructure.Identity.Entity.UserEntity;
 
 namespace Infrastructure.DB;

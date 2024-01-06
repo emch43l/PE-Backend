@@ -1,10 +1,9 @@
-﻿
-using Domain.Model.Generic;
+﻿using Domain.Model;
 using Infrastructure.Identity.Entity;
 using Infrastructure.Join;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using File = Domain.Model.Generic.File;
+using File = Domain.Model.File;
 
 namespace Infrastructure.DB.Configuration;
 

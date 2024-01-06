@@ -1,5 +1,5 @@
 ﻿using Domain.Common.Repository.Base;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace Domain.Common.Repository;
 

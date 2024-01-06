@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Service;
 using Domain.Common.Repository;
-using Domain.Model.Generic;
+using Domain.Model;
 using FluentValidation;
 using FluentValidation.Results;
 using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;

@@ -1,9 +1,10 @@
 ﻿using Domain.Enum;
-using Domain.Model.Generic.Join;
+using Domain.Model.Interface;
+using Domain.Model.Join;
 
-namespace Domain.Model.Generic;
+namespace Domain.Model;
 
-public class Post: UserManyToOneJoinWithUidIdentity, IEntity
+public class Post: UserManyToOneJoinWithUidIdentity, IEntity, IReactionParent<Post,PostReaction>
 {
     public string Title { get; set; }
     

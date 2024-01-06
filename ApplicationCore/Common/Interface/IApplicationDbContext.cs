@@ -1,7 +1,6 @@
 ﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using File = Domain.Model.Generic.File;
-using Domain.Model.Generic;
+using File = Domain.Model.File;
 
 namespace ApplicationCore.Common.Interface;
 

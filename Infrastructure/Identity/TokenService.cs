@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Text;
 using ApplicationCore.Service;
-using Domain.Model.Generic;
+using Domain.Model;
 using Infrastructure.Identity.Entity;
 using Infrastructure.JWT;
 using JWT.Algorithms;

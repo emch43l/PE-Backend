@@ -4,7 +4,7 @@ using ApplicationCore.Common.Interface;
 using Domain.Common.Query;
 using Domain.Common.Repository.QueryRepository;
 using Domain.Common.Specification;
-using Domain.Model.Generic;
+using Domain.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.QueryRepository;

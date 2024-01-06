@@ -1,4 +1,4 @@
-﻿using Domain.Model.Generic;
+﻿using Domain.Model;
 
 namespace Domain.Common.Repository.QueryRepository;
 

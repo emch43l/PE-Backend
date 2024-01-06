@@ -1,5 +1,4 @@
 ﻿using Domain.Model;
-using Domain.Model.Generic;
 using Infrastructure.Identity.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

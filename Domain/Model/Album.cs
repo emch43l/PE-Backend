@@ -1,6 +1,6 @@
-﻿using Domain.Model.Generic.Join;
+﻿using Domain.Model.Join;
 
-namespace Domain.Model.Generic;
+namespace Domain.Model;
 
 public class Album: UserManyToOneJoinWithUidIdentity, IEntity
 {

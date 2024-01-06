@@ -1,6 +1,6 @@
 ﻿using Domain.Common.Specification.Base;
 using Domain.Enum;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace ApplicationCore.Common.Implementation.Specification.ReactionSpecification;
 
@@ -8,8 +8,8 @@ public class PublicPostUserReactionSpecification : SpecificationBase<PostReactio
 {
     public PublicPostUserReactionSpecification(Post post, IUser user)
     {
-        AddCriteria(r => r.Post == post);
-        AddCriteria(r => r.Post.Status == StatusEnum.Visible);
+        AddCriteria(r => r.Parent == post);
+        AddCriteria(r => r.Parent.Status == StatusEnum.Visible);
         AddCriteria(r => r.User == user);
         
     }

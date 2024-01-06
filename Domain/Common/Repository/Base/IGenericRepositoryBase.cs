@@ -1,6 +1,5 @@
 ﻿using Domain.Common.Identity;
 using Domain.Common.Specification;
-using Domain.Model.Generic;
 
 namespace Domain.Common.Repository.Base;
 

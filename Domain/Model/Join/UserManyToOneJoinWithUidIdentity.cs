@@ -1,6 +1,6 @@
-﻿using Domain.Model.Generic.Base;
+﻿using Domain.Model.Base;
 
-namespace Domain.Model.Generic.Join;
+namespace Domain.Model.Join;
 
 public class UserManyToOneJoinWithUidIdentity : UidIdentity<int>
 {

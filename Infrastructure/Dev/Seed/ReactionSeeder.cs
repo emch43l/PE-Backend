@@ -1,5 +1,5 @@
 ﻿using Domain.Enum;
-using Domain.Model.Generic;
+using Domain.Model;
 
 namespace Infrastructure.Dev.Seed;
 
@@ -57,7 +57,7 @@ public class ReactionSeeder
     {
         return Enumerable.Range(0, count).Select(i => new PostReaction()
             {
-                Post = post,
+                Parent = post,
                 Date = DateTime.Now,
                 ReactionType = RandomizeReactionType(),
                 User = RandomizeUser()
@@ -69,7 +69,7 @@ public class ReactionSeeder
     {
         return Enumerable.Range(0, count).Select(i => new CommentReaction()
             {
-                Comment = comment,
+                Parent = comment,
                 Date = DateTime.Now,
                 ReactionType = RandomizeReactionType(),
                 User = RandomizeUser()

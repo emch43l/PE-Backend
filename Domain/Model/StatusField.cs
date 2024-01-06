@@ -1,6 +1,6 @@
 ﻿using Domain.Enum;
 
-namespace Domain.Model.Generic;
+namespace Domain.Model;
 
 public class StatusField : IEquatable<StatusEnum>
 {

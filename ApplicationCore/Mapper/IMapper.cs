@@ -2,7 +2,6 @@
 using ApplicationCore.Dto;
 using Domain.Common.Query;
 using Domain.Model;
-using Domain.Model.Generic;
 
 namespace ApplicationCore.Mapper;
 

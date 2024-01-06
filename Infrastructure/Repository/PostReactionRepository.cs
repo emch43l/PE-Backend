@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Common.Interface;
 using Domain.Common.Repository;
-using Domain.Model.Generic;
+using Domain.Model;
 using Infrastructure.Repository.Base;
 
 namespace Infrastructure.Repository;
