@@ -4,23 +4,19 @@ using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using ApplicationCore.Service;
-using Domain.Common.Query;
 using Domain.Common.Repository;
-using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
-using Domain.Model;
 using Domain.Model.Interface;
-using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public class GetCurrentUserPostsQueryHandler : IQueryHandler<GetCurrentUserPostsQuery,IGenericPaginatorResult<PostWithCommentsDto>>
 {
     private readonly IIdentityService _identityService;
-    private readonly IGenericPaginator _paginator;
-    private readonly IPostQueryRepository _postRepository;
+    private readonly IPaginator _paginator;
+    private readonly IPostRepository _postRepository;
 
-    public GetCurrentUserPostsQueryHandler(IIdentityService identityService, IGenericPaginator paginator, IPostQueryRepository postRepository)
+    public GetCurrentUserPostsQueryHandler(IIdentityService identityService, IPaginator paginator, IPostRepository postRepository)
     {
         _identityService = identityService;
         _paginator = paginator;
@@ -36,11 +32,15 @@ public class GetCurrentUserPostsQueryHandler : IQueryHandler<GetCurrentUserPosts
         IUser? user = await _identityService.GetUserByEmailAsync(currentUser);
         if (user == null)
             throw new UserNotFoundException();
-
-        IQueryManager<Post> queryManager = _postRepository.GetUserPostsWithCommentsQuery(user, 3).ApplySpecification(new PrivatePostSpecification());
-
-        return await _paginator.SetPageSize(request.PageSize.Value)
-            .Paginate(queryManager.GetQuery(), new PostWithCommentsMapper(), request.Page.Value);
+        
+        return await _paginator
+            .SetPageSize(request.PageSize.Value)
+            .Paginate(_postRepository
+                .GetQueryManager()
+                .ApplySpecification(new GetPrivateUserPostsWithCommentsSpecification(user.Id)), 
+                new PostWithCommentsMapper(), 
+                request.Page.Value
+                );
 
     }
 }

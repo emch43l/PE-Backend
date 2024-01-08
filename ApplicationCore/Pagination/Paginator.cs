@@ -1,28 +1,26 @@
-﻿using System.Linq.Expressions;
-using ApplicationCore.Mapper;
+﻿using ApplicationCore.Common.Implementation.Specification.Pagination;
 using ApplicationCore.Mapper.Base;
 using Domain.Common.Query;
-using Domain.Model;
 using Domain.Model.Interface;
 
 namespace ApplicationCore.Pagination;
 
-public class GenericPaginator : IGenericPaginator
+public class Paginator : IPaginator
 {
     private int _itemNumberPerPage;
 
-    public GenericPaginator(int itemNumberPerPage)
+    public Paginator(int itemNumberPerPage)
     {
         this.ValidatePageSize(itemNumberPerPage);
         _itemNumberPerPage = itemNumberPerPage;
     }
 
-    public GenericPaginator()
+    public Paginator()
     {
         _itemNumberPerPage = 5;
     }
 
-    public IGenericPaginator SetPageSize(int pageSize)
+    public IPaginator SetPageSize(int pageSize)
     {
         this.ValidatePageSize(pageSize);
         _itemNumberPerPage = pageSize;
@@ -30,20 +28,21 @@ public class GenericPaginator : IGenericPaginator
     }
 
     public async Task<GenericPaginatorResult<TResult>> Paginate<TEntity, TResult>(
-        IQueryable<TEntity> query,
+        IQueryManager<TEntity> query,
         IMapper<TEntity, TResult> mapper, 
         int pageNumber) where TResult : class where TEntity : IEntity
     {
-        return await Task.Run(() =>
+        return await Task.Run(async () =>
         {
-            int totalItemsCount = query.Count();
+            int totalItemsCount = query.GetQuery().Count();
             int totalPages = (int)Math.Ceiling((double)totalItemsCount / _itemNumberPerPage);
 
-            List<TResult> items = query
-                .Skip((pageNumber - 1) * _itemNumberPerPage)
-                .Take(_itemNumberPerPage)
-                .Select(mapper.GetMapperExpression())
-                .ToList();
+            int skip = (pageNumber - 1) * _itemNumberPerPage;
+            int take = _itemNumberPerPage;
+
+            List<TResult> items = await query
+                .ApplySpecification(new PaginatorSpecification<TEntity>(skip,take))
+                .GetList(mapper.GetMapperExpression());
 
             return new GenericPaginatorResult<TResult>(
                 totalItemsCount,

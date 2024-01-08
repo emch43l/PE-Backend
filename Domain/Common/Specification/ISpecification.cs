@@ -12,7 +12,9 @@ public interface ISpecification<T>
 
     int? Take { get; }
     
-    List<string> Includes { get; }
+    int? Skip { get; }
+    
+    List<Expression<Func<T, object>>> Includes { get; }
     
     bool TrackEntities { get; }
     
@@ -22,7 +24,7 @@ public interface ISpecification<T>
     
     void AddCriteria(Expression<Func<T, bool>> criteriaExpression);
 
-    void AddIncludes(string include);
+    void AddIncludes(Expression<Func<T, object>> include);
 
     void SetTake(int take);
 }

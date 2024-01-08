@@ -37,6 +37,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FileCount")
+                        .HasColumnType("int")
+                        .HasColumnName("FileCount");
+
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 

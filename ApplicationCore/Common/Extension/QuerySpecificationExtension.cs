@@ -30,6 +30,11 @@ public static class QuerySpecificationExtension
         {
             query = query.Take((int)specification.Take);
         }
+
+        if (specification.Skip != null)
+        {
+            query = query.Skip((int)specification.Skip);
+        }
         
         query = specification.Criteria
             .Aggregate(query, 

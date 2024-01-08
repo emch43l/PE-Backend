@@ -3,7 +3,6 @@ using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Common.Repository;
-using Domain.Common.Repository.QueryRepository;
 using Domain.Common.Specification;
 using Domain.Exception.Base;
 using Domain.Model;
@@ -12,13 +11,13 @@ namespace ApplicationCore.CQRS.CommentOperations.Query;
 
 public class GetCommentRepliesQueryHandler : IQueryHandler<GetCommentRepliesQuery,IGenericPaginatorResult<CommentDto>>
 {
-    private readonly ICommentQueryRepository _commentQueryRepository;
-    private readonly IGenericPaginator _genericPaginator;
+    private readonly ICommentRepository _commentQueryRepository;
+    private readonly IPaginator _paginator;
 
-    public GetCommentRepliesQueryHandler(ICommentQueryRepository commentRepository, IGenericPaginator genericPaginator)
+    public GetCommentRepliesQueryHandler(ICommentRepository commentRepository, IPaginator paginator)
     {
         _commentQueryRepository = commentRepository;
-        _genericPaginator = genericPaginator;
+        _paginator = paginator;
     }
 
     public async Task<IGenericPaginatorResult<CommentDto>> Handle(GetCommentRepliesQuery request, CancellationToken cancellationToken)
@@ -29,8 +28,8 @@ public class GetCommentRepliesQueryHandler : IQueryHandler<GetCommentRepliesQuer
         if (comment == null)
             throw new NotFoundException("Comment not found !");
 
-        IGenericPaginatorResult<CommentDto> result = await _genericPaginator.Paginate(
-            _commentQueryRepository.GetCommentCommentsQuery(comment).GetQuery(), new CommentWithUserMapper(),
+        IGenericPaginatorResult<CommentDto> result = await _paginator.Paginate(
+            _commentQueryRepository.GetQueryManager().ApplySpecification(new GetCommentCommentsSpecification(comment.Id)), new CommentWithUserMapper(),
             request.Page.Value);
 
         return result;

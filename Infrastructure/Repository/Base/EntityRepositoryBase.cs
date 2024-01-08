@@ -1,9 +1,10 @@
 ﻿using ApplicationCore.Common.Interface;
 using Domain.Common.Repository.Base;
 using Domain.Common.Specification;
-using Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using ApplicationCore.Common.Extension;
+using ApplicationCore.Common.Implementation.Query;
+using Domain.Common.Query;
 using Domain.Model.Interface;
 
 namespace Infrastructure.Repository.Base;
@@ -57,7 +58,12 @@ public abstract class EntityRepositoryBase<T> : IGuidGenericRepositoryBase<T> wh
     {
         return await Context.Set<T>().ApplySpecification(specification).ToListAsync();
     }
-    
+
+    public IQueryManager<T> GetQueryManager()
+    {
+        return QueryManager<T>.FromQuery(Context.Set<T>());
+    }
+
     public async Task<T?> FindBySpecificationAsync(ISpecification<T>? specification = null)
     {
         return await Context.Set<T>().ApplySpecification(specification).FirstOrDefaultAsync();

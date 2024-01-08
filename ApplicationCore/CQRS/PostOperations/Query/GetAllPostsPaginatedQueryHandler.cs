@@ -3,25 +3,17 @@ using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Common.Repository;
-using Domain.Common.Repository.QueryRepository;
-using Domain.Exception;
-using FluentValidation;
-using FluentValidation.Results;
-using MediatR;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public class GetAllPostsPaginatedQueryHandler: IQueryHandler<GetAllPostsPaginatedQuery,GenericPaginatorResult<PostDto>>
 {
-    private readonly IGenericPaginator _paginator;
-    private readonly IValidator<GetAllPostsPaginatedQuery> _validator;
-    private readonly IPostQueryRepository _postRepository;
+    private readonly IPaginator _paginator;
+    private readonly IPostRepository _postRepository;
 
     public GetAllPostsPaginatedQueryHandler(
-        IValidator<GetAllPostsPaginatedQuery> validator, 
-        IPostQueryRepository postRepository, IGenericPaginator paginator)
+        IPostRepository postRepository, IPaginator paginator)
     {
-        _validator = validator;
         _postRepository = postRepository;
         _paginator = paginator;
     }
@@ -29,17 +21,14 @@ public class GetAllPostsPaginatedQueryHandler: IQueryHandler<GetAllPostsPaginate
     public async Task<GenericPaginatorResult<PostDto>> Handle(GetAllPostsPaginatedQuery request,
         CancellationToken cancellationToken)
     {
-        ValidationResult validationResult = await _validator.ValidateAsync(request);
-        if (!validationResult.IsValid)
-        {
-            throw new PaginatorException();
-        }
         
         GenericPaginatorResult<PostDto> result = 
             await _paginator
                 .SetPageSize(request.ItemNumber)
                 .Paginate(
-                    _postRepository.GetPublicPostsWithUserAndFirstCommentQuery().ApplySpecification(new PublicPostSpecification()).GetQuery(), 
+                    _postRepository
+                        .GetQueryManager()
+                        .ApplySpecification(new GetPublicPostsWithUserAndFirstCommentSpecification()), 
                     new PostWithUserAndSingleCommentMapper(), 
                     request.Page.Value
                     );

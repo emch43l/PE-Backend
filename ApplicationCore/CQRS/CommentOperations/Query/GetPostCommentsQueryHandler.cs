@@ -1,13 +1,11 @@
-﻿using ApplicationCore.Common.Implementation.Specification.PostSpecification;
+﻿using ApplicationCore.Common.Implementation.Specification.CommentSpecification;
+using ApplicationCore.Common.Implementation.Specification.PostSpecification;
 using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Common.Repository;
-using Domain.Common.Repository.QueryRepository;
 using Domain.Exception;
 using Domain.Model;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace ApplicationCore.CQRS.CommentOperations.Query;
 
@@ -15,41 +13,36 @@ public class GetPostCommentsQueryHandler : IQueryHandler<GetPostCommentsQuery,IG
 {
     private const int CommentNumberPerPage = 5;
     
-    private readonly ICommentQueryRepository _commentRepository;
+    private readonly ICommentRepository _commentRepository;
     private readonly IPostRepository _postRepository;
-    private readonly IGenericPaginator _genericPaginator;
-    private readonly IValidator<GetPostCommentsQuery> _validator;
-    public GetPostCommentsQueryHandler(ICommentQueryRepository repository,
+    private readonly IPaginator _paginator;
+    public GetPostCommentsQueryHandler(ICommentRepository repository,
         IPostRepository postRepository,
-        IGenericPaginator genericPaginator,
-        IValidator<GetPostCommentsQuery> validator)
+        IPaginator paginator)
     {
         _postRepository = postRepository;
-        _genericPaginator = genericPaginator;
-        _validator = validator;
+        _paginator = paginator;
         _commentRepository = repository;
     }
 
     public async Task<IGenericPaginatorResult<CommentDto>> Handle(GetPostCommentsQuery query, CancellationToken cancellationToken)
     {
-        ValidationResult validationResult = await _validator.ValidateAsync(query,cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            throw new PaginatorException();
-        }
-
-        Post? post = await _postRepository.FindBySpecificationAsync(new GetPublicPostSpecification(query.PostId));
+        Post? post = await _postRepository.FindBySpecificationAsync(new GetPublicPostWithUserSpecification(query.PostId));
         
         if (post == null)
         {
             throw new PostNotFoundException();
         }
 
-        IGenericPaginatorResult<CommentDto> result = await _genericPaginator.SetPageSize(CommentNumberPerPage).Paginate(
-            _commentRepository.GetPostCommentsQuery(post).GetQuery(),
-            new CommentWithUserMapper(), 
-            query.Page.Value
-            );
+        IGenericPaginatorResult<CommentDto> result = await _paginator
+            .SetPageSize(CommentNumberPerPage)
+            .Paginate(
+                _commentRepository
+                    .GetQueryManager()
+                    .ApplySpecification(new GetPostCommentsSpecification(post.Id)),
+                new CommentWithUserMapper(), 
+                query.Page.Value
+                );
 
         return result;
     }

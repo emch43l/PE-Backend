@@ -4,11 +4,11 @@ using Domain.Model;
 
 namespace ApplicationCore.Common.Implementation.Specification.PostSpecification;
 
-public class GetPublicPostSpecification : SpecificationBase<Post>
+public class GetPublicPostWithUserSpecification : PublicPostSpecification
 {
-    public GetPublicPostSpecification(Guid id)
+    public GetPublicPostWithUserSpecification(Guid id) : base()
     {
+        AddIncludes(c => c.User);
         AddCriteria(p => p.Guid == id);
-        AddCriteria(p => p.Status == StatusEnum.Visible);
     }
 }

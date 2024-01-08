@@ -6,11 +6,11 @@ using Domain.Model.Interface;
 
 namespace ApplicationCore.Pagination;
 
-public interface IGenericPaginator
+public interface IPaginator
 {
-    public IGenericPaginator SetPageSize(int pageSize);
+    public IPaginator SetPageSize(int pageSize);
 
-    public Task<GenericPaginatorResult<TResult>> Paginate<TEntity, TResult>(IQueryable<TEntity> query,
+    public Task<GenericPaginatorResult<TResult>> Paginate<TEntity, TResult>(IQueryManager<TEntity> query,
         IMapper<TEntity, TResult> mapper, int pageNumber) where TResult : class where TEntity: IEntity;
 
 }

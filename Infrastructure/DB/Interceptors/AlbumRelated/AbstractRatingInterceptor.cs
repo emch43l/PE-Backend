@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace Infrastructure.DB.Interceptors.Rating;
+namespace Infrastructure.DB.Interceptors.AlbumRelated;
 
 public abstract class AbstractRatingInterceptor<TParent,TRating> : ISaveChangesInterceptor where TParent: IRatingParent<TParent,TRating> where TRating : class, IRating<TParent,TRating>
 {

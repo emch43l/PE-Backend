@@ -3,12 +3,12 @@ using Domain.Model;
 
 namespace ApplicationCore.Common.Implementation.Specification.CommentSpecification;
 
-public class GetFewCommentsWithUserSpecification : SpecificationBase<Comment>
+public class GetFewCommentsWithUserSpecification : GetPostCommentsSpecification
 {
-    public GetFewCommentsWithUserSpecification(int commentCount = 5)
+    public GetFewCommentsWithUserSpecification(int id, int commentCount = 5) : base(id)
     {
         SetTake(commentCount);
         AddOrderBy(c => c.ReactionCount);
-        AddIncludes($"User");
+        AddIncludes(c => c.User);
     }
 }

@@ -13,7 +13,9 @@ public class SpecificationBase<TEntity> : ISpecification<TEntity> where TEntity:
 
     public int? Take { get; private set; } = null;
 
-    public List<string> Includes { get; set; } = new();
+    public int? Skip { get; private set; } = null;
+
+    public List<Expression<Func<TEntity, object>>> Includes { get; set; } = new();
 
     public bool TrackEntities { get; private set; } = true;
 
@@ -36,7 +38,7 @@ public class SpecificationBase<TEntity> : ISpecification<TEntity> where TEntity:
         Criteria.Add(criteriaExpression);
     }
     
-    public void AddIncludes(string include)
+    public void AddIncludes(Expression<Func<TEntity, object>> include)
     {
         Includes.Add(include);
     }
@@ -44,6 +46,11 @@ public class SpecificationBase<TEntity> : ISpecification<TEntity> where TEntity:
     public void SetTake(int take)
     {
         Take = take;
+    }
+
+    public void SetSkip(int skip)
+    {
+        Skip = skip;
     }
     
     public void SetEntityTracking(bool track = true)

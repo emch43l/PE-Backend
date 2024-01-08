@@ -9,6 +9,9 @@ namespace Infrastructure.DB.Configuration;
 
 public class AlbumEntityConfiguration : IEntityTypeConfiguration<Album>
 {
+    public const string TableName = "Albums";
+
+    public const string FileCountPropertyName = "FileCount";
     public void Configure(EntityTypeBuilder<Album> builder)
     {
         builder.HasKey(album => album.Id);
@@ -30,7 +33,9 @@ public class AlbumEntityConfiguration : IEntityTypeConfiguration<Album>
             .HasOne(album => (UserEntity)album.User)
             .WithMany(user => user.Albums)
             .HasForeignKey(post => post.UserId);
+
+        builder.Property(a => a.FileCount).HasColumnName(FileCountPropertyName);
         
-        builder.ToTable("Albums");
+        builder.ToTable(TableName);
     }
 }

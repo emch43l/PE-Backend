@@ -11,6 +11,8 @@ public class Album: UserManyToOneJoinWithUidIdentity, IEntity, IRatingParent<Alb
     
     public ICollection<File> Files { get; set; }
     
+    public int FileCount { get; set; }
+    
     public ICollection<AlbumRating> Rating { get; set; }
     
     public int NumberOfRatingVotes { get; set; }

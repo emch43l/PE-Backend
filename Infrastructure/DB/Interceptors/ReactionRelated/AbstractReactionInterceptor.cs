@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace Infrastructure.DB.Interceptors.Reaction;
+namespace Infrastructure.DB.Interceptors.ReactionRelated;
 
 public abstract class AbstractReactionInterceptor<TParent,TReaction> : ISaveChangesInterceptor where TParent: IReactionParent<TParent,TReaction> where TReaction : class, IReaction<TParent,TReaction>
 {

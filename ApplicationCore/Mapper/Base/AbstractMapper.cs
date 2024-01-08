@@ -6,12 +6,12 @@ namespace ApplicationCore.Mapper.Base;
 
 public abstract class AbstractMapper<TEntity,TResult> : IMapper<TEntity,TResult> where TResult : class where TEntity: IEntity
 {
-    public async Task<List<TResult>> MapCollection(IQueryManager<TEntity> queryManager)
+    public async Task<List<TResult>> MapCollection(IQueryManager<TEntity> queryManager, CancellationToken cancellationToken = default(CancellationToken))
     {
         return await queryManager.GetList(GetMapperExpression());
     }
 
-    public async Task<TResult?> MapSingle(IQueryManager<TEntity> queryManager)
+    public async Task<TResult?> MapSingle(IQueryManager<TEntity> queryManager, CancellationToken cancellationToken = default(CancellationToken))
     {
         return await queryManager.GetOne(GetMapperExpression());
     }

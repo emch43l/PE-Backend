@@ -3,7 +3,7 @@ using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using ApplicationCore.Service;
-using Domain.Common.Repository.QueryRepository;
+using Domain.Common.Repository;
 using Domain.Exception;
 using Domain.Model.Interface;
 
@@ -13,15 +13,15 @@ public class GetUserAlbumsQueryHandler : IQueryHandler<GetUserAlbumsQuery,IGener
 {
     private readonly IIdentityService _identityService;
 
-    private readonly IAlbumQueryRepository _albumQueryRepository;
+    private readonly IAlbumRepository _albumQueryRepository;
 
-    private readonly IGenericPaginator _genericPaginator;
+    private readonly IPaginator _paginator;
 
-    public GetUserAlbumsQueryHandler(IIdentityService identityService, IAlbumQueryRepository albumQueryRepository, IGenericPaginator genericPaginator)
+    public GetUserAlbumsQueryHandler(IIdentityService identityService, IAlbumRepository albumQueryRepository, IPaginator paginator)
     {
         _identityService = identityService;
         _albumQueryRepository = albumQueryRepository;
-        _genericPaginator = genericPaginator;
+        _paginator = paginator;
     }
 
     public async Task<IGenericPaginatorResult<AlbumDto>> Handle(GetUserAlbumsQuery request, CancellationToken cancellationToken)
@@ -31,9 +31,10 @@ public class GetUserAlbumsQueryHandler : IQueryHandler<GetUserAlbumsQuery,IGener
            throw new UserNotFoundException();
 
        IGenericPaginatorResult<AlbumDto> result =
-           await _genericPaginator.Paginate(
-               _albumQueryRepository.GetQueryBySpecification(
-                   new GetUserAlbumsSpecification(user)).GetQuery(), new AlbumMapper(), request.Page.Value);
+           await _paginator.Paginate(
+               _albumQueryRepository
+                   .GetQueryManager()
+                   .ApplySpecification(new GetUserAlbumsSpecification(user)), new AlbumMapper(), request.Page.Value);
 
        return result;
     }

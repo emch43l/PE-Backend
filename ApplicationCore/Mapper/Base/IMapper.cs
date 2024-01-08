@@ -6,9 +6,9 @@ namespace ApplicationCore.Mapper.Base;
 
 public interface IMapper<TEntity,TResult> where TEntity: IEntity
 {
-    Task<List<TResult>> MapCollection(IQueryManager<TEntity> queryManager);
+    Task<List<TResult>> MapCollection(IQueryManager<TEntity> queryManager, CancellationToken cancellationToken = default(CancellationToken));
 
-    Task<TResult?> MapSingle(IQueryManager<TEntity> queryManager);
+    Task<TResult?> MapSingle(IQueryManager<TEntity> queryManager, CancellationToken cancellationToken = default(CancellationToken));
     
     Func<TEntity, TResult> GetCompiledDelegate();
     

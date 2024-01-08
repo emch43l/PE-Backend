@@ -1,16 +1,12 @@
 ﻿using System.Text;
 using ApplicationCore;
-using ApplicationCore.Common.Implementation.Specification;
 using ApplicationCore.Common.Interface;
 using ApplicationCore.CQRS.CommentOperations.Command;
-using ApplicationCore.CQRS.CommentOperations.Query;
 using ApplicationCore.CQRS.PostOperations.Command;
-using ApplicationCore.CQRS.PostOperations.Query;
 using ApplicationCore.Pagination;
 using ApplicationCore.Service;
 using ApplicationCore.Validation;
 using Domain.Common.Repository;
-using Domain.Common.Repository.QueryRepository;
 using Domain.Common.Specification;
 using Domain.Common.Specification.Base;
 using FluentValidation;
@@ -19,7 +15,6 @@ using Infrastructure.Identity;
 using Infrastructure.Identity.Entity;
 using Infrastructure.JWT;
 using Infrastructure.Repository;
-using Infrastructure.Repository.QueryRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -189,17 +184,13 @@ public static class DependencyInjection
         serviceCollection.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         
         serviceCollection.AddScoped(typeof(ISpecification<>),typeof(SpecificationBase<>));
-        serviceCollection.AddScoped(typeof(IGenericPaginator),typeof(GenericPaginator));
+        serviceCollection.AddScoped(typeof(IPaginator),typeof(Paginator));
         
         serviceCollection.AddScoped<ICommentRepository, CommentRepository>();
         serviceCollection.AddScoped<IAlbumRepository, AlbumRepository>();
         serviceCollection.AddScoped<IPostRepository, PostRepository>();
-        serviceCollection.AddScoped<ICommentQueryRepository, CommentQueryRepository>();
-        serviceCollection.AddScoped<IAlbumQueryRepository, AlbumQueryRepository>();
-        serviceCollection.AddScoped<IPostQueryRepository, PostQueryRepository>();
         serviceCollection.AddScoped<IPostReactionRepository, PostReactionRepository>();
         serviceCollection.AddScoped<ICommentReactionRepository, CommentReactionRepository>();
-        serviceCollection.AddScoped<ICommentReactionQueryRepository, CommentReactionQueryRepository>();
         
         serviceCollection.AddMediatR(options =>
             options.RegisterServicesFromAssembly(typeof(EntryPoint).Assembly)

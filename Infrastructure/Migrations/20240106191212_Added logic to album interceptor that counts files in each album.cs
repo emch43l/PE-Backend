@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class chagedlongtodoubleinreactioninterface : Migration
+    public partial class Addedlogictoalbuminterceptorthatcountsfilesineachalbum : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -83,6 +83,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileCount = table.Column<int>(type: "int", nullable: false),
                     NumberOfRatingVotes = table.Column<int>(type: "int", nullable: false),
                     AverageRating = table.Column<double>(type: "float", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

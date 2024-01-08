@@ -3,7 +3,7 @@ using ApplicationCore.Common.Implementation.Specification.PostSpecification;
 using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Mapper.Base;
-using Domain.Common.Repository.QueryRepository;
+using Domain.Common.Repository;
 using Domain.Exception;
 using Domain.Model;
 using Microsoft.EntityFrameworkCore;
@@ -12,14 +12,14 @@ namespace ApplicationCore.CQRS.PostOperations.Query;
 
 public class GetPostWithCommentsQueryHandler : IQueryHandler<GetPostWithCommentsQuery,PostWithCommentsDto>
 {
-    private readonly IPostQueryRepository _postRepository;
+    private readonly IPostRepository _postRepository;
 
-    private readonly ICommentQueryRepository _commentQueryRepository;
+    private readonly ICommentRepository _commentRepository;
 
-    public GetPostWithCommentsQueryHandler(IPostQueryRepository postRepository, ICommentQueryRepository commentQueryRepository)
+    public GetPostWithCommentsQueryHandler(IPostRepository postRepository, ICommentRepository commentQueryRepository)
     {
         _postRepository = postRepository;
-        _commentQueryRepository = commentQueryRepository;
+        _commentRepository = commentQueryRepository;
     }
 
     public async Task<PostWithCommentsDto> Handle(GetPostWithCommentsQuery request, CancellationToken cancellationToken)
@@ -28,16 +28,17 @@ public class GetPostWithCommentsQueryHandler : IQueryHandler<GetPostWithComments
         IMapper<Comment, CommentDto> commentMapper = new CommentWithUserMapper();
 
         Post? post = await _postRepository
-            .GetPostWithUserQuery(request.PostId)
-            .ApplySpecification(new PublicPostSpecification()).GetQuery().FirstOrDefaultAsync();
+            .GetQueryManager()
+            .ApplySpecification(new GetPublicPostWithUserSpecification(request.PostId))
+            .GetQuery().FirstOrDefaultAsync(cancellationToken);
         
         if (post == null)
             throw new PostNotFoundException();
 
         List<CommentDto> commentDtos = await commentMapper.MapCollection(
-            _commentQueryRepository
-                .GetPostCommentsQuery(post)
-                .ApplySpecification(new GetFewCommentsWithUserSpecification())
+            _commentRepository
+                .GetQueryManager()
+                .ApplySpecification(new GetFewCommentsWithUserSpecification(post.Id))
         );
 
         PostWithCommentsDto postWithCommentsDto = postMapper.GetMappedResult(post);

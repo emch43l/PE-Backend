@@ -1,13 +1,10 @@
 ﻿using ApplicationCore.Common.Interface;
 using Domain.Model;
-using Infrastructure.DB.Interceptors;
-using Infrastructure.DB.Interceptors.Rating;
-using Infrastructure.DB.Interceptors.Reaction;
+using Infrastructure.DB.Interceptors.AlbumRelated;
+using Infrastructure.DB.Interceptors.ReactionRelated;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using File = Domain.Model.File;
 using UserEntity = Infrastructure.Identity.Entity.UserEntity;
 
@@ -43,7 +40,7 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity,UserRoleEntity,
 
         optionsBuilder.AddInterceptors(new PostReactionInterceptor());
         optionsBuilder.AddInterceptors(new CommentReactionInterceptor());
-        optionsBuilder.AddInterceptors(new AlbumRatingInterceptor());
+        optionsBuilder.AddInterceptors(new AlbumInterceptor());
         
         base.OnConfiguring(optionsBuilder);
     }

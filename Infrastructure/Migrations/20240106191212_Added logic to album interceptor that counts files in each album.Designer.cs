@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240106140022_chaged long to double in reaction interface")]
-    partial class chagedlongtodoubleinreactioninterface
+    [Migration("20240106191212_Added logic to album interceptor that counts files in each album")]
+    partial class Addedlogictoalbuminterceptorthatcountsfilesineachalbum
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FileCount")
+                        .HasColumnType("int")
+                        .HasColumnName("FileCount");
 
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
