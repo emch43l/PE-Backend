@@ -1,5 +1,4 @@
-﻿using Domain.Common.Specification.Base;
-using Domain.Model;
+﻿using Domain.Model;
 
 namespace ApplicationCore.Common.Implementation.Specification.PostSpecification;
 
@@ -9,7 +8,7 @@ public class GetPublicPostsWithUserAndFirstCommentSpecification : PublicPostSpec
     {
         AddIncludes(p => p.User);
         AddIncludes(p => p.Comments.OrderBy(c => c.ReactionCount).Take(1));
-        AddIncludes(p => p.Comments.Select(c => c.User));
+        AddIncludes(nameof(Post.Comments),nameof(Comment.User));
         SetEntityTracking(false);
     }
 

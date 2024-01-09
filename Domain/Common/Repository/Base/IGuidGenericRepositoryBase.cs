@@ -1,5 +1,4 @@
-﻿using Domain.Common.Identity;
-using Domain.Model.Interface;
+﻿using Domain.Model.Interface;
 
 namespace Domain.Common.Repository.Base;
 

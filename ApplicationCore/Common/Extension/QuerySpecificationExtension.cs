@@ -41,10 +41,17 @@ public static class QuerySpecificationExtension
                 (current, criteria) => current.Where(criteria)
             );
 
-        query = specification.Includes
+        // for expressions
+        query = specification.IncludesExpressions
             .Aggregate(query, 
                 (current, include) => current.Include(include)
             );
+        // for strings
+        query = specification.IncludesStrings
+            .Aggregate(query, 
+                (current, include) => current.Include(include)
+            );
+
 
         return query;
     }

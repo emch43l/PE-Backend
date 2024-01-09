@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using Domain.Common.Specification;
-using Domain.Model;
 using Domain.Model.Interface;
 
 namespace Domain.Common.Query;

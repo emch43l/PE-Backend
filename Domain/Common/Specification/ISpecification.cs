@@ -14,7 +14,9 @@ public interface ISpecification<T>
     
     int? Skip { get; }
     
-    List<Expression<Func<T, object>>> Includes { get; }
+    List<Expression<Func<T, object>>> IncludesExpressions { get; }
+    
+    List<string> IncludesStrings { get; }
     
     bool TrackEntities { get; }
     
@@ -25,6 +27,8 @@ public interface ISpecification<T>
     void AddCriteria(Expression<Func<T, bool>> criteriaExpression);
 
     void AddIncludes(Expression<Func<T, object>> include);
+
+    void AddIncludes(params string[] include);
 
     void SetTake(int take);
 }

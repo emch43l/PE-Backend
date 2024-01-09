@@ -1,5 +1,4 @@
-﻿using Domain.Common.Identity;
-using Domain.Common.Query;
+﻿using Domain.Common.Query;
 using Domain.Common.Specification;
 using Domain.Model.Interface;
 
