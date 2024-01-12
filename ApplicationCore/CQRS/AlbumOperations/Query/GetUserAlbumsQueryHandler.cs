@@ -33,8 +33,7 @@ public class GetUserAlbumsQueryHandler : IQueryHandler<GetUserAlbumsQuery,IGener
        IGenericPaginatorResult<AlbumDto> result =
            await _paginator.Paginate(
                _albumQueryRepository
-                   .GetQueryManager()
-                   .ApplySpecification(new GetUserAlbumsSpecification(user)), new AlbumMapper(), request.Page.Value);
+                   .GetQuery(new GetUserAlbumsSpecification(user)), new AlbumMapper(), request.Page.Value);
 
        return result;
     }

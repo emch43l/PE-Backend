@@ -38,8 +38,7 @@ public class GetPostCommentsQueryHandler : IQueryHandler<GetPostCommentsQuery,IG
             .SetPageSize(CommentNumberPerPage)
             .Paginate(
                 _commentRepository
-                    .GetQueryManager()
-                    .ApplySpecification(new GetPostCommentsSpecification(post.Id)),
+                    .GetQuery(new GetPostCommentsSpecification(post.Id)),
                 new CommentWithUserMapper(), 
                 query.Page.Value
                 );

@@ -7,6 +7,7 @@ public class PaginatorSpecification<TEntity> : SpecificationBase<TEntity> where 
 {
     public PaginatorSpecification(int skip, int take)
     {
+        AddOrderBy(i => i.Id);
         SetTake(take);
         SetSkip(skip);
     }

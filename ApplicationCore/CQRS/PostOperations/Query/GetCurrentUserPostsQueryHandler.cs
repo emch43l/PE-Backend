@@ -36,8 +36,7 @@ public class GetCurrentUserPostsQueryHandler : IQueryHandler<GetCurrentUserPosts
         return await _paginator
             .SetPageSize(request.PageSize.Value)
             .Paginate(_postRepository
-                .GetQueryManager()
-                .ApplySpecification(new GetPrivateUserPostsWithCommentsSpecification(user.Id)), 
+                .GetQuery(new GetPrivateUserPostsWithCommentsSpecification(user.Id)), 
                 new PostWithCommentsMapper(), 
                 request.Page.Value
                 );

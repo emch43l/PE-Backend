@@ -3,6 +3,7 @@ using ApplicationCore.Dto;
 using ApplicationCore.Mapper;
 using ApplicationCore.Pagination;
 using Domain.Common.Repository;
+using Domain.Model;
 
 namespace ApplicationCore.CQRS.PostOperations.Query;
 
@@ -22,13 +23,13 @@ public class GetAllPostsPaginatedQueryHandler: IQueryHandler<GetAllPostsPaginate
         CancellationToken cancellationToken)
     {
         
+        
         GenericPaginatorResult<PostDto> result = 
             await _paginator
                 .SetPageSize(request.ItemNumber)
                 .Paginate(
                     _postRepository
-                        .GetQueryManager()
-                        .ApplySpecification(new GetPublicPostsWithUserAndFirstCommentSpecification()), 
+                        .GetQuery(new GetPublicPostsWithUserAndFirstCommentSpecification()), 
                     new PostWithUserAndSingleCommentMapper(), 
                     request.Page.Value
                     );

@@ -28,17 +28,14 @@ public class GetPostWithCommentsQueryHandler : IQueryHandler<GetPostWithComments
         IMapper<Comment, CommentDto> commentMapper = new CommentWithUserMapper();
 
         Post? post = await _postRepository
-            .GetQueryManager()
-            .ApplySpecification(new GetPublicPostWithUserSpecification(request.PostId))
-            .GetQuery().FirstOrDefaultAsync(cancellationToken);
+            .FindBySpecificationAsync(new GetPublicPostWithUserSpecification(request.PostId));
         
         if (post == null)
             throw new PostNotFoundException();
 
-        List<CommentDto> commentDtos = await commentMapper.MapCollection(
-            _commentRepository
-                .GetQueryManager()
-                .ApplySpecification(new GetFewCommentsWithUserSpecification(post.Id))
+        List<CommentDto> commentDtos = commentMapper.GetMappedResult(
+            await _commentRepository.FindAllBySpecificationAsync(new GetFewCommentsWithUserSpecification(post.Id)
+            )
         );
 
         PostWithCommentsDto postWithCommentsDto = postMapper.GetMappedResult(post);

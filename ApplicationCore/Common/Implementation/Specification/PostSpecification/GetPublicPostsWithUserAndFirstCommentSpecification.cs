@@ -7,8 +7,8 @@ public class GetPublicPostsWithUserAndFirstCommentSpecification : PublicPostSpec
     public GetPublicPostsWithUserAndFirstCommentSpecification()
     {
         AddIncludes(p => p.User);
-        AddIncludes(p => p.Comments.OrderBy(c => c.ReactionCount).Take(1));
         AddIncludes(nameof(Post.Comments),nameof(Comment.User));
+        AddIncludes(p => p.Comments.Where(c => c.Parent == null).OrderBy(c => c.ReactionCount).Take(1));
         SetEntityTracking(false);
     }
 

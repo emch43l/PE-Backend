@@ -1,7 +1,8 @@
 ﻿using ApplicationCore.Common.Implementation.Specification.Pagination;
 using ApplicationCore.Mapper.Base;
-using Domain.Common.Query;
 using Domain.Model.Interface;
+using ApplicationCore.Common.Extension;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Pagination;
 
@@ -28,26 +29,26 @@ public class Paginator : IPaginator
     }
 
     public async Task<GenericPaginatorResult<TResult>> Paginate<TEntity, TResult>(
-        IQueryManager<TEntity> query,
+        IQueryable<TEntity> query,
         IMapper<TEntity, TResult> mapper, 
-        int pageNumber) where TResult : class where TEntity : IEntity
+        int pageNumber) where TResult : class where TEntity : class, IEntity
     {
         return await Task.Run(async () =>
         {
-            int totalItemsCount = query.GetQuery().Count();
+            int totalItemsCount = query.Count();
             int totalPages = (int)Math.Ceiling((double)totalItemsCount / _itemNumberPerPage);
 
             int skip = (pageNumber - 1) * _itemNumberPerPage;
             int take = _itemNumberPerPage;
 
-            List<TResult> items = await query
+            List<TEntity> items = await query
                 .ApplySpecification(new PaginatorSpecification<TEntity>(skip,take))
-                .GetList(mapper.GetMapperExpression());
+                .ToListAsync();
 
             return new GenericPaginatorResult<TResult>(
                 totalItemsCount,
                 items.Count(),
-                items,
+                mapper.GetMappedResult(items),
                 pageNumber,
                 totalPages
             );

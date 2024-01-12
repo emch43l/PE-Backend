@@ -27,9 +27,9 @@ public class PostWithUserAndSingleCommentMapper : AbstractMapper<Post,PostDto>
                     Id = entity.User.Guid,
                     UserName = entity.User.UserName,
                 },
-                Comment = entity.Comments.AsQueryable()
+                Comments = entity.Comments.AsQueryable()
                     .Select(new CommentWithUserMapper().GetMapperExpression())
-                    .FirstOrDefault()
+                    .ToList()
             };
     }
 }

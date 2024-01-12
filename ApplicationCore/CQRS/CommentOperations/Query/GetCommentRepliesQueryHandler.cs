@@ -29,7 +29,7 @@ public class GetCommentRepliesQueryHandler : IQueryHandler<GetCommentRepliesQuer
             throw new NotFoundException("Comment not found !");
 
         IGenericPaginatorResult<CommentDto> result = await _paginator.Paginate(
-            _commentQueryRepository.GetQueryManager().ApplySpecification(new GetCommentCommentsSpecification(comment.Id)), new CommentWithUserMapper(),
+            _commentQueryRepository.GetQuery(new GetCommentCommentsSpecification(comment.Id)), new CommentWithUserMapper(),
             request.Page.Value);
 
         return result;

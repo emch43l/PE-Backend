@@ -1,5 +1,4 @@
 ﻿using Domain.Common.Specification;
-using Domain.Model;
 using Domain.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,15 +24,17 @@ public static class QuerySpecificationExtension
         {
             query = query.AsNoTracking();
         }
+        
+        // skip need to be invoked first, because in other case pagination wont work 🤡
+        
+        if (specification.Skip != null)
+        {
+            query = query.Skip((int)specification.Skip);
+        }
 
         if (specification.Take != null)
         {
             query = query.Take((int)specification.Take);
-        }
-
-        if (specification.Skip != null)
-        {
-            query = query.Skip((int)specification.Skip);
         }
         
         query = specification.Criteria

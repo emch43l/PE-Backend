@@ -1,5 +1,4 @@
-﻿using Domain.Common.Query;
-using Domain.Common.Specification;
+﻿using Domain.Common.Specification;
 using Domain.Model.Interface;
 
 namespace Domain.Common.Repository.Base;
@@ -23,6 +22,6 @@ public interface IGenericRepositoryBase<T> where T: IEntity
     
     Task<IEnumerable<T>> FindAllBySpecificationAsync(ISpecification<T>? specification = null);
 
-    IQueryManager<T> GetQueryManager();
+    IQueryable<T> GetQuery(ISpecification<T>? specification = null);
 
 }
