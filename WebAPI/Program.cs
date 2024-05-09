@@ -7,9 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers(
-    options => options.Filters.Add<ExceptionFilter>()
-    );
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureCors();
@@ -19,6 +17,7 @@ builder.Services.ConfigureDb(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureServices();
 builder.Services.ConfigureValidation();
+builder.Services.AddExceptionHandler<ExceptionHandlerMiddleware>();
 
 var app = builder.Build();
 
@@ -36,6 +35,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseExceptionHandler(o => {});
 
 app.Seed();
 

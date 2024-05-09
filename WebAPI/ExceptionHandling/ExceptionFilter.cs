@@ -11,7 +11,7 @@ public class ExceptionFilter : ExceptionFilterAttribute
         if (context.Exception is ExceptionBase)
         {
             ExceptionInterpreter interpreter = new ExceptionInterpreter();
-            ProblemResponse response = interpreter.Interpret(context.Exception);
+            ProblemResponse response = interpreter.Interpret((ExceptionBase)context.Exception);
 
             if (response.StatusCode == HttpStatusCode.InternalServerError)
                 return;

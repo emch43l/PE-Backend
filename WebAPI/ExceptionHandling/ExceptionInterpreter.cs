@@ -6,9 +6,11 @@ namespace WebAPI.ExceptionHandling;
 
 public class ExceptionInterpreter
 {
-    public ProblemResponse Interpret(Exception exception)
+    public ProblemResponse Interpret(ExceptionBase exception)
     {
         ProblemResponse response = new ProblemResponse();
+        
+        
         switch (exception)
         {
             case NotFoundException:

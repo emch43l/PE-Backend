@@ -32,8 +32,8 @@ public static class SeedData
             UserEntity testUser = await CreateUser(provider, "test", "test@test.com", "zaq1@WSX");
             
             await AddUserToRole(provider, adminUser, "admin");
-            await AddUserToRole(provider, adminUser, "user");
-            await AddUserToRole(provider, normalUser, "user");
+            await AddUserToRole(provider, adminUser, "devops");
+            await AddUserToRole(provider, normalUser, "developer");
             await AddUserToRole(provider, testUser, "user");
             
             Random random = new Random();
